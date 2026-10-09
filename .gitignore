@@ -218,3 +218,66 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Pytorch
+*.pt
+*.pth
+*.pwf
+*.bin
+checkpoints/
+weights/
+saved_models/
+lightning_logs/
+.pt_cache/
+
+# Tensorflow
+*.ckpt
+*.ckpt.*
+*.h5
+*.keras
+*.pb
+checkpoint
+*.tflite
+events.out.tfevents.*
+tensorboard_logs/
+
+# Model export & optimization formats
+*.onnx
+*.engine
+*.trt
+
+# Datasets & raw media
+datasets/
+data/
+raw_data/
+*.zip
+*.tar
+*.tar.gz
+*.7z
+*.rar
+
+# Training outputs, evaluations & experiment logs
+runs/
+outputs/
+results/
+eval_results/
+predictions/
+visualizations/
+logs/
+wandb/
+mlruns/
+
+# Operating System files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# User customs
+.agents/
+tasks/
+AGENTS.md
