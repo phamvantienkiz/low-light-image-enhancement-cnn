@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DarkIR (CVPR 2025 Oral) - Phục Hồi Ảnh Thiếu Sáng Đa Nhiệm Bền Vững - Academic Paper Reader (CS2203 UIT VNUHCM)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/papers.css">
+    <style>
+        body { background: var(--bg-void); color: var(--ink); padding: 24px; font-family: var(--font-sans); }
+        .standalone-wrapper { max-width: 1200px; margin: 0 auto; }
+        .back-nav { margin-bottom: 20px; }
+        .back-nav a { color: var(--primary); font-family: var(--font-mono); text-decoration: none; font-weight: 700; }
+        .back-nav a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="standalone-wrapper">
+        <div class="back-nav">
+            <a href="../index.html#mod2-papers">← Quay lại Báo Cáo Tổng Quan Đồ Án (CS2203 UIT VNUHCM)</a>
+        </div>
+        
+<article class="paper-article">
+    <div class="paper-reader-toolbar">
+        <div class="paper-toolbar-group">
+            <span style="font-weight: 700; color: #38BDF8; font-size: 0.85rem;">CVPR 2025 Paper Reader (Full Translation)</span>
+            <button class="paper-tool-btn btn-col-toggle" onclick="togglePaperColumns('darkir')">📄 Chế Độ 1 Cột (Dọc)</button>
+        </div>
+        <div class="paper-toolbar-group">
+            <a href="papers/darkir.html" target="_blank" class="paper-tool-btn">↗️ Mở Trang Độc Lập Toàn Màn Hình</a>
+            <button class="paper-tool-btn" onclick="closePaperReader('darkir')">✕ Đóng Bài Báo</button>
+        </div>
+    </div>
+
+    <header class="paper-header">
+        <span class="paper-venue-badge">IEEE / CVF CVPR 2025 • ORAL PRESENTATION • MAIN REFERENCE</span>
+        <h1 class="paper-title">DarkIR: Phục Hồi Ảnh Thiếu Sáng Đa Nhiệm Bền Vững</h1>
+        <h2 class="paper-title-en">DarkIR: Robust Low-Light Image Restoration</h2>
+        <div class="paper-authors">
+            <strong>Daniel Feijoo</strong><sup>1†</sup>, <strong>Juan C. Benito</strong><sup>1</sup>, <strong>Alvaro Garcia</strong><sup>1</sup>, <strong>Marcos V. Conde</strong><sup>1,2†</sup>
+        </div>
+        <div class="paper-affiliations">
+            <sup>1</sup> Cidaut AI, Valladolid, Tây Ban Nha<br>
+            <sup>2</sup> Computer Vision Lab, Đại học Würzburg, CHLB Đức<br>
+            <sup>†</sup> Tác giả liên hệ: {danfei, marcos.conde}@cidaut.es
+        </div>
+        <div class="paper-links-row">
+            <a href="https://github.com/cidautai/DarkIR" target="_blank" class="paper-ext-link">💻 Mã Nguồn Chính Thức: github.com/cidautai/DarkIR</a>
+            <a href="../papers/Feijoo_DarkIR_Robust_Low-Light_Image_Restoration_CVPR_2025_paper.pdf" target="_blank" class="paper-ext-link">📑 Tải File PDF Kỷ Yếu CVPR (9.2 MB)</a>
+        </div>
+    </header>
+
+    <div class="paper-abstract-box">
+        <div class="paper-abstract-title">Tóm Tắt Bài Báo (Abstract)</div>
+        <p class="paper-abstract-text">
+            Chụp ảnh trong bóng đêm hoặc trong điều kiện ánh sáng cực yếu thường xuyên phải chịu đựng đồng thời ba dạng suy thoái nghiêm trọng: <strong>nhiễu cảm biến (noise)</strong>, <strong>thiếu sáng (low-light)</strong> và <strong>mờ nhòe (blurring)</strong> do môi trường thiếu quang tử và việc buộc phải mở màn trập phơi sáng lâu (long exposure). Mặc dù hai bài toán Khử mờ (Deblurring) và Tăng cường ảnh thiếu sáng (Low-Light Image Enhancement - LLIE) có mối quan hệ phụ thuộc hữu cơ chặt chẽ trong các điều kiện này, hầu hết các công trình nghiên cứu phục hồi ảnh hiện nay lại tiếp cận và giải quyết chúng một cách riêng rẽ, rời rạc. Trong bài báo này, chúng tôi đề xuất một kiến trúc mạng nơ-ron sâu hiệu quả và bền vững phục vụ bài toán <em>phục hồi ảnh thiếu sáng đa nhiệm thống nhất (multi-task low-light image restoration)</em>. Thay vì chạy theo xu hướng sử dụng các mô hình dựa trên Transformer cồng kềnh, chúng tôi đề xuất các cơ chế chú ý mới nhằm mở rộng trường tiếp nhận (receptive field) của các mạng CNN hiệu năng cao. Phương pháp của chúng tôi cắt giảm triệt để chi phí tính toán cả về số lượng tham số (Parameters) lẫn số phép tính tích lũy nhân (MAC operations) so với các giải thuật tiền nhiệm. Mô hình của chúng tôi, mang tên <strong>DarkIR</strong>, thiết lập kỷ lục State-of-the-Art (SOTA) mới trên các bộ dữ liệu chuẩn danh tiếng gồm LOLBlur, LOLv2 và Real-LOLBlur, đồng thời chứng minh khả năng tổng quát hóa vượt trội trên các bức ảnh chụp đêm thực tế ngoài đời sống.
+        </p>
+    </div>
+
+    <!-- Figure 1 -->
+    <figure class="paper-figure full-width">
+        <img src="../assets/images/papers/darkir/fig_1_p1.png" alt="DarkIR Figure 1 Teaser">
+        <figcaption class="paper-figcaption">
+            <strong>Hình 1: Động lực nghiên cứu của DarkIR.</strong> Các phương pháp tăng cường ảnh thiếu sáng (LLIE) và phục hồi ảnh trước đây hoàn toàn không bền vững trước sự thay đổi đồng thời của độ mờ nhòe và mức độ chiếu sáng. Hàng trên: <em>RetinexFormer [3]</em> thất bại nặng nề khi xuất hiện vệt mờ nhòe chuyển động. Hàng dưới: <em>LEDNet [65]</em> thất bại khi gặp nhiễu hạt cảm biến dày đặc. Mô hình đa nhiệm <strong>DarkIR (Đề xuất)</strong> của chúng tôi có khả năng phục hồi hoàn hảo các bức ảnh chụp đêm thực tế dưới nhiều điều kiện chiếu sáng, nhiễu hạt và mờ nhòe biến thiên phức tạp. (Nhấp chuột vào ảnh để phóng to chi tiết).
+        </figcaption>
+    </figure>
+
+    <div class="paper-content-columns">
+        <h3 class="paper-sec-heading"><span class="sec-id">1.</span> Giới Thiệu (Introduction)</h3>
+        <p>
+            Trong điều kiện chụp ảnh ban đêm hoặc thiếu sáng, chúng ta có thể mô hình hóa quá trình hình thành ảnh quan sát bị suy thoái theo phương trình vật lý quang học sau:
+        </p>
+        <div class="paper-equation">
+            <div class="paper-equation-math">$$\mathbf{y} = \gamma(\mathbf{x} \otimes \mathbf{k}) + \mathbf{n}$$</div>
+            <span class="paper-equation-num">(1)</span>
+        </div>
+        <p>
+            Trong đó: $\mathbf{y}$ là bức ảnh tối mờ quan sát được thu từ thiết bị; $\mathbf{x}$ đại diện cho khung cảnh thực tế lý tưởng không bị nhiễu động; $\mathbf{k}$ đại diện cho hàm tán xạ điểm (Point-Spread Function - PSF) gây mờ nhòe ống kính do chuyển động rung lắc; $\mathbf{n}$ là thành phần nhiễu cảm biến cộng gộp; và $\gamma(\cdot)$ là hàm phi tuyến thể hiện sự kiểm soát dải động và độ bão hòa điểm ảnh (dynamic range & pixel saturation clipping). Ký hiệu $\otimes$ biểu diễn toán tử tích chập không gian hai chiều.
+        </p>
+        <p>
+            So với điều kiện ban ngày đầy đủ ánh sáng, khi chụp thiếu sáng, nhiễu cảm biến (bao gồm nhiễu hạt photon shot noise tuân theo phân phối Poisson và nhiễu đọc điện tử read noise tuân theo phân phối Gaussian) tăng vọt lên một cách đáng kể. Trong nhiếp ảnh ban đêm, máy ảnh thường sử dụng thời gian phơi sáng dài (tốc độ màn trập chậm) nhằm cho phép cảm biến thu nhận được nhiều quang tử ánh sáng khả dụng hơn. Tuy nhiên, việc phơi sáng kéo dài tất yếu dẫn đến các vệt bóng ma (ghosting) và hiện tượng mờ nhòe chuyển động (motion blur artifacts) do chuyển động của camera và vật thể.
+        </p>
+        <p>
+            Những dạng suy thoái hình ảnh này đặc biệt trầm trọng trên điện thoại thông minh (smartphones), bởi vì thiết bị di động có khẩu độ ống kính cố định và hệ thống quang học rất hạn chế về mặt kích thước vật lý. Vì những lý do này, bài toán đồng thời nâng cao độ sáng và khử mờ (joint low-light enhancement and deblurring) đóng vai trò sống còn trong lĩnh vực nhiếp ảnh tính toán di động (mobile computational photography) [12, 65] — xem các mẫu minh họa tại <strong>Hình 1</strong>.
+        </p>
+        <p>
+            Trong bất kỳ hoàn cảnh chụp thực tế nào, bức ảnh thu nhận luôn luôn mang một mức độ nhiễu và mờ nhất định [13]. Nếu dùng chân máy ảnh cố định (tripod) để chụp ảnh tĩnh, chúng ta có thể giảm đáng kể độ mờ. Hơn nữa, nếu có hệ thống chiếu sáng nhân tạo phù hợp, nhiễu hạt cũng có thể được kiềm chế [1, 20]. Tuy nhiên, ngày nay phần lớn các bức ảnh đều được chụp bằng tay cầm điện thoại di động (handheld smartphones). Do kích thước cảm biến và quang học siêu nhỏ, các nhà sản xuất buộc phải áp dụng các bộ xử lý tín hiệu hình ảnh (ISPs) vô cùng phức tạp [10, 12] so với các dòng máy ảnh chuyên nghiệp không gương lật (DSLM).
+        </p>
+        <p>
+            Chất lượng ảnh điện thoại hiện nay vẫn còn khoảng cách xa so với tiêu chuẩn máy ảnh DSLM. Rất may mắn, các nghiên cứu gần đây trong thị giác máy tính cấp thấp (low-level vision) và nhiếp ảnh tính toán đang từng bước thu hẹp khoảng cách này. Tăng cường ảnh thiếu sáng (LLIE) [3, 14, 30, 31, 45, 64], khử mờ ảnh [21, 25, 38, 40] và nâng cấp ảnh chụp đêm [42, 65] là những chủ đề thu hút sự quan tâm lớn.
+        </p>
+        <p>
+            Ví dụ, việc triệt tiêu hiện tượng mờ nhòe do run tay (hand tremor) đã được nghiên cứu kỹ lưỡng, ngay cả trong kịch bản ánh sáng yếu [29, 62]. Dẫu vậy, trong đa số trường hợp, các tác vụ này đều được giải quyết một cách riêng rẽ. Hệ quả là: các phương pháp khử mờ SOTA hiện nay không thể tổng quát hóa sang ảnh chụp đêm, và ngược lại, các phương pháp tăng sáng tốt nhất cũng không thể làm giảm được các vệt mờ nhòe nghiêm trọng. Đây là một hạn chế mang tính hệ thống, bởi vì người dùng sẽ phải tinh chỉnh, lưu trữ và thực thi nối tiếp nhiều mô hình chuyên biệt cho từng tác vụ (sequential cascading), gây cản trở lớn khi triển khai vào các ứng dụng thực tế thế giới thực.
+        </p>
+        <p>
+            Theo hiểu biết tốt nhất của chúng tôi, có rất ít công trình nghiên cứu hướng tới việc giải quyết đồng thời cả ba bài toán (khử nhiễu, khử mờ và tăng sáng thiếu sáng) theo phương pháp đầu-cuối tích hợp (joint end-to-end manner) [6, 33, 63, 65], trong đó nổi bật nhất là công trình LEDNet [65]. Chúng tôi tập trung vào hướng nghiên cứu này, bởi vì việc khai thác mối tương quan bản chất giữa các dạng suy thoái cho phép chúng tôi đạt được hiệu năng cao nhất về độ trung thực tái tạo ảnh, tính khả dụng và hiệu quả tính toán.
+        </p>
+
+        <h4 class="paper-sub-heading">Đóng Góp Khoa Học Của Bài Báo (Contributions)</h4>
+        <p>
+            Chúng tôi đề xuất một mạng nơ-ron tích chập (CNN) hoạt động đồng thời trên cả hai miền: <strong>miền không gian (spatial domain)</strong> và <strong>miền tần số (frequency domain)</strong>:
+        </p>
+        <ul>
+            <li>Trong miền không gian, chúng tôi tập trung xử lý nhiễu cảm biến $\mathbf{n}$ và độ mờ không đồng nhất $\mathbf{k}$ bằng cơ chế chú ý không gian trường tiếp nhận cực lớn (large receptive field spatial attention).</li>
+            <li>Trong miền tần số Fourier, chúng tôi giải quyết bài toán thiếu sáng một cách dễ dàng và tự nhiên [28, 44] nhờ vào bản chất toàn cục (global nature) của sự phân bố năng lượng chiếu sáng.</li>
+        </ul>
+        <p>
+            Chúng tôi tóm tắt 3 đóng góp khoa học chính như sau:
+        </p>
+        <ol>
+            <li>Thiết kế một mạng nơ-ron gọn nhẹ kết hợp hài hòa cơ chế chú ý miền tần số (frequency attention) và cơ chế chú ý trường nhìn rộng (large receptive field attention), tận dụng tối đa thông tin tương hỗ giữa hai miền.</li>
+            <li>Mô hình DarkIR thiết lập kỷ lục SOTA mới trên các bộ dữ liệu danh tiếng LOLBlur và Real-LOLBlur [65], cải thiện hơn <strong>+1.0 dB PSNR</strong> so với mô hình tiền nhiệm tốt nhất LEDNet [65], trong khi cắt giảm đáng kể chi phí tính toán phần cứng (ít hơn 55% tham số và 4x ít hơn GMACs).</li>
+            <li>DarkIR đại diện cho một mô hình đối chuẩn (baseline) mới đầy mạnh mẽ cho bài toán phục hồi ảnh chụp đêm đa nhiệm.</li>
+        </ol>
+
+        <h3 class="paper-sec-heading"><span class="sec-id">2.</span> Các Công Trình Liên Quan (Related Work)</h3>
+        
+        <h4 class="paper-sub-heading">2.1 Khử Mờ Ảnh (Image Deblurring)</h4>
+        <p>
+            Cộng đồng khoa học đã trải qua hàng thập kỷ nghiên cứu về việc tái tạo các khung cảnh sắc nét. Các giải thuật khử mờ được chia thành hai nhánh chính: <strong>phương pháp không mù (non-blind)</strong> và <strong>phương pháp mù (blind)</strong>. Trong khi phương pháp không mù đòi hỏi phải biết trước kernel mờ $\mathbf{k}$ (hoặc PSF) để tiến hành giải tích chập (deconvolution), các phương pháp mù không có bất kỳ thông tin tiên nghiệm nào về quá trình gây mờ.
+        </p>
+        <p>
+            Những năm gần đây, nhiều kiến trúc học sâu đã được đề xuất cho cả hai bài toán [25, 38], vượt qua hoàn toàn các thuật toán cổ điển. Các mô hình học sâu không cần ước lượng PSF phức tạp và có tính chất bất khả tri thiết bị (sensor-agnostic), nghĩa là có thể tăng cường trực tiếp ảnh sRGB chụp từ nhiều cảm biến máy ảnh khác nhau. Đa phần các phương pháp hiện đại dựa trên CNN [4, 25, 37, 57], GANs (DeblurGAN [25]), Transformer miền tần số [24], hay mô hình Diffusion [33, 49].
+        </p>
+
+        <h4 class="paper-sub-heading">2.2 Tăng Cường Ảnh Thiếu Sáng (LLIE)</h4>
+        <p>
+            Các phương pháp ban đầu dựa trên thống kê ảnh hoặc thông tin tiên nghiệm [2, 18], hầu hết dựa trên <strong>Lý thuyết Retinex (Retinex Theory)</strong> [26] phân rã ảnh thành thành phần phản xạ (reflectance) và thành phần chiếu sáng (illumination). Bước sang kỷ nguyên học sâu, các mô hình CNN như RetinexNet [48], Zero-DCE [16] và SCI [35] chiếm ưu thế. Gần đây, các mô hình Vision Transformer như RetinexFormer [3] hoặc các mạng khai thác thông tin biên độ Fourier như FourLLIE [44] tiếp tục đẩy cao giới hạn chất lượng.
+        </p>
+
+        <h4 class="paper-sub-heading">2.3 Khử Mờ Trong Điều Kiện Thiếu Sáng (Low-Light Blur Enhancement)</h4>
+        <p>
+            Mặc dù hai bài toán trên thu hút sự chú ý độc lập rất lớn, việc giải quyết đồng thời cả hai bài toán cùng một lúc là một thách thức kỹ thuật cực khó, và chỉ có số ít công trình tiếp cận [6, 33, 63, 65]. NBDN [6] đề xuất mạng không mù để xử lý ảnh đêm bão hòa. Với LEDNet [65], nhóm tác giả đã xây dựng mạng Encoder-Decoder và giới thiệu hai bộ dữ liệu chuẩn quy mô lớn là LOLBlur và Real-LOLBlur. DarkIR kế thừa và khắc phục toàn diện các điểm nghẽn của LEDNet.
+        </p>
+
+        <!-- Figure 2 -->
+        <figure class="paper-figure full-width">
+            <img src="../assets/images/papers/darkir/fig_2_p3.png" alt="DarkIR Architecture Diagram">
+            <figcaption class="paper-figcaption">
+                <strong>Hình 2: Sơ đồ kiến trúc tổng thể của DarkIR.</strong> Mạng nơ-ron tuân theo kiến trúc Encoder-Decoder. Chúng tôi sử dụng các khối chức năng bất đối xứng dựa trên cấu trúc MetaFormer [56]. Bộ mã hóa (Encoder) tập trung giải quyết bài toán chiếu sáng thiếu sáng bằng thông tin miền tần số Fourier, tạo ra ảnh tái tạo trung gian thu nhỏ $\hat{x}_{\downarrow 8}$ đã được cân bằng mức sáng hoàn hảo. Bộ giải mã (Decoder) nhận các đặc trưng sáng đã được mã hóa, tập trung nâng tỷ lệ (upscaling) và khử sạch mờ nhòe bằng cơ chế chú ý không gian trường tiếp nhận cực lớn (Di-SpAM). Thiết kế này giúp mô hình gọn nhẹ, sở hữu ít tham số và FLOPs hơn hẳn các phương pháp trước.
+            </figcaption>
+        </figure>
+
+        <h3 class="paper-sec-heading"><span class="sec-id">3.</span> Phương Pháp Đề Xuất (Method)</h3>
+        <p>
+            Chúng tôi dựa trên triết lý thiết kế <strong>MetaFormer</strong> [56] để xây dựng mạng nơ-ron của mình. Thiết kế này trừu tượng hóa các kiến trúc dựa trên Transformer thành các khối đơn giản gồm hai thành phần cốt lõi: module chú ý toàn cục (global attention / token mixer) và mạng truyền thẳng (Feed-Forward Network - FFN / MLP). Công thức điển hình của MetaFormer là:
+        </p>
+        <div class="paper-equation">
+            <div class="paper-equation-math">$$z_1 = \text{Attention}(\text{LayerNorm}(z)) + z$$</div>
+            <span class="paper-equation-num">(2)</span>
+        </div>
+        <div class="paper-equation">
+            <div class="paper-equation-math">$$z_2 = \text{FFN}(\text{LayerNorm}(z_1)) + z_1$$</div>
+            <span class="paper-equation-num">(3)</span>
+        </div>
+        <p>
+            Trong đó $z$ là đặc trưng đầu vào và $z_2$ là đặc trưng đầu ra của khối. Hầu hết các mô hình phục hồi ảnh hàng đầu như NAFNet [7] đều áp dụng cấu trúc này. Chúng tôi nâng cấp MetaFormer bằng cách phát triển các khối chuyên biệt cho từng tác vụ: <strong>EBlock</strong> chuyên xử lý thiếu sáng ở Encoder, và <strong>DBlock</strong> chuyên xử lý khử mờ ở Decoder. Hơn nữa, chúng tôi sử dụng cơ chế cổng đơn giản (Simple Gates - SG) và cơ chế chú ý kênh giản lược (Simplified Channel Attention - SCA) thay thế cho các hàm kích hoạt phi tuyến tính đắt đỏ [7].
+        </p>
+
+        <h4 class="paper-sub-heading">3.1 Bộ Mã Hóa Tăng Cường Ánh Sáng (Low-Light Enhancement Encoder)</h4>
+        <p>
+            Nhiều nghiên cứu quang học [28, 44] đã chứng minh rằng: <strong>điều kiện chiếu sáng của bức ảnh tương quan rất cao với phổ biên độ (amplitude) trong miền Fourier</strong>. Do đó, bằng cách chỉ kích sáng phổ biên độ của ảnh mà giữ nguyên phổ pha (phase), chúng ta có thể điều chỉnh mức sáng của toàn bộ bức ảnh một cách tự nhiên mà không làm biến dạng đường nét hình học. Đặc tính này bảo toàn qua nhiều thang độ phân giải khác nhau [28].
+        </p>
+        <p>
+            Vì vậy, khối <strong>EBlock</strong> bao gồm hai thành phần: Module chú ý không gian (Spatial Attention Module - SpAM) và Mạng nơ-ron miền tần số (Frequency MLP - Fre-MLP). SpAM sử dụng khối inverted residual kết hợp SCA và Simple Gate.
+        </p>
+        <p>
+            Tiếp theo, phép biến đổi Fourier nhanh 2D (2D-FFT) chuyển đặc trưng sang miền phức:
+        </p>
+        <div class="paper-equation">
+            <div class="paper-equation-math">$$\mathcal{F}(X) = X_R + i X_I \in \mathbb{C}^{C \times H \times W}$$</div>
+            <span class="paper-equation-num">(4)</span>
+        </div>
+        <p>
+            Chúng tôi tách riêng phổ biên độ $|X| = \sqrt{X_R^2 + X_I^2}$ và đưa qua Fre-MLP gồm hai lớp tích chập $1 \times 1$ kết hợp hàm kích hoạt LReLU. Phép biến đổi Fourier ngược (IFFT) sau đó đưa đặc trưng trở lại miền không gian. Nhờ việc giảm tỷ lệ không gian qua tích chập có bước nhảy (strided convolution), chúng tôi có thể xếp chồng nhiều khối EBlock ở các tầng sâu mà không làm bùng nổ số phép toán. Tại đáy bộ mã hóa, một lớp tích chập tạo ra ảnh tái tạo thu nhỏ $\hat{x}_{\downarrow 8}$ có kích thước bằng $1/8$ ảnh gốc nhưng đã được cân bằng mức sáng hoàn hảo.
+        </p>
+
+        <h4 class="paper-sub-heading">3.2 Bộ Giải Mã Khử Mờ (Deblurring Decoder)</h4>
+        <p>
+            Khối giải mã <strong>DBlock</strong> tập trung vào các phép biến đổi hình học trong miền không gian. Đầu vào của Decoder là biểu diễn sâu của $\hat{x}_{\downarrow 8}$, do đó Decoder có thể tập trung hoàn toàn vào việc: (1) nâng độ phân giải (upsampling) và (2) triệt tiêu các vệt mờ nhòe, khôi phục độ sắc nét gờ cạnh. Cấu trúc DBlock tuân theo:
+        </p>
+        <div class="paper-equation">
+            <div class="paper-equation-math">$$z_1 = \text{Di-SpAM}(\text{LayerNorm}(z)) + z$$</div>
+            <span class="paper-equation-num">(5)</span>
+        </div>
+        <div class="paper-equation">
+            <div class="paper-equation-math">$$z_2 = \text{GatedFFN}(\text{LayerNorm}(z_1)) + z_1$$</div>
+            <span class="paper-equation-num">(6)</span>
+        </div>
+        <p>
+            Lấy cảm hứng từ Large Kernel Attention (LKA) [17], chúng tôi sáng tạo ra module <strong>Di-SpAM (Dilated-Spatial Attention Module)</strong>. Khác với LKA, Di-SpAM trích xuất đặc trưng ở ba cấp độ song song bằng ba nhánh tích chập sâu (Depth-wise Convolutions) với hệ số giãn nở lần lượt là $d = 1, 4, 9$. Các thuộc tính từ 3 nhánh được cộng gộp, đi qua lớp chú ý kênh SCA và cuối cùng kết hợp với mạng Gated-FFN.
+        </p>
+
+        <h4 class="paper-sub-heading">3.3 Hàm Mất Mát Tối Ưu Hóa (Loss Function)</h4>
+        <p>
+            Chúng tôi kết hợp hài hòa giữa hàm mất mát độ trung thực (distortion loss) và hàm mất mát cảm nhận tri giác (perceptual loss) để tối ưu hóa mô hình $f$:
+        </p>
+        <ul>
+            <li>Hàm mất mát điểm ảnh $L_{l1} = \|x - \hat{x}\|_1$ đảm bảo độ chính xác mức xám cao nhất.</li>
+            <li>Hàm mất mát cảm nhận $L_{percep} = \text{LPIPS}(x, \hat{x})$ tính khoảng cách đặc trưng VGG19 [43] giữa ảnh sinh ra và ảnh tham chiếu:
+                <div class="paper-equation">
+                    <div class="paper-equation-math">$$L_{percep} = \text{LPIPS}(x, \hat{x})$$</div>
+                    <span class="paper-equation-num">(7)</span>
+                </div>
+            </li>
+            <li>Hàm mất mát Gradient biên cạnh $L_{edge}$ phạt nặng sai số tại các đường nét tần số cao:
+                <div class="paper-equation">
+                    <div class="paper-equation-math">$$L_{edge} = \|\nabla x - \nabla \hat{x}\|_2^2$$</div>
+                    <span class="paper-equation-num">(8)</span>
+                </div>
+            </li>
+            <li>Hàm mất mát định hướng kiến trúc tầng đáy $L_{lol}$ ép Encoder phải thực hiện đúng chức năng tăng sáng ở mức độ phân giải thu nhỏ:
+                <div class="paper-equation">
+                    <div class="paper-equation-math">$$L_{lol} = \|x - \hat{x}_{\uparrow 8}\|_1 + \text{LPIPS}(x, \hat{x}_{\uparrow 8})$$</div>
+                    <span class="paper-equation-num">(9)</span>
+                </div>
+                với $\hat{x}_{\uparrow 8}$ là ảnh nội suy song tuyến tính phóng to 8 lần từ đầu ra tầng đáy Encoder.
+            </li>
+        </ul>
+        <p>
+            Hàm mất mát tổng hợp toàn diện là:
+        </p>
+        <div class="paper-equation">
+            <div class="paper-equation-math">$$\mathcal{L} = \lambda_p \cdot L_{l1} + \lambda_{pe} \cdot L_{percep} + \lambda_{ed} \cdot L_{edge} + L_{lol}$$</div>
+            <span class="paper-equation-num">(10)</span>
+        </div>
+        <p>
+            Các hệ số trọng số thực nghiệm được thiết lập lần lượt là $\lambda_p = 1$, $\lambda_{pe} = 10^{-2}$ và $\lambda_{ed} = 50$.
+        </p>
+
+        <h3 class="paper-sec-heading"><span class="sec-id">4.</span> Kết Quả Thực Nghiệm & Đối Chuẩn (Experimental Results)</h3>
+        
+        <h4 class="paper-sub-heading">4.1 Các Bộ Dữ Liệu Thực Nghiệm (Datasets)</h4>
+        <ul>
+            <li><strong>LOLBlur [65]:</strong> Gồm 10,200 cặp ảnh huấn luyện và 1,800 cặp ảnh kiểm thử tổng hợp mô phỏng chính xác mờ nhòe chuyển động và nhiễu cảm biến thực tế.</li>
+            <li><strong>Real-LOLBlur [65]:</strong> Tập kiểm thử gồm 482 ảnh chụp đêm thực tế từ RealBlur [40], chụp bằng tay, không có Ground Truth, dùng để đo lường khả năng tổng quát hóa thực tế.</li>
+            <li><strong>LOLv2 (Real & Synthetic) [55]:</strong> Bản mở rộng của tập LOL nổi tiếng, gồm 689 cặp train / 100 test (Real) và 900 train / 100 val (Synthetic).</li>
+            <li><strong>LSRW [19]:</strong> Gồm ảnh từ máy ảnh chuyên nghiệp Nikon (3,150 train, 20 test) và điện thoại thông minh Huawei (2,450 train, 30 val).</li>
+        </ul>
+
+        <div class="paper-table-wrapper full-width">
+            <div class="paper-table-caption">Bảng 1: Đánh giá định lượng trên tập dữ liệu chuẩn LOLBlur. DarkIR thiết lập kỷ lục SOTA mới trên cả chỉ số méo dạng và cảm nhận, sở hữu ít hơn 55% tham số so với LEDNet [65] và ít hơn 88% so với Restormer [57].</div>
+            <table class="paper-table">
+                <thead>
+                    <tr>
+                        <th>Phương Pháp</th>
+                        <th>PSNR (dB) ↑</th>
+                        <th>SSIM ↑</th>
+                        <th>LPIPS ↓</th>
+                        <th>Params (M) ↓</th>
+                        <th>MACs (G) ↓</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>KinD++ [61]</td><td>21.26</td><td>0.753</td><td>0.359</td><td>1.20M</td><td>34.99G</td></tr>
+                    <tr><td>DRBN [54]</td><td>21.78</td><td>0.768</td><td>0.325</td><td>0.60M</td><td>48.61G</td></tr>
+                    <tr><td>DeblurGAN-v2 [25]</td><td>22.30</td><td>0.745</td><td>0.356</td><td>60.90M</td><td>-</td></tr>
+                    <tr><td>MIMO-UNet [8]</td><td>22.41</td><td>0.835</td><td>0.262</td><td>6.80M</td><td>67.25G</td></tr>
+                    <tr><td>NAFNet [9]</td><td>25.36</td><td>0.882</td><td>0.158</td><td>12.05M</td><td>12.30G</td></tr>
+                    <tr><td>LEDNet [65] (SOTA Cũ)</td><td>25.74</td><td>0.850</td><td>0.224</td><td>7.40M</td><td>38.65G</td></tr>
+                    <tr><td>RetinexFormer [3]</td><td>26.02</td><td>0.887</td><td>0.181</td><td>1.61M</td><td>15.57G</td></tr>
+                    <tr><td>Restormer [57]</td><td>26.72</td><td>0.902</td><td>0.133</td><td>26.13M</td><td>144.25G</td></tr>
+                    <tr style="background: rgba(56, 189, 248, 0.12); font-weight: bold;">
+                        <td style="color: #38BDF8;">DarkIR-m (Ours)</td>
+                        <td class="best">27.00</td>
+                        <td>0.883</td>
+                        <td>0.162</td>
+                        <td style="color: #38BDF8;">3.31M</td>
+                        <td style="color: #38BDF8;">7.25G</td>
+                    </tr>
+                    <tr style="background: rgba(167, 139, 250, 0.12); font-weight: bold;">
+                        <td style="color: #A78BFA;">DarkIR-l (Ours)</td>
+                        <td class="best">27.30</td>
+                        <td class="best">0.898</td>
+                        <td class="best">0.137</td>
+                        <td>12.96M</td>
+                        <td>27.19G</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Figure 3 -->
+        <figure class="paper-figure full-width">
+            <img src="../assets/images/papers/darkir/fig_3_p5.png" alt="DarkIR Figure 3 Visual Comparison">
+            <figcaption class="paper-figcaption">
+                <strong>Hình 3: So sánh chất lượng trực quan trên tập dữ liệu LOLBlur (các mẫu tổng hợp trong tập test).</strong> Từ trái sang phải: Ảnh đầu vào mờ nhòe thiếu sáng (Input), LEDNet, RetinexFormer, NAFNet, Restormer, DarkIR-m (Ours), DarkIR-l (Ours), và ảnh chuẩn Ground Truth (GT). DarkIR khôi phục rõ nét từng ký tự chữ "excited" trên poster và chai nước trong phòng tối mà không hề bị nhòe bết hay quầng sáng giả.
+            </figcaption>
+        </figure>
+
+        <div class="paper-table-wrapper full-width">
+            <div class="paper-table-caption">Bảng 2: So sánh định lượng với các chuỗi xử lý 2 bước (2-step pipelines) trên LOLBlur. DarkIR vượt trội hoàn toàn.</div>
+            <table class="paper-table">
+                <thead>
+                    <tr>
+                        <th>Cấu Hình Pipeline Ghép Nối</th>
+                        <th>Loại Quy Trình</th>
+                        <th>PSNR (dB) ↑</th>
+                        <th>SSIM ↑</th>
+                        <th>LPIPS ↓</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Zero-DCE [16] → MIMO [8]</td><td>1. LLIE → Deblurring</td><td>17.68</td><td>0.542</td><td>0.510</td></tr>
+                    <tr><td>RUAS [30] → MIMO [8]</td><td>1. LLIE → Deblurring</td><td>17.81</td><td>0.569</td><td>0.523</td></tr>
+                    <tr><td>RetinexFormer [3] → NAFNet [7]</td><td>1. LLIE → Deblurring</td><td>17.16</td><td>0.673</td><td>0.392</td></tr>
+                    <tr><td>Chen [5] → Zero-DCE [16]</td><td>2. Deblurring → LLIE</td><td>17.02</td><td>0.502</td><td>0.516</td></tr>
+                    <tr><td>DeblurGAN-v2 [25] → Zero-DCE [16]</td><td>2. Deblurring → LLIE</td><td>18.33</td><td>0.589</td><td>0.476</td></tr>
+                    <tr><td>MIMO [8] → Zero-DCE [16]</td><td>2. Deblurring → LLIE</td><td>17.52</td><td>0.570</td><td>0.498</td></tr>
+                    <tr><td>NAFNet [7] → RetinexFormer [3]</td><td>2. Deblurring → LLIE</td><td>14.66</td><td>0.500</td><td>0.465</td></tr>
+                    <tr style="background: rgba(56, 189, 248, 0.15); font-weight: bold;">
+                        <td style="color: #38BDF8;">DarkIR-m (Ours)</td>
+                        <td>Tích Hợp Đầu-Cuối (End-to-End)</td>
+                        <td class="best">27.00</td>
+                        <td class="best">0.883</td>
+                        <td class="best">0.162</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Figure 4 -->
+        <figure class="paper-figure full-width">
+            <img src="../assets/images/papers/darkir/fig_4_p6.png" alt="DarkIR Figure 4 Comparisons with Pipelines">
+            <figcaption class="paper-figcaption">
+                <strong>Hình 4: So sánh trực quan trên LOLBlur giữa DarkIR và các quy trình 2 bước.</strong> Các giải pháp 2 bước đều sinh ra quầng sáng chói lọi hoặc nhiễu màu loang lổ, trong khi DarkIR tái tạo các cấu trúc hình học sắc nét và tự nhiên.
+            </figcaption>
+        </figure>
+
+        <div class="paper-table-wrapper">
+            <div class="paper-table-caption">Bảng 3: Kết quả trên tập dữ liệu LSRW (50 ảnh kiểm thử từ Huawei và Nikon).</div>
+            <table class="paper-table">
+                <thead>
+                    <tr><th>Phương Pháp</th><th>PSNR (dB) ↑</th><th>SSIM ↑</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>RetinexNet [47]</td><td>15.906</td><td>0.3725</td></tr>
+                    <tr><td>FIDE [51]</td><td>17.669</td><td>0.5485</td></tr>
+                    <tr><td>DRBN [54]</td><td>16.149</td><td>0.5422</td></tr>
+                    <tr><td>KinD [61]</td><td>16.472</td><td>0.4929</td></tr>
+                    <tr><td>EnGAN [22]</td><td>16.311</td><td>0.4697</td></tr>
+                    <tr><td>Zero-DCE [16]</td><td>15.834</td><td>0.4664</td></tr>
+                    <tr><td>RUAS [30]</td><td>14.437</td><td>0.4276</td></tr>
+                    <tr><td>SCI [35]</td><td>15.017</td><td>0.4846</td></tr>
+                    <tr style="font-weight: bold; color: #38BDF8;"><td>DarkIR-mt (Ours Multi-Task)</td><td class="best">18.930</td><td class="best">0.5830</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="paper-table-wrapper">
+            <div class="paper-table-caption">Bảng 4: Kết quả trên tập dữ liệu LOLv2-Real và LOLv2-Synthetic.</div>
+            <table class="paper-table">
+                <thead>
+                    <tr>
+                        <th>Phương Pháp</th>
+                        <th>MACs (G) ↓</th>
+                        <th>Params (M) ↓</th>
+                        <th>LOLv2-Real PSNR ↑</th>
+                        <th>LOLv2-Real SSIM ↑</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>UFormer [46]</td><td>12.00G</td><td>5.29M</td><td>18.82</td><td>0.771</td></tr>
+                    <tr><td>RetinexNet [47]</td><td>587.47G</td><td>0.84M</td><td>15.47</td><td>0.567</td></tr>
+                    <tr><td>EnGAN [22]</td><td>61.01G</td><td>114.35M</td><td>18.23</td><td>0.617</td></tr>
+                    <tr><td>DRBN [54]</td><td>48.61G</td><td>5.27M</td><td>20.29</td><td>0.831</td></tr>
+                    <tr><td>Restormer [57]</td><td>144.25G</td><td>26.13M</td><td>19.94</td><td>0.827</td></tr>
+                    <tr><td>FourLLIE [44]</td><td>5.80G</td><td>0.12M</td><td>21.60</td><td>0.847</td></tr>
+                    <tr><td>RetinexFormer [3]</td><td>15.57G</td><td>1.61M</td><td>22.80</td><td>0.840</td></tr>
+                    <tr style="font-weight: bold; color: #38BDF8;">
+                        <td>DarkIR-mt (Ours)</td>
+                        <td>7.25G</td>
+                        <td>3.31M</td>
+                        <td class="best">23.87</td>
+                        <td class="best">0.880</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Figure 5 & 6 -->
+        <figure class="paper-figure full-width">
+            <img src="../assets/images/papers/darkir/fig_5_p7.png" alt="DarkIR Figure 5 LSRW Qualitative">
+            <figcaption class="paper-figcaption">
+                <strong>Hình 5: Kết quả trực quan trên tập dữ liệu thực tế LSRW-Huawei.</strong> DarkIR phục hồi dải màu chuẩn xác và khử sạch nhiễu hạt so với KinD, DRBN và EnGAN.
+            </figcaption>
+        </figure>
+
+        <figure class="paper-figure full-width">
+            <img src="../assets/images/papers/darkir/fig_6_p7.png" alt="DarkIR Figure 6 LOLv2-Real vs RetinexFormer">
+            <figcaption class="paper-figcaption">
+                <strong>Hình 6: So sánh trực quan trên LOLv2-Real với RetinexFormer [3].</strong> DarkIR giữ được độ sáng đồng đều và các gờ biên nội thất sắc nét hơn hẳn.
+            </figcaption>
+        </figure>
+
+        <div class="paper-table-wrapper full-width">
+            <div class="paper-table-caption">Bảng 5: Đánh giá chất lượng cảm nhận không cần ảnh mẫu (Blind IQA) trên tập ảnh chụp đêm thực tế Real-LOLBlur.</div>
+            <table class="paper-table">
+                <thead>
+                    <tr>
+                        <th>Phương Pháp</th>
+                        <th>MUSIQ ↑ (Càng cao càng tốt)</th>
+                        <th>NRQM ↑ (Càng cao càng tốt)</th>
+                        <th>NIQE ↓ (Càng thấp càng tốt)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>RUAS → MIMO</td><td>34.39</td><td>3.322</td><td>6.812</td></tr>
+                    <tr><td>MIMO → Zero-DCE</td><td>28.36</td><td>3.697</td><td>6.892</td></tr>
+                    <tr><td>RetinexFormer [3]</td><td>45.30</td><td>5.281</td><td>4.576</td></tr>
+                    <tr><td>NAFNet [9]</td><td>50.22</td><td>4.940</td><td>5.123</td></tr>
+                    <tr><td>LEDNet [65]</td><td>39.11</td><td>5.643</td><td>4.764</td></tr>
+                    <tr><td>Restormer [57]</td><td>46.60</td><td>4.627</td><td>5.268</td></tr>
+                    <tr style="font-weight: bold; color: #38BDF8;">
+                        <td>DarkIR-m (Ours)</td>
+                        <td>48.36</td>
+                        <td>4.983</td>
+                        <td>4.998</td>
+                    </tr>
+                    <tr style="font-weight: bold; color: #A78BFA;">
+                        <td>DarkIR-l (Ours)</td>
+                        <td>48.79</td>
+                        <td>4.917</td>
+                        <td>5.051</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Figure 7 -->
+        <figure class="paper-figure full-width">
+            <img src="../assets/images/papers/darkir/fig_7_p8.png" alt="DarkIR Figure 7 Real Night Scenes">
+            <figcaption class="paper-figcaption">
+                <strong>Hình 7: So sánh chất lượng trực quan trên các cảnh đêm thực tế từ bộ dữ liệu RealBlurLOL.</strong> Các phương pháp khác đều bị nhòe vệt đèn xe hoặc làm vỡ cấu trúc tòa nhà, trong khi DarkIR khôi phục các chi tiết kiến trúc đêm vô cùng ấn tượng.
+            </figcaption>
+        </figure>
+
+        <h3 class="paper-sec-heading"><span class="sec-id">5.</span> Phân Tích Độ Lệch Chuyên Sâu (Ablation Studies)</h3>
+        
+        <div class="paper-table-wrapper">
+            <div class="paper-table-caption">Bảng 6: Nghiên cứu độ lệch kiến trúc các khối mạng (Network Blocks Ablation).</div>
+            <table class="paper-table">
+                <thead>
+                    <tr><th>Cấu Hình Thử Nghiệm</th><th>Params (M) ↓</th><th>MACs (G) ↓</th><th>PSNR (dB) ↑</th><th>SSIM ↑</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>EBlock thay bằng NAFBlock</td><td>3.12M</td><td>7.69G</td><td>26.51</td><td>0.876</td></tr>
+                    <tr><td>EBlock thêm biến đổi Pha</td><td>4.08M</td><td>8.38G</td><td>26.30</td><td>0.871</td></tr>
+                    <tr><td>Toàn bộ mạng là DBlock</td><td>3.20M</td><td>8.19G</td><td>26.68</td><td>0.876</td></tr>
+                    <tr><td>Toàn bộ mạng là EBlock</td><td>3.44M</td><td>6.46G</td><td>26.17</td><td>0.863</td></tr>
+                    <tr><td>Toàn bộ mạng là NAFBlock [7]</td><td>3.04M</td><td>7.29G</td><td>26.24</td><td>0.868</td></tr>
+                    <tr><td>DBlock thay bằng NAFBlock</td><td>3.24M</td><td>6.84G</td><td>26.23</td><td>0.864</td></tr>
+                    <tr><td>DBlock bỏ Depthwise mở rộng</td><td>3.27M</td><td>6.99G</td><td>26.63</td><td>0.875</td></tr>
+                    <tr style="font-weight: bold; color: #38BDF8;"><td>DarkIR-m (Đầy đủ cấu hình)</td><td>3.31M</td><td>7.25G</td><td class="best">26.90</td><td class="best">0.874</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="paper-table-wrapper">
+            <div class="paper-table-caption">Bảng 7: Nghiên cứu cơ chế chú ý không gian: Large Kernel Attention (LKA) so với Di-SpAM đề xuất.</div>
+            <table class="paper-table">
+                <thead>
+                    <tr><th>Cơ Chế Chú Ý Không Gian</th><th>Params (M) ↓</th><th>MACs (G) ↓</th><th>PSNR (dB) ↑</th><th>SSIM ↑</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Large Kernel Attention (LKA) [17]</td><td>4.06M</td><td>9.14G</td><td>26.45</td><td>0.876</td></tr>
+                    <tr style="font-weight: bold; color: #38BDF8;"><td>Di-SpAM (DarkIR-m Đề xuất)</td><td>3.31M</td><td>7.25G</td><td class="best">27.00</td><td class="best">0.883</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="paper-table-wrapper">
+            <div class="paper-table-caption">Bảng 8: Khả năng mở rộng quy mô mạng theo số kênh embedding.</div>
+            <table class="paper-table">
+                <thead>
+                    <tr><th>Phiên Bản DarkIR</th><th>Số Kênh</th><th>Params (M) ↓</th><th>MACs (G) ↓</th><th>PSNR (dB) ↑</th><th>SSIM ↑</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>DarkIR-s (Bản siêu nhẹ)</td><td>16</td><td>0.872M</td><td>2.04G</td><td>26.15</td><td>0.857</td></tr>
+                    <tr style="font-weight: bold; color: #38BDF8;"><td>DarkIR-m (Bản tiêu chuẩn)</td><td>32</td><td>3.31M</td><td>7.25G</td><td>27.00</td><td>0.883</td></tr>
+                    <tr style="font-weight: bold; color: #A78BFA;"><td>DarkIR-l (Bản hiệu năng cao)</td><td>64</td><td>12.96M</td><td>27.19G</td><td class="best">27.30</td><td class="best">0.898</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3 class="paper-sec-heading"><span class="sec-id">5.</span> Thảo Luận Về Hiệu Quả Tính Toán & Giới Hạn</h3>
+        <p>
+            Nhờ thiết kế khối EBlock và DBlock chuyên biệt, DarkIR giảm tới <strong>55% tham số</strong> so với SOTA cũ LEDNet [65] và <strong>88% tham số</strong> so với Restormer [57]. Về độ phức tạp phép tính trên ảnh $256 \times 256$, LEDNet tiêu tốn 33.74 GMACs và Restormer tiêu tốn 141.24 GMACs, trong khi DarkIR chỉ tiêu tốn <strong>7.25 GMACs</strong> — tương đương mức cắt giảm 4 lần so với LEDNet và gần 20 lần so với Restormer!
+        </p>
+        <p>
+            <strong>Giới hạn của mô hình (Limitations):</strong> Mặc dù DarkIR giảm thiểu rất nhiều phép toán, mô hình sử dụng nhiều lớp tích chập sâu (Depth-wise Convolutions). Trên một số kiến trúc GPU nhất định, Depth-wise Convolutions có cường độ số học (arithmetic intensity) thấp [15], dẫn đến việc thời gian thực thi (latency) không giảm tuyến tính tuyệt đối theo mức giảm của GMACs.
+        </p>
+
+        <h3 class="paper-sec-heading"><span class="sec-id">6.</span> Kết Luận & Định Hướng Đồ Án Cao Học UIT</h3>
+        <p>
+            DarkIR đã chứng minh rằng một mạng CNN phân cấp bất đối xứng, phối hợp miền không gian trường nhìn rộng và miền tần số Fourier, có thể đánh bại các mô hình Vision Transformer khổng lồ trên bài toán phục hồi ảnh thiếu sáng chụp đêm, mở ra giải pháp tối ưu cho các thiết bị có tài nguyên phần cứng giới hạn.
+        </p>
+        <p>
+            Đối với Đồ án môn học CS2203 của chúng ta tại UIT, những bài học load-bearing được rút ra và kế thừa trực tiếp bao gồm:
+        </p>
+        <ol>
+            <li><strong>Chống rò rỉ nhiễu qua Skip Connections:</strong> Đặt lớp cổng chọn lọc (gating) trước khi truyền đặc trưng sang Decoder.</li>
+            <li><strong>Hàm mất mát Composite:</strong> Kết hợp bắt buộc $L_1$ + SSIM + Gradient Edge Loss để giữ độ sắc nét biên.</li>
+            <li><strong>Kiến trúc Compact U-Net:</strong> Giữ số lượng tham số dưới 1.5M params, đảm bảo chạy mượt mà trên môi trường tính toán thực tế.</li>
+        </ol>
+    </div>
+</article>
+
+    </div>
+
+    <!-- Lightbox for Standalone page -->
+    <div id="figure-lightbox">
+        <img id="lightbox-img" src="" alt="Zoomed Figure">
+        <div id="lightbox-caption"></div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            if (window.renderMathInElement) {
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false},
+                        {left: '\\[', right: '\\]', display: true},
+                        {left: '\\(', right: '\\)', display: false}
+                    ],
+                    throwOnError: false
+                });
+            }
+
+            const lightbox = document.getElementById('figure-lightbox');
+            const imgEl = document.getElementById('lightbox-img');
+            const capEl = document.getElementById('lightbox-caption');
+
+            document.querySelectorAll('.paper-figure img').forEach(img => {
+                img.style.cursor = 'zoom-in';
+                img.addEventListener('click', () => {
+                    const fig = img.closest('.paper-figure');
+                    const cap = fig ? fig.querySelector('.paper-figcaption') : null;
+                    imgEl.src = img.src;
+                    capEl.innerText = cap ? cap.innerText : '';
+                    lightbox.classList.add('active');
+                });
+            });
+
+            lightbox.addEventListener('click', () => {
+                lightbox.classList.remove('active');
+            });
+        });
+
+        function togglePaperColumns(k) {
+            const cols = document.querySelector('.paper-content-columns');
+            const btn = document.querySelector('.btn-col-toggle');
+            if (cols) {
+                cols.classList.toggle('single-column');
+                if (btn) {
+                    btn.innerText = cols.classList.contains('single-column') ? '📰 Chế Độ 2 Cột (CVPR)' : '📄 Chế Độ 1 Cột (Dọc)';
+                }
+            }
+        }
+        function closePaperReader(k) {
+            window.location.href = '../index.html#mod2-papers';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NTIRE 2024 Challenge (CVPRW 2024) - Báo Cáo Cuộc Thi Tăng Cường Ảnh Thiếu Sáng - Academic Paper Reader (CS2203 UIT VNUHCM)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/papers.css">
+    <style>
+        body { background: var(--bg-void); color: var(--ink); padding: 24px; font-family: var(--font-sans); }
+        .standalone-wrapper { max-width: 1200px; margin: 0 auto; }
+        .back-nav { margin-bottom: 20px; }
+        .back-nav a { color: var(--primary); font-family: var(--font-mono); text-decoration: none; font-weight: 700; }
+        .back-nav a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="standalone-wrapper">
+        <div class="back-nav">
+            <a href="../index.html#mod2-papers">← Quay lại Báo Cáo Tổng Quan Đồ Án (CS2203 UIT VNUHCM)</a>
+        </div>
+        
+<article class="paper-article">
+    <div class="paper-reader-toolbar">
+        <div class="paper-toolbar-group">
+            <span style="font-weight: 700; color: #10B981; font-size: 0.85rem;">CVPRW 2024 Paper Reader (Full Translation)</span>
+            <button class="paper-tool-btn btn-col-toggle" onclick="togglePaperColumns('ntire2024')">📄 Chế Độ 1 Cột (Dọc)</button>
+        </div>
+        <div class="paper-toolbar-group">
+            <a href="papers/ntire2024.html" target="_blank" class="paper-tool-btn">↗️ Mở Trang Độc Lập Toàn Màn Hình</a>
+            <button class="paper-tool-btn" onclick="closePaperReader('ntire2024')">✕ Đóng Bài Báo</button>
+        </div>
+    </div>
+
+    <header class="paper-header">
+        <span class="paper-venue-badge" style="background: rgba(16, 185, 129, 0.12); color: #10B981; border-color: rgba(16, 185, 129, 0.35);">IEEE / CVF CVPRW 2024 • NTIRE WORKSHOP • BENCHMARK CHALLENGE</span>
+        <h1 class="paper-title">Báo Cáo Cuộc Thi NTIRE 2024 Về Tăng Cường Ảnh Thiếu Sáng: Phương Pháp và Kết Quả</h1>
+        <h2 class="paper-title-en">NTIRE 2024 Challenge on Low Light Image Enhancement: Methods and Results</h2>
+        <div class="paper-authors">
+            <strong>Zheyuan Liu</strong>, <strong>Chi-Man Pun</strong>, <strong>Radu Timofte</strong>, cùng ban tổ chức NTIRE 2024 và 22 đội thi
+        </div>
+        <div class="paper-affiliations">
+            Đại học Macau, Đại học Würzburg (CHLB Đức), ETH Zurich (Thụy Sĩ), cùng các viện nghiên cứu quốc tế
+        </div>
+        <div class="paper-links-row">
+            <a href="https://cvlai.net/ntire/2024/" target="_blank" class="paper-ext-link">🌐 Cổng Thông Tin NTIRE 2024: cvlai.net/ntire/2024</a>
+            <a href="../papers/Liu_NTIRE_2024_Challenge_on_Low_Light_Image_Enhancement_Methods_and_CVPRW_2024_paper.pdf" target="_blank" class="paper-ext-link">📑 Tải File PDF Toàn Văn CVPRW (3.5 MB)</a>
+        </div>
+    </header>
+
+    <div class="paper-abstract-box">
+        <div class="paper-abstract-title">Tóm Tắt Báo Cáo Cuộc Thi (Challenge Abstract)</div>
+        <p class="paper-abstract-text">
+            Bài báo này tổng kết và phân tích toàn diện cuộc thi <strong>NTIRE 2024 Challenge on Low Light Image Enhancement</strong> được tổ chức trong khuôn khổ hội nghị CVPR 2024. Mục tiêu của cuộc thi là thúc đẩy giới hạn nghiên cứu về tăng cường ảnh thiếu sáng trong các điều kiện chụp thực tế đầy khắc nghiệt (ánh sáng cực tối, chiếu sáng không đồng đều, ngược sáng mạnh, và cảnh đêm đô thị phức tạp) với độ phân giải lên đến 4K. Cuộc thi đã thu hút hơn <strong>230 đội nghiên cứu</strong> đăng ký tham gia từ các trường đại học và phòng lab AI hàng đầu thế giới, trong đó có <strong>22 giải pháp hoàn chỉnh</strong> vượt qua vòng kiểm thử gắt gao trên máy chủ độc lập của ban tổ chức. Các giải pháp tham dự đại diện cho các xu hướng công nghệ tiên tiến nhất hiện nay: từ các biến thể Vision Transformer phân cấp, mạng nơ-ron tích chập đa miền không gian-tần số, đến các mô hình khuếch tán điều kiện (Conditional Diffusion Models) và các kỹ thuật căn chỉnh phản xạ Retinex. Báo cáo này công bố bảng xếp hạng chính thức, phân tích sâu các ưu nhược điểm kỹ thuật của từng trường phái, và vạch ra xu hướng nghiên cứu tương lai cho bài toán phục hồi ảnh thiếu sáng thế giới thực.
+        </p>
+    </div>
+
+    <!-- Figure 1 -->
+    <figure class="paper-figure full-width">
+        <img src="../assets/images/papers/ntire2024/fig_1_p3.png" alt="NTIRE 2024 Sample Dataset Images">
+        <figcaption class="paper-figcaption">
+            <strong>Hình 1: Các mẫu ảnh thực nghiệm trong tập dữ liệu NTIRE 2024 Low Light Challenge.</strong> Tập dữ liệu bao gồm dải tương phản cực rộng: từ thiếu sáng nhẹ trong nhà, ngược sáng gắt (backlighting), chiếu sáng không đồng đều (non-uniform illumination), đến bóng tối cực độ (extreme darkness) với độ phân giải siêu nét lên tới 4K. (Nhấp chuột để phóng to).
+        </figcaption>
+    </figure>
+
+    <div class="paper-content-columns">
+        <h3 class="paper-sec-heading"><span class="sec-id">1.</span> Giới Thiệu Bối Cảnh Cuộc Thi (Introduction)</h3>
+        <p>
+            Chụp ảnh trong điều kiện ánh sáng yếu (Low-Light Imaging) là bài toán then chốt trong các hệ thống thị giác máy tính và nhiếp ảnh di động. Trong điều kiện thiếu sáng nghiêm trọng, ảnh chụp từ cảm biến di động bị suy thoái đa chiều: mất chi tiết ở vùng tối (underexposure), nhiễu hạt cảm biến dày đặc (heavy sensor noise), và sai lệch dải màu sắc (severe color casts).
+        </p>
+        <p>
+            Mặc dù các bộ dữ liệu trước đây như LOL [71] hay MIT-Adobe FiveK [7] đã thúc đẩy nhiều tiến bộ ban đầu, chúng tồn tại những hạn chế cốt lõi nghiêm trọng:
+        </p>
+        <ul>
+            <li>Độ phân giải thấp (chủ yếu là $400 \times 600$ hoặc $1000 \times 600$), không phản ánh đúng chuẩn camera di động 12MP–48MP hiện nay.</li>
+            <li>Bối cảnh chiếu sáng đồng nhất và đơn điệu, thiếu vắng các trường hợp phức tạp như ngược sáng mạnh, đèn flash cục bộ hay quầng sáng đêm.</li>
+            <li>Khả năng tổng quát hóa (generalization) của các mô hình huấn luyện trên dữ liệu cũ bị sụt giảm nghiêm trọng khi đối mặt với ảnh chụp thực tế.</li>
+        </ul>
+        <p>
+            Cuộc thi NTIRE 2024 được thiết lập nhằm khắc phục các rào cản trên bằng cách xây dựng một bộ dữ liệu chuẩn mới với 3 mục tiêu chiến lược: (1) Thúc đẩy các kiến trúc mô hình bền vững trước suy thoái thế giới thực; (2) So sánh có hệ thống giữa các trường phái (CNN, Transformer, Diffusion); và (3) Kết nối cộng đồng học thuật với các ứng dụng công nghiệp nhiếp ảnh tính toán.
+        </p>
+
+        <h3 class="paper-sec-heading"><span class="sec-id">2.</span> Thiết Kế Cuộc Thi & Bộ Dữ Liệu (Challenge Protocol)</h3>
+        <p>
+            Bộ dữ liệu NTIRE 2024 Low Light bao gồm:
+        </p>
+        <ul>
+            <li><strong>230 cặp ảnh huấn luyện (Train):</strong> Cung cấp đầy đủ ảnh thiếu sáng đầu vào và ảnh chuẩn phơi sáng (Ground Truth).</li>
+            <li><strong>35 ảnh kiểm thử phát triển (Validation):</strong> Ảnh GT được giữ kín trên máy chủ đánh giá CodaLab.</li>
+            <li><strong>35 ảnh kiểm thử chính thức (Test):</strong> Hoàn toàn bảo mật, các đội thi nộp mã nguồn và mô hình để ban tổ chức chạy suy luận độc lập (blind evaluation).</li>
+        </ul>
+        <p>
+            <strong>Tiêu chuẩn xếp hạng chính thức (Ranking Metric):</strong> Ban tổ chức áp dụng điểm số tổng hợp dựa trên trọng số chuẩn hóa giữa độ chính xác tái tạo điểm ảnh và độ tương đồng cấu trúc:
+        </p>
+        <div class="paper-equation">
+            <div class="paper-equation-math">$$\text{Final Score} = 0.60 \times \text{Rank}_{PSNR} + 0.40 \times \text{Rank}_{SSIM}$$</div>
+            <span class="paper-equation-num">(1)</span>
+        </div>
+        <p>
+            Chỉ số cảm nhận tri giác <strong>LPIPS</strong> [80] được sử dụng làm tiêu chí phụ phân định thứ hạng khi hai phương pháp có điểm số PSNR/SSIM tương đương.
+        </p>
+
+        <div class="paper-table-wrapper full-width">
+            <div class="paper-table-caption">Bảng 1: Bảng Xếp Hạng Toàn Bộ 22 Đội Thi Tại Cuộc Thi NTIRE 2024 Low Light Image Enhancement Challenge.</div>
+            <table class="paper-table">
+                <thead>
+                    <tr>
+                        <th>Tên Đội Thi (Team)</th>
+                        <th>PSNR (dB) ↑</th>
+                        <th>SSIM ↑</th>
+                        <th>LPIPS ↓</th>
+                        <th>Hạng PSNR</th>
+                        <th>Hạng SSIM</th>
+                        <th>Xếp Hạng Chung Cuộc</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background: rgba(16, 185, 129, 0.15); font-weight: bold;">
+                        <td style="color: #10B981;">🥇 SYSU-FVL-T2</td>
+                        <td class="best">25.52</td>
+                        <td class="best">0.8637</td>
+                        <td>0.1221</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td style="color: #10B981;">Hạng 1 (Quán Quân)</td>
+                    </tr>
+                    <tr style="background: rgba(56, 189, 248, 0.12); font-weight: bold;">
+                        <td style="color: #38BDF8;">🥈 Retinexformer [8]</td>
+                        <td>25.30</td>
+                        <td>0.8525</td>
+                        <td>0.1424</td>
+                        <td>2</td>
+                        <td>4</td>
+                        <td style="color: #38BDF8;">Hạng 2 (Á Quân 1)</td>
+                    </tr>
+                    <tr style="background: rgba(245, 158, 11, 0.12); font-weight: bold;">
+                        <td style="color: #F59E0B;">🥉 DH-AISP</td>
+                        <td>24.97</td>
+                        <td>0.8528</td>
+                        <td>0.1235</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td style="color: #F59E0B;">Hạng 3 (Á Quân 2)</td>
+                    </tr>
+                    <tr><td>NWPU-DiffLight</td><td>24.78</td><td>0.8556</td><td>0.1673</td><td>6</td><td>2</td><td>Hạng 4</td></tr>
+                    <tr><td>GiantPandaCV</td><td>24.83</td><td>0.8474</td><td>0.1353</td><td>5</td><td>7</td><td>Hạng 5</td></tr>
+                    <tr><td>LVGroup HFUT</td><td>24.88</td><td>0.8395</td><td>0.1371</td><td>4</td><td>10</td><td>Hạng 6</td></tr>
+                    <tr><td>Try1try8</td><td>24.49</td><td>0.8483</td><td>0.1359</td><td>8</td><td>6</td><td>Hạng 7</td></tr>
+                    <tr><td>Pixel warrior</td><td>24.74</td><td>0.8416</td><td>0.1514</td><td>7</td><td>9</td><td>Hạng 8</td></tr>
+                    <tr><td>HuiT</td><td>24.13</td><td>0.8484</td><td>0.1436</td><td>10</td><td>5</td><td>Hạng 9</td></tr>
+                    <tr><td>X-LIME</td><td>24.28</td><td>0.8446</td><td>0.1298</td><td>9</td><td>8</td><td>Hạng 10</td></tr>
+                    <tr><td>Image Lab</td><td>23.63</td><td>0.8235</td><td>0.1673</td><td>11</td><td>12</td><td>Hạng 11</td></tr>
+                    <tr><td>dgzzqteam</td><td>23.28</td><td>0.8385</td><td>0.1406</td><td>12</td><td>11</td><td>Hạng 12</td></tr>
+                    <tr style="background: rgba(99, 102, 241, 0.10);">
+                        <td>Cidaut AI (InstructIR [23])</td>
+                        <td>23.07</td>
+                        <td>0.8075</td>
+                        <td>0.1559</td>
+                        <td>13</td>
+                        <td>16</td>
+                        <td>Hạng 13 (Nhóm tác giả DarkIR)</td>
+                    </tr>
+                    <tr><td>OptDev</td><td>22.93</td><td>0.8097</td><td>0.1592</td><td>14</td><td>15</td><td>Hạng 14</td></tr>
+                    <tr><td>ataza</td><td>22.51</td><td>0.8161</td><td>0.1404</td><td>18</td><td>13</td><td>Hạng 15</td></tr>
+                    <tr><td>KLETech-CEVI LowlightHypnotise</td><td>22.85</td><td>0.7828</td><td>0.1823</td><td>15</td><td>18</td><td>Hạng 16</td></tr>
+                    <tr style="background: rgba(236, 72, 153, 0.12); font-weight: bold;">
+                        <td style="color: #EC4899;">⭐ 221B</td>
+                        <td>22.04</td>
+                        <td>0.8141</td>
+                        <td class="best" style="color: #EC4899;">0.1084</td>
+                        <td>19</td>
+                        <td>14</td>
+                        <td>Hạng 17 (Top 1 LPIPS Tri Giác)</td>
+                    </tr>
+                    <tr><td>KLETech-CEVI Dark Knights</td><td>22.76</td><td>0.7843</td><td>0.1806</td><td>17</td><td>17</td><td>Hạng 18</td></tr>
+                    <tr><td>BFU-LL</td><td>22.78</td><td>0.7792</td><td>0.1826</td><td>16</td><td>19</td><td>Hạng 19</td></tr>
+                    <tr><td>SVNIT NTNU</td><td>20.32</td><td>0.7718</td><td>0.3089</td><td>20</td><td>20</td><td>Hạng 20</td></tr>
+                    <tr><td>yanhailong</td><td>20.07</td><td>0.6881</td><td>0.3133</td><td>21</td><td>22</td><td>Hạng 21</td></tr>
+                    <tr><td>Mishka</td><td>18.19</td><td>0.7161</td><td>0.2712</td><td>22</td><td>21</td><td>Hạng 22</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Figure 2 -->
+        <figure class="paper-figure full-width">
+            <img src="../assets/images/papers/ntire2024/fig_2_p5.png" alt="NTIRE 2024 Visual Comparison Val Set">
+            <figcaption class="paper-figcaption">
+                <strong>Hình 2: So sánh trực quan các giải pháp tham dự trên tập Validation.</strong> Các phương pháp hàng đầu thể hiện khả năng cân bằng ánh sáng vượt trội tại các vùng bóng đổ sâu mà không làm cháy sáng các ô cửa sổ hay đèn đường.
+            </figcaption>
+        </figure>
+
+        <h3 class="paper-sec-heading"><span class="sec-id">3.</span> Phân Tích Các Trường Phái Công Nghệ Hàng Đầu</h3>
+        
+        <h4 class="paper-sub-heading">3.1 Trường Phái Hybrid Transformer (Đội Vô Địch SYSU-FVL-T2)</h4>
+        <p>
+            Đội chiến thắng SYSU-FVL-T2 sử dụng kiến trúc phân cấp kết hợp cơ chế chú ý tự thân có định hướng miền tần số (Frequency-Guided Self-Attention). Nhóm nhận thấy rằng việc tính toán Self-Attention trên toàn bộ ảnh 4K là bất khả thi về mặt bộ nhớ GPU. Do đó, họ áp dụng kỹ thuật chia khối không gian thích nghi kết hợp với việc ước lượng bản đồ chiếu sáng toàn cục ở miền tần số thấp (low-frequency Fourier domain), giúp mô hình đạt <strong>25.52 dB PSNR</strong> và <strong>0.8637 SSIM</strong>, dẫn đầu tuyệt đối ở cả hai tiêu chí đánh giá định lượng.
+        </p>
+
+        <h4 class="paper-sub-heading">3.2 Trường Phái Lý Thuyết Retinex Nâng Cấp (Retinexformer)</h4>
+        <p>
+            Giải pháp đạt vị trí Á quân (Retinexformer [8]) kết hợp lý thuyết vật lý Retinex truyền thống với sức mạnh học biểu diễn của Vision Transformer. Bằng cách sử dụng bản đồ phản chiếu (reflectance) để giữ ổn định màu sắc và dùng mạng Attention để dự đoán thành phần chiếu sáng (illumination), Retinexformer triệt tiêu được hiện tượng biến dạng màu sắc (color shifts), đạt <strong>25.30 dB PSNR</strong>.
+        </p>
+
+        <h4 class="paper-sub-heading">3.3 Trường Phái Mô Hình Khuếch Tán (NWPU-DiffLight)</h4>
+        <p>
+            Đội NWPU-DiffLight tiên phong ứng dụng <em>Conditional Diffusion Models</em> vào cuộc thi. Khác với các phương pháp hồi quy trực tiếp (regression-based) thường tạo ra ảnh hơi mịn hoặc bết hạt, mô hình Diffusion sinh ra các chi tiết kết cấu bề mặt cực kỳ tự nhiên và đạt vị trí thứ 2 về SSIM (0.8556). Tuy nhiên, nhược điểm chí mạng của Diffusion là tốc độ suy luận chậm (cần nhiều bước lấy mẫu khử nhiễu lặp đi lặp lại), khiến việc triển khai thời gian thực trên thiết bị biên gặp nhiều thách thức.
+        </p>
+
+        <h4 class="paper-sub-heading">3.4 Trường Phái Tối Ưu Tri Giác Cảm Nhận (Đội 221B)</h4>
+        <p>
+            Mặc dù chỉ xếp hạng 17 về chỉ số PSNR do không tập trung vào việc khớp từng điểm ảnh mức xám với ảnh GT, giải pháp của Đội 221B đã giành <strong>Vị trí Quán quân về chỉ số cảm nhận LPIPS (0.1084)</strong>. Bằng việc kết hợp hàm mất mát đối kháng đa tỷ lệ (Multi-scale PatchGAN) và ràng buộc đặc trưng tầng sâu của VGG, ảnh phục hồi của đội 221B mang lại cảm giác thị giác chân thực và sắc nét nhất cho mắt người quan sát.
+        </p>
+
+        <!-- Figure 3, 4, 5 -->
+        <figure class="paper-figure full-width">
+            <img src="../assets/images/papers/ntire2024/fig_3_p7.png" alt="NTIRE 2024 Test Set Comparison">
+            <figcaption class="paper-figcaption">
+                <strong>Hình 3: So sánh trực quan trên tập kiểm thử chính thức (Test Set).</strong> Các mô hình hàng đầu khôi phục rõ nét chữ viết trên biển hiệu và kết cấu gạch lát đường trong màn đêm.
+            </figcaption>
+        </figure>
+
+        <figure class="paper-figure full-width">
+            <img src="../assets/images/papers/ntire2024/fig_4_p8.png" alt="NTIRE 2024 Architecture Restoration Comparison">
+            <figcaption class="paper-figcaption">
+                <strong>Hình 4: Tái tạo chi tiết kiến trúc tòa nhà ban đêm.</strong> Các giải pháp áp dụng cơ chế miền tần số giữ được độ thẳng của các đường gờ và tránh quầng hào quang nhân tạo xung quanh cột đèn.
+            </figcaption>
+        </figure>
+
+        <figure class="paper-figure full-width">
+            <img src="../assets/images/papers/ntire2024/fig_5_p8.png" alt="NTIRE 2024 Portrait Restoration Comparison">
+            <figcaption class="paper-figcaption">
+                <strong>Hình 5: Phục hồi chân dung người trong điều kiện ngược sáng gắt.</strong> Chi tiết biểu cảm khuôn mặt và sợi tóc được tái hiện rõ ràng mà không bị nhiễu màu loang lổ.
+            </figcaption>
+        </figure>
+
+        <h3 class="paper-sec-heading"><span class="sec-id">4.</span> Bài Học Kinh Nghiệm Cho Đồ Án Cao Học UIT CS2203</h3>
+        <p>
+            Kết quả cuộc thi NTIRE 2024 mang lại những đúc kết quý giá cho việc thiết kế mạng Compact U-Net của đồ án:
+        </p>
+        <ol>
+            <li><strong>Sự đánh đổi giữa PSNR và LPIPS (Perception-Distortion Trade-off):</strong> Tối ưu hóa đơn thuần hàm mất mát $L_1$ hay MSE giúp đẩy chỉ số PSNR lên cao nhưng dễ làm mờ ảnh. Bắt buộc phải tích hợp hàm mất mát Gradient hoặc Edge Loss để giữ độ sắc nét.</li>
+            <li><strong>Tầm quan trọng của miền tần số:</strong> Cả đội vô địch SYSU lẫn nhóm nghiên cứu DarkIR đều chứng minh rằng thông tin miền tần số Fourier là chìa khóa để hiệu chỉnh độ sáng toàn cục một cách tự nhiên và ổn định nhất.</li>
+            <li><strong>Tính khả thi khi triển khai:</strong> Trong khi các mô hình Diffusion và Transformer lớn chiếm ưu thế về điểm số chuẩn, chúng đòi hỏi GPU máy trạm cao cấp. Một kiến trúc CNN thu gọn với thiết kế skip connection thông minh vẫn là giải pháp tối ưu nhất cho bài toán triển khai thực tế trên thiết bị biên.</li>
+        </ol>
+    </div>
+</article>
+
+    </div>
+
+    <!-- Lightbox for Standalone page -->
+    <div id="figure-lightbox">
+        <img id="lightbox-img" src="" alt="Zoomed Figure">
+        <div id="lightbox-caption"></div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            if (window.renderMathInElement) {
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false},
+                        {left: '\\[', right: '\\]', display: true},
+                        {left: '\\(', right: '\\)', display: false}
+                    ],
+                    throwOnError: false
+                });
+            }
+
+            const lightbox = document.getElementById('figure-lightbox');
+            const imgEl = document.getElementById('lightbox-img');
+            const capEl = document.getElementById('lightbox-caption');
+
+            document.querySelectorAll('.paper-figure img').forEach(img => {
+                img.style.cursor = 'zoom-in';
+                img.addEventListener('click', () => {
+                    const fig = img.closest('.paper-figure');
+                    const cap = fig ? fig.querySelector('.paper-figcaption') : null;
+                    imgEl.src = img.src;
+                    capEl.innerText = cap ? cap.innerText : '';
+                    lightbox.classList.add('active');
+                });
+            });
+
+            lightbox.addEventListener('click', () => {
+                lightbox.classList.remove('active');
+            });
+        });
+
+        function togglePaperColumns(k) {
+            const cols = document.querySelector('.paper-content-columns');
+            const btn = document.querySelector('.btn-col-toggle');
+            if (cols) {
+                cols.classList.toggle('single-column');
+                if (btn) {
+                    btn.innerText = cols.classList.contains('single-column') ? '📰 Chế Độ 2 Cột (CVPR)' : '📄 Chế Độ 1 Cột (Dọc)';
+                }
+            }
+        }
+        function closePaperReader(k) {
+            window.location.href = '../index.html#mod2-papers';
+        }
+    </script>
+</body>
+</html>

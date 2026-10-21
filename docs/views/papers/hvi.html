@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HVI Color Space & CIDNet (CVPR 2025) - Không Gian Màu Mới Cho Tăng Cường Ảnh - Academic Paper Reader (CS2203 UIT VNUHCM)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/papers.css">
+    <style>
+        body { background: var(--bg-void); color: var(--ink); padding: 24px; font-family: var(--font-sans); }
+        .standalone-wrapper { max-width: 1200px; margin: 0 auto; }
+        .back-nav { margin-bottom: 20px; }
+        .back-nav a { color: var(--primary); font-family: var(--font-mono); text-decoration: none; font-weight: 700; }
+        .back-nav a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="standalone-wrapper">
+        <div class="back-nav">
+            <a href="../index.html#mod2-papers">← Quay lại Báo Cáo Tổng Quan Đồ Án (CS2203 UIT VNUHCM)</a>
+        </div>
+        
+<article class="paper-article">
+    <div class="paper-reader-toolbar">
+        <div class="paper-toolbar-group">
+            <span style="font-weight: 700; color: #A78BFA; font-size: 0.85rem;">CVPR 2025 Paper Reader (Full Translation)</span>
+            <button class="paper-tool-btn btn-col-toggle" onclick="togglePaperColumns('hvi')">📄 Chế Độ 1 Cột (Dọc)</button>
+        </div>
+        <div class="paper-toolbar-group">
+            <a href="papers/hvi.html" target="_blank" class="paper-tool-btn">↗️ Mở Trang Độc Lập Toàn Màn Hình</a>
+            <button class="paper-tool-btn" onclick="closePaperReader('hvi')">✕ Đóng Bài Báo</button>
+        </div>
+    </div>
+
+    <header class="paper-header">
+        <span class="paper-venue-badge" style="background: rgba(167, 139, 250, 0.12); color: #A78BFA; border-color: rgba(167, 139, 250, 0.35);">IEEE / CVF CVPR 2025 • COLOR SCIENCE & FOUNDATIONAL INNOVATION</span>
+        <h1 class="paper-title">HVI: Không Gian Màu Mới Cho Tăng Cường Ảnh Thiếu Sáng</h1>
+        <h2 class="paper-title-en">HVI: A New Color Space for Low-light Image Enhancement</h2>
+        <div class="paper-authors">
+            <strong>Jinmin Yan</strong>, <strong>Jiawei Zhang</strong>, <strong>Yingying Wang</strong>, <strong>Yanyun Qu</strong>, <strong>Dacheng Tao</strong>
+        </div>
+        <div class="paper-affiliations">
+            Đại học Hạ Môn, Đại học Sydney, Viện Nghiên cứu Trí tuệ Nhân tạo JD Explore Academy
+        </div>
+        <div class="paper-links-row">
+            <a href="https://github.com/flyywh/HVI-CIDNet" target="_blank" class="paper-ext-link">💻 Mã Nguồn Chính Thức: github.com/flyywh/HVI-CIDNet</a>
+            <a href="../papers/Yan_HVI_A_New_Color_Space_for_Low-light_Image_Enhancement_CVPR_2025_paper.pdf" target="_blank" class="paper-ext-link">📑 Tải File PDF Kỷ Yếu CVPR (7.8 MB)</a>
+        </div>
+    </header>
+
+    <div class="paper-abstract-box">
+        <div class="paper-abstract-title">Tóm Tắt Bài Báo (Abstract)</div>
+        <p class="paper-abstract-text">
+            Hầu hết các giải thuật tăng cường ảnh thiếu sáng (LLIE) hiện nay thao tác trực tiếp trong không gian màu tiêu chuẩn <strong>sRGB</strong> hoặc chuyển đổi sang không gian <strong>HSV</strong>. Tuy nhiên, trong không gian sRGB, thông tin cường độ chiếu sáng (illumination) và thông tin sắc độ màu sắc (chromaticity) bị liên kết chặt chẽ (entangled), khiến việc kích sáng bức ảnh tất yếu dẫn đến hiện tượng méo mó màu sắc và bão hòa cục bộ. Mặt khác, việc chuyển sang HSV mặc dù tách được kênh độ sáng V, nhưng lại sinh ra hai dạng <em>nhiễu không gian màu (color space noises)</em> vô cùng nghiêm trọng: (1) <strong>Hiện tượng đứt gãy màu đỏ (red discontinuity)</strong> do tính chất tuần hoàn theo chu kỳ modulo của trục Hue ($h=0$ và $h=6$), và (2) <strong>Hiện tượng kỳ dị mặt phẳng đen (black plane noise)</strong> khi độ bão hòa $S$ sụp đổ không xác định ở vùng bóng tối cực sâu. Để giải quyết triệt để vấn đề gốc rễ này, chúng tôi đề xuất <strong>Không gian màu HVI (Hue, Value, Intensity)</strong> hoàn toàn mới. HVI giải quyết hiện tượng đứt gãy màu đỏ bằng phép phân cực góc trực giao (polarized HS) và giải quyết nhiễu vùng tối bằng hàm sụp đổ cường độ khả vi (learnable intensity collapse function $C_k$). Đồng thời, chúng tôi thiết kế mạng nơ-ron hai nhánh <strong>CIDNet (Color and Intensity Decoupling Network)</strong> xử lý độc lập mặt phẳng màu sắc HV và trục cường độ I. CIDNet thiết lập kỷ lục SOTA mới trên LOLv1 (<strong>28.20 dB PSNR</strong>), LOLv2-Real (<strong>24.11 dB</strong>), và vượt trội các phương pháp trước tới <strong>+6.68 dB</strong> trên tập dữ liệu bóng tối cực độ Sony-Total-Dark chỉ với 1.88M tham số.
+        </p>
+    </div>
+
+    <!-- Figure 1 -->
+    <figure class="paper-figure full-width">
+        <img src="../assets/images/papers/hvi/fig_1_p2.png" alt="HVI Figure 1 Transformation Process">
+        <figcaption class="paper-figcaption">
+            <strong>Hình 1: Quá trình chuyển đổi từ không gian màu sRGB qua HSV sang không gian màu HVI đề xuất.</strong> Hàng trên: Quá trình hình thành HVI. Khi chuyển từ sRGB sang HSV, trục Hue bị đứt đoạn ở màu đỏ và vùng tối bị nhiễu hạt loang lổ. HVI áp dụng phép phân cực góc để nối liền trục đỏ và sử dụng hàm sụp đổ cường độ $C_k$ để gom cụm các điểm tối, giúp biểu diễn màu sắc hoàn toàn liên tục và ổn định. (Nhấp chuột để phóng to).
+        </figcaption>
+    </figure>
+
+    <div class="paper-content-columns">
+        <h3 class="paper-sec-heading"><span class="sec-id">1.</span> Giới Thiệu (Introduction)</h3>
+        <p>
+            Trong bài toán tăng cường ảnh thiếu sáng (LLIE), việc lựa chọn không gian màu biểu diễn hình ảnh (color space representation) đóng vai trò quyết định tới chất lượng phục hồi. Khi chụp trong điều kiện đói quang tử, cảm biến máy ảnh tạo ra các giá trị điểm ảnh sRGB với độ nhạy nhiễu rất cao. Nếu một mạng nơ-ron thực hiện biến đổi trực tiếp trên các kênh RGB, sự khuếch đại tín hiệu sáng sẽ làm sai lệch tỷ lệ giữa ba kênh Red, Green, Blue, gây ra hiện tượng đổi màu (color shifting) và quầng màu giả.
+        </p>
+        <p>
+            Các nghiên cứu quang học kinh điển [9, 34] đề xuất tách rời thành phần chiếu sáng và thành phần sắc độ bằng cách chuyển sang không gian màu HSV (Hue - Sắc màu, Saturation - Độ bão hòa, Value - Giá trị sáng tối). Tuy nhiên, phép biến đổi toán học phi tuyến sang HSV tạo ra hai khuyết tật cố hữu:
+        </p>
+        <ul>
+            <li><strong>Đứt gãy màu đỏ (Red Discontinuity):</strong> Trục góc Hue được biểu diễn từ 0 đến 6 (hoặc $0^\circ$ đến $360^\circ$). Màu đỏ thực tế nằm ở cả hai đầu mút giới hạn ($h 	o 0$ và $h 	o 6$). Trong không gian Euclid, hai điểm ảnh màu đỏ rất gần nhau về mặt thị giác lại có khoảng cách số học cực lớn, gây bối rối cho quá trình tối ưu hóa gradient của mạng nơ-ron.</li>
+            <li><strong>Kỳ dị mặt phẳng đen (Black Plane Singularity):</strong> Khi cường độ ánh sáng $I_{max} 	o 0$, giá trị bão hòa màu $S = \Delta / I_{max}$ trở thành phép chia cho 0. Tại vùng bóng tối cực sâu, nhiễu cảm biến nhỏ nhất cũng bị nhân lên vô hạn lần, biến mặt phẳng đen thành một vùng nhiễu hạt bừa bãi.</li>
+        </ul>
+        <p>
+            Bài báo này giải quyết triệt để hai khuyết tật toán học trên bằng cách định nghĩa không gian màu HVI chuẩn xác về mặt vật lý và tương thích hoàn hảo với học sâu.
+        </p>
+
+        <h3 class="paper-sec-heading"><span class="sec-id">2.</span> Cơ Sở Toán Học Của Không Gian Màu HVI</h3>
+        
+        <h4 class="paper-sub-heading">2.1 Ước Lượng Cường Độ Theo Lý Thuyết Max-RGB</h4>
+        <p>
+            Thay vì dựa vào các mạng học sâu dự đoán bản đồ ánh sáng đầy rủi ro, chúng tôi kế thừa Lý thuyết Max-RGB [21] để ước lượng trực tiếp bản đồ cường độ chiếu sáng cực đại $I_{max} \in \mathbb{R}^{H 	imes W}$ tại mỗi điểm ảnh $x$:
+        </p>
+        <div class="paper-equation">
+            <div class="paper-equation-math">$$\mathbf{I}_{max}(x) = \max_{c \in \{R,G,B\}} (\mathbf{I}_c(x))$$</div>
+            <span class="paper-equation-num">(1)</span>
+        </div>
+        <p>
+            Trong biểu diễn HSV kinh điển, độ bão hòa $S$ và góc sắc $H$ được tính theo công thức:
+        </p>
+        <div class="paper-equation">
+            <div class="paper-equation-math">$$s = egin{cases} 0, & \mathbf{I}_{max} = 0 \ rac{\Delta}{\mathbf{I}_{max}}, & \mathbf{I}_{max} 
+e 0 \end{cases}, \quad 	ext{với } \Delta = \mathbf{I}_{max} - \min_{c}(\mathbf{I}_c)$$</div>
+            <span class="paper-equation-num">(2)</span>
+        </div>
+        <div class="paper-equation">
+            <div class="paper-equation-math">$$h = egin{cases} 0, & 	ext{nếu } s = 0 \ rac{\mathbf{I}_G - \mathbf{I}_B}{\Delta} mod 6, & 	ext{nếu } \mathbf{I}_{max} = \mathbf{I}_R \ 2 + rac{\mathbf{I}_B - \mathbf{I}_R}{\Delta}, & 	ext{nếu } \mathbf{I}_{max} = \mathbf{I}_G \ 4 + rac{\mathbf{I}_R - \mathbf{I}_G}{\Delta}, & 	ext{nếu } \mathbf{I}_{max} = \mathbf{I}_B \end{cases}$$</div>
+            <span class="paper-equation-num">(3)</span>
+        </div>
+
+        <h4 class="paper-sub-heading">2.2 Phân Cực Trục Sắc Độ (Polarized HS) & Hàm Sụp Đổ Cường Độ ($C_k$)</h4>
+        <p>
+            Để xóa bỏ sự đứt gãy của màu đỏ tại $h=0$ và $h=6$, chúng tôi phân cực trục Hue thành hai tọa độ trực giao trên vòng tròn lượng giác:
+        </p>
+        <div class="paper-equation">
+            <div class="paper-equation-math">$$h_{ortho} = \cos\left(rac{\pi h}{3}ight), \quad v_{ortho} = \sin\left(rac{\pi h}{3}ight)$$</div>
+            <span class="paper-equation-num">(4)</span>
+        </div>
+        <p>
+            Khi được phân cực, mọi màu sắc cùng loại đều nằm gần nhau trong không gian Euclid hai chiều $(h_{ortho}, v_{ortho})$, triệt tiêu hoàn toàn sự nhảy cóc giá trị ở biên màu đỏ.
+        </p>
+        <p>
+            Để xử lý hiện tượng kỳ dị chia cho 0 ở vùng tối, chúng tôi thiết kế <strong>hàm sụp đổ cường độ khả vi (Learnable Intensity Collapse Function $C_k$)</strong>:
+        </p>
+        <div class="paper-equation">
+            <div class="paper-equation-math">$$\mathbf{C}_k(x) = \sqrt[k]{\sin\left(rac{\pi \mathbf{I}_{max}(x)}{2}ight) + \epsilon}$$</div>
+            <span class="paper-equation-num">(5)</span>
+        </div>
+        <p>
+            Trong đó $k \in \mathbb{Q}^+$ là tham số có thể huấn luyện học tự động theo từng bộ dữ liệu, và $\epsilon = 10^{-8}$ ngăn chặn bùng nổ gradient. Tọa độ hai kênh sắc độ <strong>Horizontal ($\hat{H}$)</strong> và <strong>Vertical ($\hat{V}$)</strong> của HVI được định nghĩa là:
+        </p>
+        <div class="paper-equation">
+            <div class="paper-equation-math">$$\mathbf{\hat{H}} = \mathbf{C}_k \odot \mathbf{S} \odot h_{ortho}, \quad \mathbf{\hat{V}} = \mathbf{C}_k \odot \mathbf{S} \odot v_{ortho}$$</div>
+            <span class="paper-equation-num">(6)</span>
+        </div>
+        <p>
+            Bộ ba $(\mathbf{\hat{H}}, \mathbf{\hat{V}}, \mathbf{I}_{max})$ tạo thành biểu diễn ảnh hoàn chỉnh trong không gian màu HVI: trơn tru, khả vi, và hoàn toàn miễn nhiễm với nhiễu mặt phẳng đen.
+        </p>
+
+        <!-- Figure 2 -->
+        <figure class="paper-figure full-width">
+            <img src="../assets/images/papers/hvi/fig_2_p5.png" alt="HVI CIDNet Architecture">
+            <figcaption class="paper-figcaption">
+                <strong>Hình 2: Kiến trúc mạng hai nhánh CIDNet (Color and Intensity Decoupling Network).</strong> Ảnh sRGB đầu vào trước tiên được biến đổi thành ảnh HVI qua module HVIT. Nhánh <em>HV-Branch</em> tập trung dập tắt nhiễu hạt và khôi phục sự hài hòa màu sắc trên mặt phẳng trực giao. Nhánh <em>I-Branch</em> chuyên trách việc tái cân bằng dải sáng động trên toàn ảnh. Cuối cùng, module Inv-HVIT chuyển ngược ảnh phục hồi về lại định dạng sRGB tiêu chuẩn.
+            </figcaption>
+        </figure>
+
+        <h3 class="paper-sec-heading"><span class="sec-id">3.</span> Kiến Trúc Mạng Hai Nhánh CIDNet (Architecture)</h3>
+        <p>
+            Nhờ việc phân rã tường minh bài toán màu sắc và bài toán độ sáng, CIDNet không cần sử dụng các khối Transformer cồng kềnh:
+        </p>
+        <ul>
+            <li><strong>Nhánh HV (HV-Branch):</strong> Nhận đầu vào là 2 kênh $(\hat{H}, \hat{V})$. Vì thông tin độ sáng đã được loại bỏ, nhánh này chỉ tập trung vào việc lọc nhiễu màu sắc (chromatic denoising) bằng các khối tích chập đa thang đo.</li>
+            <li><strong>Nhánh I (I-Branch):</strong> Nhận đầu vào là kênh cường độ $I_{max}$. Nhánh này dự đoán bản đồ hệ số khuếch đại ánh sáng toàn cục và địa phương, đảm bảo các vùng tối sâu được kéo sáng trong khi các vùng sáng không bị lóa vỡ hạt.</li>
+            <li><strong>Biến đổi HVI ngược khả vi (Perceptual-Inverse HVIT):</strong> Tái hợp các kênh đã phục hồi thành ảnh sRGB hoàn chỉnh để tính toán hàm mất mát.</li>
+        </ul>
+
+        <h3 class="paper-sec-heading"><span class="sec-id">4.</span> Kết Quả Thực Nghiệm & Đánh Giá Định Lượng (Experiments)</h3>
+
+        <div class="paper-table-wrapper full-width">
+            <div class="paper-table-caption">Bảng 1: Đánh giá định lượng trên các tập dữ liệu chuẩn có cặp ảnh LOLv1, LOLv2-Real và LOLv2-Synthetic. CIDNet thiết lập kỷ lục SOTA mới với chỉ 1.88M tham số và 7.57 GFLOPs.</div>
+            <table class="paper-table">
+                <thead>
+                    <tr>
+                        <th>Phương Pháp</th>
+                        <th>Không Gian Màu</th>
+                        <th>Tham Số (M) ↓</th>
+                        <th>FLOPs (G) ↓</th>
+                        <th>LOLv1 PSNR ↑</th>
+                        <th>LOLv1 SSIM ↑</th>
+                        <th>LOLv1 LPIPS ↓</th>
+                        <th>LOLv2-Real PSNR ↑</th>
+                        <th>LOLv2-Real SSIM ↑</th>
+                        <th>LOLv2-Syn PSNR ↑</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>RetinexNet [43]</td><td>Retinex</td><td>0.84M</td><td>584.47</td><td>18.91</td><td>0.427</td><td>0.470</td><td>16.10</td><td>0.401</td><td>17.14</td></tr>
+                    <tr><td>KinD [51]</td><td>Retinex</td><td>8.02M</td><td>34.99</td><td>23.02</td><td>0.843</td><td>0.156</td><td>17.54</td><td>0.669</td><td>18.32</td></tr>
+                    <tr><td>ZeroDCE [10]</td><td>sRGB</td><td>0.08M</td><td>4.83</td><td>21.88</td><td>0.640</td><td>0.335</td><td>16.06</td><td>0.580</td><td>17.71</td></tr>
+                    <tr><td>RUAS [33]</td><td>Retinex</td><td>0.003M</td><td>0.83</td><td>18.65</td><td>0.518</td><td>0.270</td><td>15.33</td><td>0.488</td><td>13.77</td></tr>
+                    <tr><td>LLFlow [41]</td><td>sRGB</td><td>17.42M</td><td>358.40</td><td>25.00</td><td>0.871</td><td>0.117</td><td>17.43</td><td>0.831</td><td>24.81</td></tr>
+                    <tr><td>EnlightenGAN [18]</td><td>sRGB</td><td>114.35M</td><td>61.01</td><td>20.00</td><td>0.691</td><td>0.317</td><td>18.23</td><td>0.617</td><td>16.57</td></tr>
+                    <tr><td>SNR-Aware [46]</td><td>SNR + RGB</td><td>4.01M</td><td>26.35</td><td>26.72</td><td>0.851</td><td>0.152</td><td>21.48</td><td>0.849</td><td>24.14</td></tr>
+                    <tr><td>Bread [11]</td><td>YCbCr</td><td>2.02M</td><td>19.85</td><td>25.30</td><td>0.847</td><td>0.155</td><td>20.83</td><td>0.847</td><td>17.63</td></tr>
+                    <tr><td>LLFormer [39]</td><td>sRGB</td><td>24.55M</td><td>22.52</td><td>25.76</td><td>0.823</td><td>0.167</td><td>20.06</td><td>0.792</td><td>24.04</td></tr>
+                    <tr><td>RetinexFormer [3]</td><td>Retinex</td><td>1.53M</td><td>15.85</td><td>27.14</td><td>0.850</td><td>0.129</td><td>22.79</td><td>0.840</td><td>25.67</td></tr>
+                    <tr><td>GSAD [16]</td><td>sRGB (Diffusion)</td><td>17.36M</td><td>442.02</td><td>27.61</td><td>0.876</td><td>0.092</td><td>20.15</td><td>0.846</td><td>24.47</td></tr>
+                    <tr style="background: rgba(167, 139, 250, 0.15); font-weight: bold;">
+                        <td style="color: #A78BFA;">CIDNet (Ours)</td>
+                        <td style="color: #A78BFA;">HVI (Đề Xuất)</td>
+                        <td style="color: #A78BFA;">1.88M</td>
+                        <td style="color: #A78BFA;">7.57G</td>
+                        <td class="best">28.20</td>
+                        <td class="best">0.889</td>
+                        <td class="best">0.079</td>
+                        <td class="best">24.11</td>
+                        <td class="best">0.871</td>
+                        <td class="best">25.71</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Figure 3 -->
+        <figure class="paper-figure full-width">
+            <img src="../assets/images/papers/hvi/fig_3_p6.png" alt="HVI Figure 3 Qualitative Comparison">
+            <figcaption class="paper-figcaption">
+                <strong>Hình 3: So sánh chất lượng trực quan trên tập LOLv1 và LOLv2.</strong> CIDNet tái tạo màu sắc trung thực tuyệt đối so với Ground Truth, không bị bệt màu đỏ như RetinexFormer hay bị ám vàng như các mô hình dựa trên sRGB.
+            </figcaption>
+        </figure>
+
+        <h4 class="paper-sub-heading">4.1 Đánh Giá Trên Tập Dữ Liệu Bóng Tối Cực Độ Sony-Total-Dark</h4>
+        <p>
+            Trên tập dữ liệu Sony-Total-Dark (các ảnh chụp không qua hiệu chỉnh gamma, dải sáng cực thấp gần như đen kịt hoàn toàn), CIDNet thể hiện ưu thế áp đảo của không gian màu HVI.
+        </p>
+
+        <div class="paper-table-wrapper full-width">
+            <div class="paper-table-caption">Bảng 2: Kết quả thực nghiệm trên tập dữ liệu quy mô lớn SICE, tập bóng tối cực hạn Sony-Total-Dark và 5 tập ảnh không có nhãn (Unpaired: DICM, LIME, MEF, NPE, VV).</div>
+            <table class="paper-table">
+                <thead>
+                    <tr>
+                        <th>Phương Pháp</th>
+                        <th>SICE PSNR (dB) ↑</th>
+                        <th>SICE SSIM ↑</th>
+                        <th>Sony-Total-Dark PSNR (dB) ↑</th>
+                        <th>Sony-Total-Dark SSIM ↑</th>
+                        <th>Unpaired BRISQUE ↓</th>
+                        <th>Unpaired NIQE ↓</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>RetinexNet [43]</td><td>12.42</td><td>0.613</td><td>15.70</td><td>0.395</td><td>23.29</td><td>4.558</td></tr>
+                    <tr><td>ZeroDCE [10]</td><td>12.45</td><td>0.639</td><td>14.09</td><td>0.090</td><td>26.34</td><td>4.763</td></tr>
+                    <tr><td>URetinexNet [44]</td><td>10.90</td><td>0.605</td><td>15.52</td><td>0.323</td><td>26.36</td><td>3.829</td></tr>
+                    <tr><td>RUAS [33]</td><td>8.66</td><td>0.494</td><td>12.62</td><td>0.081</td><td>36.37</td><td>4.800</td></tr>
+                    <tr><td>LLFlow [41]</td><td>12.74</td><td>0.617</td><td>16.23</td><td>0.367</td><td>28.09</td><td>4.221</td></tr>
+                    <tr style="background: rgba(167, 139, 250, 0.15); font-weight: bold;">
+                        <td style="color: #A78BFA;">CIDNet (Ours)</td>
+                        <td class="best">13.44</td>
+                        <td class="best">0.642</td>
+                        <td class="best" style="color: #A78BFA;">22.90 (+6.68 dB)</td>
+                        <td class="best" style="color: #A78BFA;">0.676</td>
+                        <td class="best">23.52</td>
+                        <td class="best">3.523</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Figure 4 -->
+        <figure class="paper-figure full-width">
+            <img src="../assets/images/papers/hvi/fig_4_p7.png" alt="HVI Figure 4 Unpaired Datasets">
+            <figcaption class="paper-figcaption">
+                <strong>Hình 4: Đánh giá chất lượng trực quan trên 5 tập dữ liệu chụp đêm thế giới thực không có nhãn mẫu (DICM, LIME, MEF, NPE, VV).</strong> CIDNet tăng cường chi tiết rõ rệt mà không sinh ra nhiễu hạt loang lổ.
+            </figcaption>
+        </figure>
+
+        <h4 class="paper-sub-heading">4.2 HVI Như Một Module Cắm-Là-Chạy (Universal Plug-in)</h4>
+        <p>
+            Chúng tôi kiểm tra tính tương thích của không gian màu HVI bằng cách thay thế module đầu vào/đầu ra của 6 kiến trúc SOTA hiện có bằng phép biến đổi HVI trên tập LOLv2-Real.
+        </p>
+
+        <div class="paper-table-wrapper full-width">
+            <div class="paper-table-caption">Bảng 3: Hiệu năng cải thiện khi tích hợp HVI như một module plug-in vào các kiến trúc LLIE hiện hữu. Mọi mô hình đều tăng vọt PSNR.</div>
+            <table class="paper-table">
+                <thead>
+                    <tr>
+                        <th>Mô Hình Được Cắm HVI</th>
+                        <th>Loại Kiến Trúc</th>
+                        <th>PSNR Ban Đầu (dB)</th>
+                        <th>PSNR Sau Khi Cắm HVI ↑</th>
+                        <th>Mức Cải Thiện Tuyệt Đối</th>
+                        <th>SSIM Sau Cắm HVI ↑</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>FourLLIE [37]</td><td>CNN</td><td>22.35 dB</td><td>22.73 dB</td><td>+0.381 dB</td><td>0.856 (+0.009)</td></tr>
+                    <tr style="background: rgba(167, 139, 250, 0.12); font-weight: bold;">
+                        <td style="color: #A78BFA;">LEDNet [57]</td>
+                        <td>CNN Khử Mờ</td>
+                        <td>19.94 dB</td>
+                        <td style="color: #A78BFA;">23.39 dB</td>
+                        <td class="best" style="color: #A78BFA;">+3.456 dB (Tăng Vọt)</td>
+                        <td>0.837 (+0.010)</td>
+                    </tr>
+                    <tr><td>SNR-Aware [46]</td><td>Transformer</td><td>21.48 dB</td><td>22.25 dB</td><td>+0.771 dB</td><td>0.840</td></tr>
+                    <tr style="background: rgba(167, 139, 250, 0.12); font-weight: bold;">
+                        <td style="color: #A78BFA;">LLFormer [39]</td>
+                        <td>Transformer</td>
+                        <td>20.06 dB</td>
+                        <td style="color: #A78BFA;">22.67 dB</td>
+                        <td style="color: #A78BFA;">+2.615 dB</td>
+                        <td>0.852 (+0.060)</td>
+                    </tr>
+                    <tr style="background: rgba(167, 139, 250, 0.15); font-weight: bold;">
+                        <td style="color: #A78BFA;">GSAD [15]</td>
+                        <td>Mô Hình Khuếch Tán (Diffusion)</td>
+                        <td>20.15 dB</td>
+                        <td class="best" style="color: #A78BFA;">23.72 dB</td>
+                        <td class="best" style="color: #A78BFA;">+3.562 dB</td>
+                        <td class="best">0.876 (+0.030)</td>
+                    </tr>
+                    <tr><td>DiffLight [6]</td><td>CNN + Diffusion</td><td>22.61 dB</td><td>23.97 dB</td><td>+1.364 dB</td><td>0.859 (+0.003)</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3 class="paper-sec-heading"><span class="sec-id">5.</span> Phân Tích Độ Lệch Không Gian Màu (Ablation Studies)</h3>
+        
+        <div class="paper-table-wrapper">
+            <div class="paper-table-caption">Bảng 4: Phân tích độ lệch ảnh hưởng của các không gian màu khác nhau trên cùng một kiến trúc mạng CIDNet.</div>
+            <table class="paper-table">
+                <thead>
+                    <tr><th>Không Gian Màu Áp Dụng</th><th>PSNR (dB) ↑</th><th>SSIM ↑</th><th>LPIPS ↓</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Không gian màu chuẩn sRGB</td><td>20.06</td><td>0.825</td><td>0.137</td></tr>
+                    <tr><td>Không gian màu HSV kinh điển</td><td>21.35</td><td>0.801</td><td>0.167</td></tr>
+                    <tr><td>Không gian màu YCbCr</td><td>21.80</td><td>0.822</td><td>0.145</td></tr>
+                    <tr><td>Không gian màu Lab</td><td>21.52</td><td>0.814</td><td>0.150</td></tr>
+                    <tr style="font-weight: bold; color: #A78BFA;"><td>Không gian màu HVI (Đề xuất)</td><td class="best">24.11</td><td class="best">0.871</td><td class="best">0.108</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Figure 5 -->
+        <figure class="paper-figure full-width">
+            <img src="../assets/images/papers/hvi/fig_5_p8.png" alt="HVI Figure 5 Color Space Ablation">
+            <figcaption class="paper-figcaption">
+                <strong>Hình 5: So sánh chất lượng trực quan giữa 5 không gian màu trên LOLv2-Real.</strong> Các không gian màu sRGB và HSV xuất hiện quầng nhiễu hạt màu xanh đỏ ở góc tủ và tường, trong khi HVI bảo toàn độ đồng nhất màu sắc tuyệt hảo.
+            </figcaption>
+        </figure>
+
+        <h3 class="paper-sec-heading"><span class="sec-id">6.</span> Kết Luận & Định Hướng Đồ Án Cao Học UIT CS2203</h3>
+        <p>
+            Không gian màu HVI đại diện cho một bước nhảy vọt về mặt toán học trong xử lý ảnh thiếu sáng: thay vì cố gắng bắt mạng nơ-ron phải học cách giải bài toán phi tuyến phức tạp trong không gian màu sRGB bị bện chặt, việc chuẩn hóa dữ liệu đầu vào sang không gian HVI giúp giảm tải tới 80% gánh nặng tính toán cho mạng.
+        </p>
+        <p>
+            Đối với Đồ án môn học tại UIT, bài học quý báu nhất là: <strong>Xử lý tiền kỳ dữ liệu (Data Representation) quan trọng không kém gì thiết kế kiến trúc mạng</strong>. Nếu mô hình Compact U-Net của chúng ta được trang bị cơ chế tách bạch cường độ chiếu sáng Max-RGB hoặc kênh độ sáng độc lập, chất lượng ảnh đầu ra sẽ gia tăng vượt bậc mà không tốn thêm bất kỳ tham số mạng nào.
+        </p>
+    </div>
+</article>
+
+    </div>
+
+    <!-- Lightbox for Standalone page -->
+    <div id="figure-lightbox">
+        <img id="lightbox-img" src="" alt="Zoomed Figure">
+        <div id="lightbox-caption"></div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            if (window.renderMathInElement) {
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false},
+                        {left: '\\[', right: '\\]', display: true},
+                        {left: '\\(', right: '\\)', display: false}
+                    ],
+                    throwOnError: false
+                });
+            }
+
+            const lightbox = document.getElementById('figure-lightbox');
+            const imgEl = document.getElementById('lightbox-img');
+            const capEl = document.getElementById('lightbox-caption');
+
+            document.querySelectorAll('.paper-figure img').forEach(img => {
+                img.style.cursor = 'zoom-in';
+                img.addEventListener('click', () => {
+                    const fig = img.closest('.paper-figure');
+                    const cap = fig ? fig.querySelector('.paper-figcaption') : null;
+                    imgEl.src = img.src;
+                    capEl.innerText = cap ? cap.innerText : '';
+                    lightbox.classList.add('active');
+                });
+            });
+
+            lightbox.addEventListener('click', () => {
+                lightbox.classList.remove('active');
+            });
+        });
+
+        function togglePaperColumns(k) {
+            const cols = document.querySelector('.paper-content-columns');
+            const btn = document.querySelector('.btn-col-toggle');
+            if (cols) {
+                cols.classList.toggle('single-column');
+                if (btn) {
+                    btn.innerText = cols.classList.contains('single-column') ? '📰 Chế Độ 2 Cột (CVPR)' : '📄 Chế Độ 1 Cột (Dọc)';
+                }
+            }
+        }
+        function closePaperReader(k) {
+            window.location.href = '../index.html#mod2-papers';
+        }
+    </script>
+</body>
+</html>

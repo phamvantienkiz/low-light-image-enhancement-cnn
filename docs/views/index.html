@@ -1,0 +1,1250 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tăng Cường Chất Lượng Ảnh Thiếu Sáng Bằng Mạng Nơ-ron Tích Chập Gọn Nhẹ (Lightweight CNN) - CS2203 UIT</title>
+
+    <!-- Google Fonts: Inter & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- KaTeX Mathematical Engine -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+
+    <!-- Three.js r128 UMD Engine (Bản ổn định nhất, hỗ trợ OrbitControls toàn cục) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+
+    <!-- Modular Stylesheets -->
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/visualizers.css">
+    <link rel="stylesheet" href="css/papers.css">
+</head>
+<body>
+
+    <!-- Reading Progress Indicator -->
+    <div id="progress-bar"></div>
+    <button id="mobile-menu-btn" title="Mở danh mục điều hướng">☰</button>
+
+    <!-- SIDEBAR NAVIGATION -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-top-row">
+                <span class="sidebar-badge">CS2203 • UIT</span>
+                <button class="theme-toggle-btn" id="theme-toggle" onclick="toggleTheme()" title="Chuyển đổi chủ đề Dark/Light">
+                    <span id="theme-icon">🌙</span> <span id="theme-label">Dark</span>
+                </button>
+            </div>
+            <h1>Low-Light Image Enhancement</h1>
+            <p>Đồ Án Cao Học Khoa Học Máy Tính 2026</p>
+        </div>
+
+        <div style="padding: 12px 16px; border-bottom: 1px solid var(--border-hairline);">
+            <a href="slides.html" class="nav-item" style="background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(129, 140, 248, 0.2)); border: 1px solid #38BDF8; color: #FFF; font-weight: 700; text-align: center; border-radius: 10px; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                🎬 Bài Giảng Trực Quan (12 Slides)
+            </a>
+        </div>
+
+        <nav class="nav-list" id="nav-list">
+            <span class="nav-group-title">Tổng Quan Đề Tài</span>
+            <a href="#intro" class="nav-item">Lời Mở Đầu & Mục Tiêu</a>
+            <a href="#mod1-problem" class="nav-item sub-item">1. Phát Biểu Bài Toán Thực Tế</a>
+            <a href="#mod1-pixel-matrix" class="nav-item sub-item">2. Ma Trận Pixel & Diễn Hoạt</a>
+            <a href="#mod1-dict" class="nav-item sub-item">3. Từ Điển Ký Hiệu Đời Thường</a>
+            <a href="#mod1-simulator" class="nav-item sub-item">4. Mô Phỏng Histogram 2D</a>
+
+            <span class="nav-group-title">Khảo Sát Papers (CVF 2024-2025)</span>
+            <a href="#mod2-darkir" class="nav-item sub-item">5. DarkIR (CVPR 2025) - Paper Chính</a>
+            <a href="#mod2-ntire" class="nav-item sub-item">6. NTIRE 2024 LLIE Challenge</a>
+            <a href="#mod2-edgellie" class="nav-item sub-item">7. Edge-LLIE (CVPRW 2024)</a>
+            <a href="#mod2-hvi" class="nav-item sub-item">8. HVI Color Space & CIDNet (CVPR'25)</a>
+            <a href="#mod2-matrix" class="nav-item sub-item">9. Ma Trận Đối Chiếu Các Paper</a>
+
+            <span class="nav-group-title">Trực Quan Hóa Không Gian 3D</span>
+            <a href="#mod3-3dviz" class="nav-item sub-item">10. Khối Không Gian & 3D Heightmap</a>
+
+            <span class="nav-group-title">Kiến Trúc Compact U-Net</span>
+            <a href="#mod4-arch" class="nav-item sub-item">11. Thiết Kế Mạng & Skip Gating</a>
+            <a href="#mod4-loss" class="nav-item sub-item">12. Hàm Mất Mát Composite Loss</a>
+            <a href="#mod4-explorer" class="nav-item sub-item">13. Trình Khám Phá Tensor Tầng Mạng</a>
+
+            <span class="nav-group-title">Kế Hoạch Thực Nghiệm</span>
+            <a href="#mod5-datasets" class="nav-item sub-item">14. Các Bộ Dữ Liệu Thực Nghiệm</a>
+            <a href="#mod5-ablation" class="nav-item sub-item">15. Đối Chuẩn & Phân Tích Độ Lệch</a>
+
+            <span class="nav-group-title">Bảo Vệ Đề Tài & Phản Biện</span>
+            <a href="#mod6-qa" class="nav-item sub-item">16. Bộ 15 Câu Hỏi Phản Biện Hội Đồng</a>
+        </nav>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="content">
+
+        <!-- HERO HEADER -->
+        <header id="intro" class="doc-header">
+            <div class="doc-tag-row">
+                <span class="doc-tag primary">🎓 Đồ Án Môn Học CS2203</span>
+                <span class="doc-tag">Trường ĐH Công Nghệ Thông Tin - ĐHQG-HCM</span>
+                <span class="doc-tag">Chương Trình Cao Học KHMT 2026</span>
+                <span class="doc-tag">Paper Chính: DarkIR (CVPR 2025)</span>
+            </div>
+            <h1 class="doc-title">Tăng Cường Chất Lượng Ảnh Trong Điều Kiện Thiếu Sáng Bằng Mạng Nơ-ron Tích Chập Gọn Nhẹ</h1>
+            <h2 class="doc-subtitle">Low-Light Image Enhancement Using a Lightweight Convolutional Neural Network (Compact U-Net)</h2>
+            <p>
+                Bản thiết kế và tổng quan nghiên cứu toàn diện phục vụ báo cáo khoa học, slide thuyết trình và hiện thực hóa thực nghiệm. Đề tài tập trung vào việc hiểu sâu bản chất suy thoái vật lý, xây dựng giải pháp học máy CNN gọn nhẹ (&lt; 1.5M tham số), không chạy theo trào lưu mô hình khổng lồ, bảo toàn chi tiết biên cạnh và sẵn sàng triển khai trên thiết bị biên.
+            </p>
+
+            <!-- CALLOUT BANNER TO SLIDES -->
+            <div style="margin: 20px 0; background: linear-gradient(90deg, rgba(56, 189, 248, 0.12), rgba(52, 211, 153, 0.12)); border: 1px solid rgba(56, 189, 248, 0.4); border-radius: 16px; padding: 18px 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
+                <div>
+                    <div style="font-size: 0.8rem; font-weight: 800; color: #38BDF8; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px;">✨ DÀNH CHO NGƯỜI MỚI BẮT ĐẦU &amp; ÔN TẬP BẢO VỆ</div>
+                    <div style="font-size: 1.15rem; font-weight: 800; color: #FFF;">Slide Trực Quan Hóa &amp; Mô Phỏng Hoạt Họa (12 Chuyên Đề)</div>
+                    <div style="font-size: 0.9rem; color: #94A3B8; margin-top: 4px;">Giải thích tường tận ma trận pixel, phương trình suy thoái DarkIR, U-Net, Gated Skip, SCA Attention và kịch bản bảo vệ trước hội đồng.</div>
+                </div>
+                <a href="slides.html" style="padding: 10px 22px; background: #38BDF8; color: #06090E; font-weight: 800; border-radius: 10px; text-decoration: none; font-size: 0.95rem; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 0 16px rgba(56, 189, 248, 0.4); transition: transform 0.2s ease;">
+                    🚀 Mở Slide Bài Giảng Ngay →
+                </a>
+            </div>
+
+            <div class="doc-meta-grid">
+                <div class="doc-meta-item">
+                    <strong>Học Viên Thực Hiện</strong>
+                    <span>Cao học Khoa học Máy tính - UIT</span>
+                </div>
+                <div class="doc-meta-item">
+                    <strong>Môn Học</strong>
+                    <span>Xử lý ảnh và Thị giác máy tính (CS2203)</span>
+                </div>
+                <div class="doc-meta-item">
+                    <strong>Mục Tiêu Đồ Án</strong>
+                    <span>Nắm vững bản chất, thực nghiệm có đối chứng</span>
+                </div>
+                <div class="doc-meta-item">
+                    <strong>Độ Đo Đánh Giá</strong>
+                    <span>PSNR (dB), SSIM, Latency (FPS), FLOPs</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- MODULE 01: PROBLEM FORMULATION -->
+        <section id="mod1-problem">
+            <h2 class="section-heading"><span class="section-num">01</span> Phát Biểu Bài Toán Thực Tế (Problem Formulation)</h2>
+            
+            <p>
+                Khi chụp ảnh trong điều kiện ánh sáng cực yếu (thiếu sáng tự nhiên, cảnh đêm đường phố, phòng kín tắt đèn), cảm biến quang học của máy ảnh phải đối mặt với một sự đánh đổi vật lý (physical trade-off): hoặc phải kéo dài thời gian phơi sáng (slow shutter speed), hoặc phải đẩy độ khuếch đại tín hiệu điện tử (ISO) lên mức cực đại. Hệ quả là hình ảnh thu được bị suy thoái phức hợp đa chiều.
+            </p>
+
+            <div class="callout def">
+                <div class="callout-title">📐 Mô Hình Toán Học Về Quá Trình Suy Thoái Ảnh Chụp Đêm</div>
+                <p>
+                    Theo công trình <strong>DarkIR (CVPR 2025)</strong>, quá trình hình thành ảnh quan sát bị suy thoái $y$ từ khung cảnh thực $x$ được mô hình hóa theo phương trình:
+                </p>
+                $$y = \gamma(x \otimes k) + n$$
+                <p style="margin-top: 8px; margin-bottom: 0;">
+                    Trong đó: $x$ là ảnh thực tế hoàn hảo (Ground Truth); $k$ là kernel gây mờ (Point-Spread Function do rung tay hoặc phơi sáng lâu); $\otimes$ là toán tử tích chập không gian; $n$ là nhiễu cảm biến cộng gộp (nhiễu hạt Poisson + nhiễu đọc Gaussian tăng vọt khi ISO cao); và $\gamma(\cdot)$ là hàm phi tuyến thể hiện sự bão hòa dải động (dynamic range clipping).
+                </p>
+            </div>
+
+            <div class="metric-hero-grid">
+                <div class="metric-box">
+                    <span class="label">Độ tương phản sụt giảm</span>
+                    <span class="hero-val accent-orange">&lt; 15 dB</span>
+                    <span class="note">PSNR ảnh tối thô ban đầu (LOL-v1)</span>
+                </div>
+                <div class="metric-box">
+                    <span class="label">Nhiễu hạt cảm biến</span>
+                    <span class="hero-val accent-purple">Poisson</span>
+                    <span class="note">Tăng tỉ lệ nghịch với lượng photon</span>
+                </div>
+                <div class="metric-box">
+                    <span class="label">Mục tiêu mô hình Compact</span>
+                    <span class="hero-val accent-blue">&lt; 1.5M</span>
+                    <span class="note">Số lượng tham số (Parameters)</span>
+                </div>
+                <div class="metric-box">
+                    <span class="label">Kỳ vọng phục hồi</span>
+                    <span class="hero-val accent-emerald">&gt; 23 dB</span>
+                    <span class="note">PSNR trên tập kiểm thử chuẩn LOL</span>
+                </div>
+            </div>
+
+            <!-- 1.2 MICRO-PIXEL MATRIX SIMULATION & ANIMATION -->
+            <div id="mod1-pixel-matrix">
+                <h3 class="sub-heading">1.2 Trực Quan Hóa Ma Trận Pixel Vi Mô: Diễn Hoạt Cơ Chế Suy Thoái & Phục Hồi Từng Điểm Ảnh</h3>
+                <p>
+                    Để hình dung một cách trực quan nhất bản chất phương trình vật lý $y = \gamma(x \otimes k) + n$, khung mô phỏng dưới đây phóng to một vùng ảnh vi mô kích thước $10 \times 10$ gồm <strong>100 ô pixel</strong>. Quan sát trực tiếp từng ô vuông đổi màu, sụp đổ độ sáng và tái sinh như thế nào qua 6 giai đoạn suy thoái và phục hồi:
+                </p>
+
+                <div class="pixel-matrix-panel">
+                    <!-- 1. Horizontal Stepper Bar (6 Stages) -->
+                    <div class="matrix-stepper">
+                        <button class="matrix-step-btn active" data-step="1">
+                            <span class="matrix-step-num">BƯỚC 01</span>
+                            <span class="matrix-step-name">Ảnh Gốc Chuẩn (GT $x$)</span>
+                        </button>
+                        <button class="matrix-step-btn" data-step="2">
+                            <span class="matrix-step-num">BƯỚC 02</span>
+                            <span class="matrix-step-name">Mờ Nhòe ($x \otimes k$)</span>
+                        </button>
+                        <button class="matrix-step-btn" data-step="3">
+                            <span class="matrix-step-num">BƯỚC 03</span>
+                            <span class="matrix-step-name">Sụp Quang Tử ($\gamma$)</span>
+                        </button>
+                        <button class="matrix-step-btn" data-step="4">
+                            <span class="matrix-step-num">BƯỚC 04</span>
+                            <span class="matrix-step-name">Nhiễu Cảm Biến ($+ n$)</span>
+                        </button>
+                        <button class="matrix-step-btn" data-step="5">
+                            <span class="matrix-step-num">BƯỚC 05</span>
+                            <span class="matrix-step-name">Kéo Sáng Thô ($10\times$)</span>
+                        </button>
+                        <button class="matrix-step-btn" data-step="6">
+                            <span class="matrix-step-num">BƯỚC 06</span>
+                            <span class="matrix-step-name">Compact U-Net ($\hat{x}$)</span>
+                        </button>
+                    </div>
+
+                    <!-- 2. Stage Details & Mathematical Banner -->
+                    <div class="matrix-stage-banner">
+                        <div class="matrix-stage-header">
+                            <div class="matrix-stage-title-wrap">
+                                <h4 id="matrix-stage-title">Giai đoạn 1: Ảnh Gốc Chuẩn Phơi Sáng</h4>
+                                <span class="matrix-badge badge-gt" id="matrix-stage-badge">Ground Truth</span>
+                            </div>
+                            <div class="matrix-stage-math" id="matrix-stage-math">$$x$$</div>
+                        </div>
+                        <p class="matrix-stage-desc" id="matrix-stage-desc">
+                            Khung cảnh hoàn hảo trong điều kiện chiếu sáng đầy đủ. Từng ô pixel sở hữu độ bão hòa màu nguyên bản, dải tương phản cao (HDR) và ranh giới vật thể tách biệt rõ ràng.
+                        </p>
+                        <div class="matrix-pixel-callout">
+                            <strong>🔬 Ý nghĩa vi mô từng ô vuông:</strong> <span id="matrix-pixel-meaning">Pixel đại diện cho năng lượng photon phản xạ thực chất từ bề mặt vật thể đến cảm biến máy ảnh.</span>
+                        </div>
+                    </div>
+
+                    <!-- 3. Toolbar Controls Bar -->
+                    <div class="matrix-controls-bar">
+                        <div class="matrix-control-group">
+                            <span class="matrix-label">Mẫu cảnh:</span>
+                            <button class="matrix-scene-btn active" data-scene="flower">🌸 Hoa & Lá</button>
+                            <button class="matrix-scene-btn" data-scene="neon">💡 Đèn Neon Đêm</button>
+                            <button class="matrix-scene-btn" data-scene="portrait">👤 Da Mặt & Chân Dung</button>
+                        </div>
+
+                        <div class="matrix-control-group">
+                            <span class="matrix-label">Chế độ xem:</span>
+                            <button class="matrix-mode-btn active" id="btn-mode-2d">🔲 2D Ma Trận Ô Vuông</button>
+                            <button class="matrix-mode-btn" id="btn-mode-3d">🧊 3D Trụ Không Gian</button>
+                        </div>
+
+                        <div class="matrix-control-group">
+                            <button class="matrix-play-btn" id="matrix-btn-play">▶ Phát Diễn Hoạt Tự Động</button>
+                            <select class="matrix-select" id="matrix-speed-select" title="Tốc độ diễn hoạt">
+                                <option value="1800">Tốc độ: 1.0x (Chuẩn)</option>
+                                <option value="1200">Tốc độ: 1.5x (Nhanh)</option>
+                                <option value="700">Tốc độ: 2.0x (Cực nhanh)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- 4. Interactive Workspace: Left Viewport (2D/3D) & Right Microscope Inspector -->
+                    <div class="matrix-workspace">
+                        <!-- Left Viewport Container -->
+                        <div class="matrix-display-container">
+                            <!-- 2D Pixel Grid Mode -->
+                            <div class="pixel-grid-wrapper" id="matrix-grid-view">
+                                <div id="pixel-grid-cells">
+                                    <!-- Injected dynamically via js/pixel-matrix.js (100 cells) -->
+                                </div>
+                                <div style="display: flex; justify-content: space-between; font-size: 0.72rem; color: var(--text-secondary); margin-top: 8px; font-family: var(--font-mono);">
+                                    <span>← Trục Hoành X (0 đến 9) →</span>
+                                    <span>Di chuột để soi • Nhấp chọn để ghim</span>
+                                </div>
+                            </div>
+
+                            <!-- 3D Voxel Pillars Mode (Three.js WebGL) -->
+                            <div id="matrix-3d-view">
+                                <div id="matrix-3d-viewport"></div>
+                                <div style="display: flex; justify-content: space-between; font-size: 0.72rem; color: #38BDF8; margin-top: 8px; font-family: var(--font-mono);">
+                                    <span>🧊 Chiều cao cột trụ = Độ sáng Luminance $Y$</span>
+                                    <span>🖱️ Giữ chuột trái xoay • Cuộn zoom</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Microscope Inspector HUD -->
+                        <div class="microscope-hud">
+                            <div class="microscope-header">
+                                <h5>🔬 Kính Hiển Vi Pixel</h5>
+                                <span class="microscope-coord" id="mic-coord">[Tọa độ y: 4, x: 5]</span>
+                            </div>
+
+                            <div class="micro-swatch-comparison">
+                                <div class="micro-swatch-box">
+                                    <span class="swatch-label">Giai Đoạn Này</span>
+                                    <div class="swatch-color-preview" id="mic-swatch-current"></div>
+                                    <div class="swatch-meta" id="mic-val-hex">#DA4034</div>
+                                </div>
+                                <div class="micro-swatch-box">
+                                    <span class="swatch-label">Ảnh Gốc Chuẩn (GT)</span>
+                                    <div class="swatch-color-preview" id="mic-swatch-gt"></div>
+                                    <div class="swatch-meta" id="mic-val-current">RGB(...)</div>
+                                </div>
+                            </div>
+
+                            <div class="micro-channel-bars">
+                                <div style="display: flex; justify-content: space-between; font-size: 0.76rem; font-weight: 700; color: var(--ink); margin-bottom: 2px;">
+                                    <span>Phổ Màu 3 Kênh (0 - 255)</span>
+                                    <span id="mic-val-lum" style="color: var(--primary);">124.5 / 255</span>
+                                </div>
+                                <div class="micro-bar-row">
+                                    <span class="channel-tag r">R</span>
+                                    <div class="channel-track"><div class="channel-fill r" id="bar-r" style="width: 80%;"></div></div>
+                                    <span class="channel-num" id="num-r">210</span>
+                                </div>
+                                <div class="micro-bar-row">
+                                    <span class="channel-tag g">G</span>
+                                    <div class="channel-track"><div class="channel-fill g" id="bar-g" style="width: 25%;"></div></div>
+                                    <span class="channel-num" id="num-g">42</span>
+                                </div>
+                                <div class="micro-bar-row">
+                                    <span class="channel-tag b">B</span>
+                                    <div class="channel-track"><div class="channel-fill b" id="bar-b" style="width: 30%;"></div></div>
+                                    <span class="channel-num" id="num-b">55</span>
+                                </div>
+                            </div>
+
+                            <div class="micro-diagnosis-box">
+                                <div class="micro-diagnosis-title">Chẩn Đoán Biến Đổi Vật Lý:</div>
+                                <div id="mic-diagnosis">Điểm ảnh chuẩn: Năng lượng photon trong dải nhìn thấy chuẩn xác.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 5. Micro Matrix Stats Row -->
+                    <div class="matrix-stats-row">
+                        <div class="matrix-stat-card">
+                            <span class="stat-title">Độ Sáng Trung Bình $\mu$</span>
+                            <span class="stat-val" id="stat-avg-y">138.4 / 255</span>
+                        </div>
+                        <div class="matrix-stat-card">
+                            <span class="stat-title">Tỷ Số Tín Hiệu/Nhiễu (SNR)</span>
+                            <span class="stat-val" id="stat-snr">∞ dB</span>
+                        </div>
+                        <div class="matrix-stat-card">
+                            <span class="stat-title">Biến Thiên Nhiễu Cảm Biến</span>
+                            <span class="stat-val" id="stat-noise">0.00%</span>
+                        </div>
+                        <div class="matrix-stat-card">
+                            <span class="stat-title">Độ Bảo Toàn Gờ Cạnh</span>
+                            <span class="stat-val" id="stat-edge">Sắc nét cực đại</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 1.3 DICTIONARY TABLE -->
+            <div id="mod1-dict">
+                <h3 class="sub-heading">1.3 Từ Điển Ký Hiệu & Khái Niệm Cốt Lõi (Dành Cho Người Học Chậm)</h3>
+                <p>Để tránh việc nhìn vào công thức toán như những ký tự trừu tượng, bảng từ điển sau quy đổi 1-1 từng biến số học thuật sang hiện thực đời sống:</p>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Ký Hiệu</th>
+                                <th>Tên Chuẩn Tiếng Anh</th>
+                                <th>Tên Tiếng Việt Chính Xác</th>
+                                <th>Nghĩa Đời Thường (Hình dung thực tế)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>$y \in \mathbb{R}^{H \times W \times 3}$</td>
+                                <td>Observed Low-Light Image</td>
+                                <td>Ảnh thiếu sáng quan sát được</td>
+                                <td>Bức ảnh chụp đêm tối om, lấm tấm hạt mè và mờ nhòe lấy từ điện thoại.</td>
+                            </tr>
+                            <tr>
+                                <td>$x \in \mathbb{R}^{H \times W \times 3}$</td>
+                                <td>Ground-Truth Normal Image</td>
+                                <td>Ảnh gốc chuẩn phơi sáng</td>
+                                <td>Bức ảnh chụp ban ngày hoặc dùng chân máy phơi sáng hoàn hảo, màu sắc trong trẻo.</td>
+                            </tr>
+                            <tr>
+                                <td>$\hat{x} = f_\theta(y)$</td>
+                                <td>Enhanced Output Image</td>
+                                <td>Ảnh đầu ra đã tăng cường</td>
+                                <td>Bức ảnh sau khi cho qua mạng nơ-ron CNN được kích sáng và dập tắt nhiễu.</td>
+                            </tr>
+                            <tr>
+                                <td>$n \sim \mathcal{P} + \mathcal{N}$</td>
+                                <td>Sensor Noise</td>
+                                <td>Nhiễu hạt cảm biến quang học</td>
+                                <td>Nhiễu hạt "hột é" do cảm biến camera cố gắng khuếch đại luồng photon yếu ớt.</td>
+                            </tr>
+                            <tr>
+                                <td>$k$</td>
+                                <td>Blur Kernel (PSF)</td>
+                                <td>Hàm tán xạ điểm gây mờ</td>
+                                <td>Vệt nhòe kéo dài do tay bị rung hoặc vật thể chuyển động khi mở màn trập lâu.</td>
+                            </tr>
+                            <tr>
+                                <td>$\text{MSE}$</td>
+                                <td>Mean Squared Error</td>
+                                <td>Sai số bình phương trung bình</td>
+                                <td>Trung bình độ chênh lệch mức xám từng điểm ảnh; càng gần 0 thì ảnh càng giống nhau.</td>
+                            </tr>
+                            <tr>
+                                <td>$\text{PSNR}$ (dB)</td>
+                                <td>Peak Signal-to-Noise Ratio</td>
+                                <td>Tỷ số tín hiệu cực đại trên nhiễu</td>
+                                <td>Đo độ "sạch" của ảnh tính theo thang decibel; tăng 3 dB tương đương giảm một nửa công suất sai số.</td>
+                            </tr>
+                            <tr>
+                                <td>$\text{SSIM} \in [0, 1]$</td>
+                                <td>Structural Similarity Index</td>
+                                <td>Chỉ số tương đồng cấu trúc</td>
+                                <td>Mắt người nhìn vào thấy đường nét, vân gỗ, nếp áo có giống ảnh thật không (1.0 là hoàn hảo).</td>
+                            </tr>
+                            <tr>
+                                <td>$C_k(x)$</td>
+                                <td>Intensity Collapse Function</td>
+                                <td>Hàm co sụp cường độ (HVI)</td>
+                                <td>"Van tiết lưu" dập tắt nhiễu màu ở các vùng tối đen như mực về gốc tọa độ 0.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="callout intuition">
+                    <div class="callout-title">🌱 Góc Dành Cho Người Học Chậm: Tại Sao Không Đơn Giản Là Nhân Đôi Giá Trị Pixel?</div>
+                    <p>
+                        Nhiều người mới bắt đầu thường thắc mắc: <em>"Nếu ảnh tối vì các giá trị pixel quá nhỏ (ví dụ $10/255$), tại sao không đơn giản nhân toàn bộ ảnh với 5 hoặc 10 lần?"</em>.
+                    </p>
+                    <p style="margin-bottom: 0;">
+                        <strong>Bản chất vật lý:</strong> Khi bạn nhân tuyến tính, tín hiệu ảnh ($x$) tăng 10 lần thì nhiễu hạt ($n$) cũng bị phóng đại 10 lần! Các đốm nhiễu li ti ban đầu bị giấu trong bóng tối sẽ bùng nổ thành các vệt màu đỏ xanh loang lổ. Đồng thời, những vùng vốn có ánh đèn sẽ bị vượt quá giá trị $255$ dẫn đến <strong>cháy sáng (over-exposure / clipping)</strong>. Một mạng CNN thông minh không "nhân sáng thô", mà học cách phân tách độ phản xạ cấu trúc và triệt tiêu thành phần nhiễu hạt trước khi bù sáng.
+                    </p>
+                </div>
+            </div>
+
+            <!-- 1.4 HISTOGRAM SIMULATOR WIDGET -->
+            <div id="mod1-simulator">
+                <h3 class="sub-heading">1.4 Widget Tương Tác: Mô Phỏng Phân Bố Biểu Đồ Độ Sáng (Histogram)</h3>
+                <p>Khám phá sự khác biệt cốt lõi giữa các phương pháp xử lý ảnh: Kéo sáng tuyến tính, CLAHE truyền thống và Phục hồi phi tuyến tính bằng CNN.</p>
+
+                <div class="widget-panel">
+                    <div class="widget-controls">
+                        <div class="slider-group">
+                            <span>Phương pháp xem:</span>
+                            <select id="sim-mode-select" class="three-btn">
+                                <option value="dark">1. Ảnh Gốc Thiếu Sáng (Input Low-Light)</option>
+                                <option value="linear">2. Kéo Sáng Tuyến Tính (Linear Scaling x3.0)</option>
+                                <option value="clahe">3. Cân Bằng Histogram Thích Nghi (CLAHE)</option>
+                                <option value="cnn" selected>4. Mạng Compact U-Net (Ours)</option>
+                            </select>
+                        </div>
+                        <div class="slider-group">
+                            <span>Mức độ nhiễu cảm biến:</span>
+                            <input type="range" id="sim-noise-slider" min="0" max="60" value="25">
+                            <span id="noise-val" style="font-family:var(--font-mono); font-size:0.85rem; color:var(--primary);">25%</span>
+                        </div>
+                    </div>
+
+                    <div class="canvas-row">
+                        <div class="canvas-box">
+                            <h5>Mô Phỏng Hình Ảnh Trực Quan</h5>
+                            <canvas id="canvas-image" class="widget-canvas" width="320" height="180"></canvas>
+                            <p id="canvas-img-desc" style="font-size:0.8rem; color:var(--text-tertiary); margin-top:8px;">Ảnh thiếu sáng: chi tiết chìm sâu trong vùng tối.</p>
+                        </div>
+                        <div class="canvas-box">
+                            <h5>Biểu Đồ Phân Phối Sắc Độ (Luminance Histogram)</h5>
+                            <canvas id="canvas-hist" class="widget-canvas" width="320" height="180"></canvas>
+                            <p id="canvas-hist-desc" style="font-size:0.8rem; color:var(--text-tertiary); margin-top:8px;">Phổ pixel tập trung 90% ở dải giá trị [0 - 40].</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULE 02: LITERATURE REVIEW (PAPERS SURVEY) -->
+        <section id="mod2-papers">
+            <h2 class="section-heading"><span class="section-num">02</span> Tổng Hợp Các Công Trình Đỉnh Cao (CVF 2024 - 2025)</h2>
+            <p>
+                Để định vị vững chắc cho đề tài trong chương trình Cao học tại UIT, chúng ta đã tiến hành khảo sát và phân tích chuyên sâu 4 bài báo đỉnh cao xuất bản tại IEEE/CVF (CVPR & CVPRW) giai đoạn 2024–2025. Các bài báo này giải quyết bài toán ở nhiều góc độ: kiến trúc bất đối xứng, benchmark 4K, triển khai thiết bị biên, và đổi mới không gian màu học thuật.
+            </p>
+
+            <!-- 2.1 DARKIR -->
+            <div id="mod2-darkir" class="soft-card">
+                <div class="soft-card-header">
+                    <div>
+                        <span class="badge-tag badge-blue">CVPR 2025 • Paper Tham Khảo Chính</span>
+                        <h3 class="soft-card-title" style="margin-top:6px;">DarkIR: Robust Low-Light Image Restoration</h3>
+                        <p class="soft-card-subtitle">Daniel Feijoo, Juan C. Benito, Alvaro Garcia, Marcos V. Conde (Cidaut AI & ĐH Würzburg)</p>
+                    </div>
+                    <span class="badge-tag badge-purple">MetaFormer Asymmetric</span>
+                </div>
+
+                <p>
+                    <strong>Vấn đề giải quyết:</strong> Các phương pháp trước đây hoặc chỉ nâng sáng (LLIE) hoặc chỉ khử mờ (Deblur) tách biệt. Khi gặp ảnh chụp đêm thực tế vừa tối vừa bị rung tay do phơi sáng lâu ($y = \gamma(x \otimes k) + n$), các mô hình chuỗi (cascaded) thất bại hoàn toàn vì khuếch đại vệt mờ thành quầng sáng bệt.
+                </p>
+
+                <div class="metric-hero-grid">
+                    <div class="metric-box">
+                        <span class="label">DarkIR-m Params</span>
+                        <span class="hero-val accent-blue">3.31M</span>
+                        <span class="note">Giảm 55% so với LEDNet (7.4M)</span>
+                    </div>
+                    <div class="metric-box">
+                        <span class="label">Độ phức tạp GMACs</span>
+                        <span class="hero-val accent-purple">7.25G</span>
+                        <span class="note">Chỉ bằng 1/20 Restormer (144G)</span>
+                    </div>
+                    <div class="metric-box">
+                        <span class="label">PSNR trên LOLBlur</span>
+                        <span class="hero-val accent-emerald">27.00 dB</span>
+                        <span class="note">Vượt SOTA cũ +1.26 dB</span>
+                    </div>
+                </div>
+
+                <div class="callout def">
+                    <div class="callout-title">💡 Đột Phá Kiến Trúc Của DarkIR: Phân Tách Miền Tần Số & Không Gian</div>
+                    <ul style="margin-left: 20px; font-size: 0.92rem;">
+                        <li><strong>Bộ mã hóa Fourier (EBlock):</strong> Tận dụng đặc tính của biến đổi Fourier — <em>biên độ (Amplitude) chứa thông tin độ sáng toàn cục, còn pha (Phase) chứa cấu trúc không gian</em>. Fre-MLP chỉ can thiệp vào phổ biên độ để cân bằng sáng tự nhiên từ độ phân giải cao xuống tầng đáy ($8\times$ downsample).</li>
+                        <li><strong>Bộ giải mã giãn nở không gian (Di-SpAM DBlock):</strong> Không cần làm sáng nữa, Decoder tập trung khử mờ bằng tích chập giãn nở 3 nhánh với dilation factors <strong>(1, 4, 9)</strong> mở rộng trường tiếp nhận cực đại mà không tăng tham số.</li>
+                        <li><strong>Hàm mất mát hướng dẫn tầng đáy ($\mathcal{L}_{lol}$):</strong> Bắt buộc đặc trưng tầng đáy phải tái tạo được ảnh sáng $\hat{x}_{\downarrow 8}$ thu nhỏ.</li>
+                    </ul>
+                </div>
+
+                <!-- DarkIR Full Paper Reader Toggle & Container -->
+                <button class="paper-expand-toggle-btn" data-paper="darkir" onclick="togglePaperReader('darkir')">
+                    📖 Đọc Toàn Văn Bài Báo DarkIR (Bản Dịch Học Thuật & Đồ Họa Đầy Đủ) <span class="arrow-icon" id="arrow-darkir">▼</span>
+                </button>
+                <div class="paper-reader-wrapper" id="reader-darkir"></div>
+            </div>
+
+            <!-- 2.2 NTIRE 2024 CHALLENGE -->
+            <div id="mod2-ntire" class="soft-card">
+                <div class="soft-card-header">
+                    <div>
+                        <span class="badge-tag badge-orange">CVPRW 2024 • Benchmark Challenge</span>
+                        <h3 class="soft-card-title" style="margin-top:6px;">NTIRE 2024 Challenge on Low Light Image Enhancement</h3>
+                        <p class="soft-card-subtitle">Xiaoning Liu et al. (Ban tổ chức NTIRE & 22 nhóm nghiên cứu quốc tế)</p>
+                    </div>
+                    <span class="badge-tag badge-orange">Ultra-HD 4K Benchmark</span>
+                </div>
+
+                <p>
+                    <strong>Ý nghĩa học thuật:</strong> NTIRE là cuộc thi học thuật danh giá nhất thế giới về phục hồi ảnh. Năm 2024 đánh dấu lần đầu tiên có đường đua riêng cho ảnh cực tối, ngược sáng và cảnh đêm ở độ phân giải siêu nét <strong>4K UHD+</strong> (230 train, 35 val, 35 test).
+                </p>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Hạng</th>
+                                <th>Đội Nghiên Cứu</th>
+                                <th>Mô Hình Cốt Lõi</th>
+                                <th>PSNR (dB) ↑</th>
+                                <th>SSIM ↑</th>
+                                <th>Đặc Trưng Kỹ Thuật Đột Phá</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>🥇 1</td>
+                                <td><strong>SYSU-FVL-T2</strong></td>
+                                <td>ESDNet-L</td>
+                                <td><strong>25.52</strong></td>
+                                <td><strong>0.8637</strong></td>
+                                <td>Chiến lược <em>Progressive Patch Training</em> ($720 \to 1024 \to 1600$), Semantic-Aligned Module.</td>
+                            </tr>
+                            <tr>
+                                <td>🥈 2</td>
+                                <td><strong>Retinexformer</strong></td>
+                                <td>ORF + IGT</td>
+                                <td>25.30</td>
+                                <td>0.8525</td>
+                                <td>Illumination-Guided Attention: Dùng bản đồ chiếu sáng hướng dẫn vùng đủ sáng bù vùng tối.</td>
+                            </tr>
+                            <tr>
+                                <td>🥉 3</td>
+                                <td><strong>DH-AISP</strong></td>
+                                <td>DWT-FFC</td>
+                                <td>24.97</td>
+                                <td>0.8528</td>
+                                <td>Biến đổi Wavelet 2D tách chi tiết + ConvNeXt trích xuất đặc trưng ngữ cảnh ImageNet.</td>
+                            </tr>
+                            <tr>
+                                <td>Hạng 5</td>
+                                <td><strong>GiantPandaCV</strong></td>
+                                <td>UHDMamba</td>
+                                <td>24.83</td>
+                                <td>0.8474</td>
+                                <td>State-Space Model (Mamba) độ phức tạp tuyến tính $\mathcal{O}(N)$ giải quyết nghẽn bộ nhớ 4K.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="callout warn">
+                    <div class="callout-title">⚠️ Bài Học Thực Tế Về Phần Cứng: Nghịch Lý VRAM Khi Xử Lý Ảnh Lớn</div>
+                    <p style="margin-bottom:0;">
+                        Báo cáo NTIRE 2024 chỉ ra rằng 100% các mô hình SOTA đều cần GPU 24GB - 48GB (A6000/RTX4090) và sẽ bị <strong>Out-of-Memory (OOM)</strong> trên GPU phổ thông 8GB-12GB nếu không chia mảnh (patching). Điều này củng cố mạnh mẽ lý do vì sao đồ án của chúng ta chọn hướng <strong>Lightweight CNN</strong> để có thể chạy mượt mà trên phần cứng giới hạn.
+                    </p>
+                </div>
+
+                <!-- NTIRE 2024 Full Paper Reader Toggle & Container -->
+                <button class="paper-expand-toggle-btn" data-paper="ntire2024" onclick="togglePaperReader('ntire2024')">
+                    📖 Đọc Toàn Văn Báo Cáo NTIRE 2024 (Bản Dịch Học Thuật & Đồ Họa Đầy Đủ) <span class="arrow-icon" id="arrow-ntire2024">▼</span>
+                </button>
+                <div class="paper-reader-wrapper" id="reader-ntire2024"></div>
+            </div>
+
+            <!-- 2.3 EDGE-LLIE -->
+            <div id="mod2-edgellie" class="soft-card">
+                <div class="soft-card-header">
+                    <div>
+                        <span class="badge-tag badge-green">CVPRW 2024 • Thiết Bị Biên Thực Tế</span>
+                        <h3 class="soft-card-title" style="margin-top:6px;">Edge-LLIE: Optimized Low-Light Image Enhancement for Edge Vision</h3>
+                        <p class="soft-card-subtitle">S M A Sharif et al. (Opt-AI Inc., Seoul, Hàn Quốc)</p>
+                    </div>
+                    <span class="badge-tag badge-green">199 FPS • INT8 Jetson Orin</span>
+                </div>
+
+                <p>
+                    <strong>Đóng góp đột phá:</strong> Thiết kế mạng FCN U-Net thuần tích chập với Residual Blocks, giải quyết vấn đề nghẽn phần cứng trên chip nhúng ARM64. Đồng thời giải quyết hiện tượng <em>nhiễu rò rỉ qua Skip Connection</em> bằng lớp Conv $1 \times 1$ gating.
+                </p>
+
+                <div class="metric-hero-grid">
+                    <div class="metric-box">
+                        <span class="label">Tốc độ Jetson Orin</span>
+                        <span class="hero-val accent-emerald">199.67 FPS</span>
+                        <span class="note">Độ trễ chỉ 5.01 ms (chế độ 30W)</span>
+                    </div>
+                    <div class="metric-box">
+                        <span class="label">Số tham số mạng</span>
+                        <span class="hero-val accent-blue">4.46M</span>
+                        <span class="note">FCN U-Net + Residual Blocks</span>
+                    </div>
+                    <div class="metric-box">
+                        <span class="label">Tăng cường YOLOv3</span>
+                        <span class="hero-val accent-purple">+1.4% mAP</span>
+                        <span class="note">Nhận diện vật thể đêm (ExDark)</span>
+                    </div>
+                    <div class="metric-box">
+                        <span class="label">Khớp ảnh SuperGlue</span>
+                        <span class="hero-val accent-orange">+90 pts</span>
+                        <span class="note">Tăng từ 217 lên 304 điểm khớp stereo</span>
+                    </div>
+                </div>
+
+                <div class="callout intuition">
+                    <div class="callout-title">🌱 Bài Học Skip Connection Chống Rò Rỉ Nhiễu (Noise Leakage)</div>
+                    <p style="margin-bottom:0;">
+                        Trong kiến trúc U-Net y sinh nguyên bản của Ronneberger, các đường liên kết tắt (skip connections) truyền thẳng tensor từ Encoder sang Decoder qua phép nối `torch.cat`. Tuy nhiên trong ảnh chụp đêm, Encoder mã hóa cả cấu trúc <strong>lẫn hạt nhiễu cảm biến cực nặng</strong>. Nếu truyền thô, nhiễu sẽ bị đẩy thẳng ra ảnh đầu ra! Sharif et al. đặt một lớp Conv $1 \times 1$ làm bộ lọc không gian (Gating), giúp chặn hạt nhiễu lại trước khi sang Decoder. Đây là chi tiết đắt giá mà chúng ta sẽ tích hợp vào Compact U-Net.
+                    </p>
+                </div>
+
+                <!-- Edge-LLIE Full Paper Reader Toggle & Container -->
+                <button class="paper-expand-toggle-btn" data-paper="edgellie" onclick="togglePaperReader('edgellie')">
+                    📖 Đọc Toàn Văn Bài Báo Edge-LLIE (Bản Dịch Học Thuật & Đồ Họa Đầy Đủ) <span class="arrow-icon" id="arrow-edgellie">▼</span>
+                </button>
+                <div class="paper-reader-wrapper" id="reader-edgellie"></div>
+            </div>
+
+            <!-- 2.4 HVI COLOR SPACE -->
+            <div id="mod2-hvi" class="soft-card">
+                <div class="soft-card-header">
+                    <div>
+                        <span class="badge-tag badge-blue">CVPR 2025 • Đột Phá Không Gian Màu</span>
+                        <h3 class="soft-card-title" style="margin-top:6px;">HVI: A New Color Space for Low-Light Image Enhancement</h3>
+                        <p class="soft-card-subtitle">Qingsen Yan et al. (ĐH Công Nghiệp Tây Bắc & SMU Singapore)</p>
+                    </div>
+                    <span class="badge-tag badge-blue">28.20 dB PSNR • CIDNet 1.88M</span>
+                </div>
+
+                <p>
+                    <strong>Bản chất khoa học:</strong> Nhóm tác giả chứng minh rằng việc tăng cường ảnh trong không gian sRGB dễ gây biến dạng màu (color bias) do độ nhạy kênh cao; còn chuyển sang HSV truyền thống thì gặp 2 loại nhiễu hình học màu nghiêm trọng:
+                </p>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Khuyết Tật Không Gian Màu Cũ</th>
+                                <th>Nguyên Nhân Hình Học Toán Học</th>
+                                <th>Giải Pháp Không Gian Màu HVI (CVPR 2025)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Nhiễu đứt gãy màu đỏ (Red Discontinuity)</strong></td>
+                                <td>Trục sắc độ $H \in [0, 6)$ cắt đôi màu đỏ tại $h=0$ và $h=6$. Khoảng cách Euclid giữa 2 sắc đỏ giống nhau bị đội lên $\approx 6$, sinh ra vệt rách màu đen.</td>
+                                <td><strong>Phân cực trực giao HS:</strong> Chiếu sang tọa độ $(h_{proj}, v_{proj}) = (\cos \frac{\pi h}{3}, \sin \frac{\pi h}{3})$. Hai điểm đỏ hòa làm một tại $(1, 0)$, khoảng cách bằng 0.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Nhiễu mặt phẳng đen (Black Plane Noise)</strong></td>
+                                <td>Khi độ sáng $V \to 0$ (vùng tối đen), mặt phẳng $HS$ vẫn là một đĩa tròn đơn vị. Nhiễu hạt cảm biến xoay vector màu hỗn loạn sinh ra nhiễu hạt mè màu sặc sỡ.</td>
+                                <td><strong>Hàm co sụp $C_k(x)$ học được:</strong> $C_k(x) = \frac{k}{r}\sin(\frac{\pi I_{max}}{2}) + \varepsilon$. Khi $I_{max} \to 0$, $C_k \to 0$, nén toàn bộ đĩa tròn về gốc tọa độ đen tuyệt đối.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="callout insight">
+                    <div class="callout-title">💡 Tính Năng Plug-and-Play Tuyệt Vời Của HVI</div>
+                    <p style="margin-bottom:0;">
+                        Khi gắn module chuyển đổi HVI vào các mạng CNN khác như LEDNet, PSNR tăng vọt ngay <strong>+3.45 dB</strong> mà không cần thêm bất kỳ một tham số nào trong mạng nơ-ron! Đây là hướng mở rộng giá trị gia tăng cực tốt cho đồ án của chúng ta.
+                    </p>
+                </div>
+
+                <!-- HVI Full Paper Reader Toggle & Container -->
+                <button class="paper-expand-toggle-btn" data-paper="hvi" onclick="togglePaperReader('hvi')">
+                    📖 Đọc Toàn Văn Bài Báo HVI (Bản Dịch Học Thuật & Đồ Họa Đầy Đủ) <span class="arrow-icon" id="arrow-hvi">▼</span>
+                </button>
+                <div class="paper-reader-wrapper" id="reader-hvi"></div>
+            </div>
+
+            <!-- 2.5 COMPARISON MATRIX -->
+            <div id="mod2-matrix">
+                <h3 class="sub-heading">2.5 Ma Trận Đối Chiếu Tổng Quan Giữa 4 Bài Báo & Đề Tài Của Chúng Ta</h3>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Tiêu Chí Đối Chiếu</th>
+                                <th>DarkIR (CVPR 2025)</th>
+                                <th>NTIRE 2024 Challenge</th>
+                                <th>Edge-LLIE (CVPRW 2024)</th>
+                                <th>HVI & CIDNet (CVPR 2025)</th>
+                                <th style="background:var(--primary-light); color:var(--primary);">Đồ Án Compact U-Net (Ours)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Loại công trình</strong></td>
+                                <td>Mô hình đơn lẻ SOTA</td>
+                                <td>Toàn cảnh cuộc thi</td>
+                                <td>Thiết bị biên & hạ nguồn</td>
+                                <td>Không gian màu mới</td>
+                                <td><span class="badge-tag badge-blue">Đồ án cao học chuẩn thực nghiệm</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Trường phái kiến trúc</strong></td>
+                                <td>Asymmetric MetaFormer</td>
+                                <td>Đa dạng (CNN/Trans/Mamba)</td>
+                                <td>FCN U-Net + ResBlocks</td>
+                                <td>Dual-branch Cross-Attention</td>
+                                <td><strong>Compact U-Net (3 cấp + Skip Gating)</strong></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Số tham số (Params)</strong></td>
+                                <td>3.31M (DarkIR-m)</td>
+                                <td>1.5M - 30M+ (đa phần >15M)</td>
+                                <td>4.46M</td>
+                                <td>1.88M</td>
+                                <td><span class="badge-tag badge-green">Dự kiến &lt; 1.5M</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Độ phức tạp FLOPs</strong></td>
+                                <td>7.25 GMACs (256px)</td>
+                                <td>Rất nặng (cần 48GB VRAM)</td>
+                                <td>Đo trên ARM64 Orin</td>
+                                <td>7.57 GFLOPs (256px)</td>
+                                <td><strong>Mục tiêu &lt; 8.0 GFLOPs</strong></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Tốc độ thực tế</strong></td>
+                                <td>~0.05s GPU</td>
+                                <td>Dễ OOM ở độ phân giải 4K</td>
+                                <td>199.67 FPS (Jetson Orin)</td>
+                                <td>0.053s GPU</td>
+                                <td><strong>Thời gian thực (&gt; 45 FPS)</strong></td>
+                            </tr>
+                            <tr>
+                                <td><strong>PSNR LOL-v1 (dB)</strong></td>
+                                <td>N/A (Tập trung LOLBlur)</td>
+                                <td>Dữ liệu tham khảo thêm</td>
+                                <td>16.44 dB</td>
+                                <td>28.20 dB</td>
+                                <td><strong>Kỳ vọng đối chuẩn: ~22 - 25 dB</strong></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Vị trí trong đồ án</strong></td>
+                                <td><strong>Paper tham khảo chính</strong></td>
+                                <td>Chuẩn hóa benchmark & loss</td>
+                                <td>Học thiết kế Skip Gating</td>
+                                <td>Module mở rộng màu sắc</td>
+                                <td><strong>Xương sống thực nghiệm của nhóm</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULE 03: 3D SPATIAL VISUALIZATION (Skill 3dviz-pro-max) -->
+        <section id="mod3-3dviz">
+            <h2 class="section-heading"><span class="section-num">03</span> Trực Quan Hóa Không Gian 3D (Interactive WebGL 3D Visualization)</h2>
+            <p>
+                Ứng dụng kỹ thuật mô hình hóa không gian 3D chuẩn <strong>`3dviz-pro-max`</strong>: Chúng ta biến ma trận điểm ảnh $I(x, y) \in \mathbb{R}^{H \times W}$ thành một <strong>Địa hình Cường độ Không Gian 3D (3D Pixel Intensity Heightmap)</strong>. Chiều cao $z = f(x, y)$ tỷ lệ thuận với mức photon thu nhận được, giúp quan sát trực diện cấu trúc tín hiệu và bản chất hạt nhiễu cảm biến Poisson/Gaussian.
+            </p>
+
+            <div id="three-container">
+                <canvas id="three-canvas"></canvas>
+                <div class="three-overlay">
+                    <h4 id="three-title">🌌 1. Ảnh Thiếu Sáng Gốc (Input Dark)</h4>
+                    <p id="three-desc">Điểm ảnh chìm sâu dưới thung lũng đen [z ≈ 1.5 - 3.5]. Các gai nhọn màu đỏ cam chọc thẳng lên cao thể hiện rõ hạt nhiễu cảm biến ngẫu nhiên.</p>
+                </div>
+                <div class="three-stat-pill" id="three-stat-pill">
+                    Elevation: 2.8u • Noise Spikes: High
+                </div>
+                <div class="three-controls">
+                    <button class="three-btn active" onclick="switch3DMode('dark', this)">1. Ảnh Tối Ban Đầu (Low-Light)</button>
+                    <button class="three-btn" onclick="switch3DMode('clahe', this)">2. Qua CLAHE (Gai nhiễu phóng đại)</button>
+                    <button class="three-btn" onclick="switch3DMode('enhanced', this)">3. Qua Compact U-Net (Phục hồi êm dịu)</button>
+                    <button class="three-btn" onclick="toggleRenderMode(this)">Hiển Thị: Khối Bề Mặt (Solid)</button>
+                    <button class="three-btn" onclick="toggleAutoRotate(this)">Tự Động Xoay: BẬT</button>
+                    <button class="three-btn" onclick="reset3DCamera()">Góc Nhìn Chuẩn</button>
+                </div>
+            </div>
+
+            <div class="callout intuition">
+                <div class="callout-title">🌱 Góc Quan Sát 3D Cho Thấy Điều Gì?</div>
+                <p style="margin-bottom:0;">
+                    Hãy dùng chuột xoay và phóng to địa hình 3D ở chế độ <strong>2. Qua CLAHE</strong>: Bạn sẽ thấy trần nhà sáng bị cắt bẹt bằng phẳng (Clipping Plateau), các gai nhiễu bị phóng đại gấp 3 lần thành các mũi chông nhọn hoắt. Ngược lại ở chế độ <strong>3. Qua Compact U-Net</strong>, mạng nơ-ron hoạt động như một bộ lọc thông minh: các sườn dốc cấu trúc biên cạnh được bảo tồn nguyên vẹn sắc nét, trong khi toàn bộ thung lũng đáy được nâng phẳng mượt mà, triệt tiêu hoàn toàn gai nhiễu!
+                </p>
+            </div>
+        </section>
+
+        <!-- MODULE 04: PROPOSED COMPACT U-NET ARCHITECTURE -->
+        <section id="mod4-arch">
+            <h2 class="section-heading"><span class="section-num">04</span> Thiết Kế Kiến Trúc Compact U-Net & Composite Loss</h2>
+            <p>
+                Dựa trên phân tích từ các paper tham khảo và yêu cầu nghiêm ngặt từ giảng viên ("Hiểu rõ bản chất, không phát minh bừa bãi, không tuyên bố reproduce SOTA, mô hình CNN cơ bản phù hợp phạm vi môn học"), chúng ta đề xuất kiến trúc <strong>Compact U-Net</strong> tối ưu hóa cho bài toán phục hồi ảnh.
+            </p>
+
+            <div class="soft-card">
+                <div class="soft-card-header">
+                    <div>
+                        <h3 class="soft-card-title">Sơ Đồ Luồng Tín Hiệu Compact U-Net Với Skip Gating</h3>
+                        <p class="soft-card-subtitle">Cấu trúc 3 cấp hạ mẫu & nâng mẫu, kết hợp lớp Conv 1x1 tinh lọc nhiễu học từ Edge-LLIE</p>
+                    </div>
+                    <span class="badge-tag badge-blue">&lt; 1.5M Tham Số</span>
+                </div>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Khối Tầng Mạng</th>
+                                <th>Kích Thước Tensor Đầu Ra</th>
+                                <th>Toán Tử & Thành Phần Bên Trong</th>
+                                <th>Vai Trò Vật Lý Trong Khôi Phục Ảnh</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Input Tensor</strong></td>
+                                <td>$(B, 3, 256, 256)$</td>
+                                <td>Ảnh thiếu sáng đầu vào $y$</td>
+                                <td>Dải giá trị chuẩn hóa $[0.0, 1.0]$.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Encoder Stage 1</strong></td>
+                                <td>$(B, 32, 256, 256)$</td>
+                                <td>$\text{Conv } 3\times 3 \to \text{BatchNorm} \to \text{LeakyReLU}(0.2)$</td>
+                                <td>Trích xuất đặc trưng biên cạnh nông và sắc độ cục bộ.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Downsample 1</strong></td>
+                                <td>$(B, 32, 128, 128)$</td>
+                                <td>$\text{Conv } 3\times 3, \text{stride}=2$</td>
+                                <td>Thu nhỏ $2\times$ không gian, nén thông tin tần số cao.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Encoder Stage 2</strong></td>
+                                <td>$(B, 64, 128, 128)$</td>
+                                <td>$\text{ResBlock } (2 \times \text{Conv } 3\times 3 + \text{BN})$</td>
+                                <td>Trích xuất kết cấu vi mô (texture) và cấu trúc đối tượng.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Downsample 2</strong></td>
+                                <td>$(B, 64, 64, 64)$</td>
+                                <td>$\text{Conv } 3\times 3, \text{stride}=2$</td>
+                                <td>Mở rộng trường tiếp nhận (Receptive Field).</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Encoder Stage 3</strong></td>
+                                <td>$(B, 128, 64, 64)$</td>
+                                <td>$\text{ResBlock } (2 \times \text{Conv } 3\times 3 + \text{BN})$</td>
+                                <td>Nắm bắt bối cảnh phân bố nguồn sáng toàn cục.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Bottleneck Layer</strong></td>
+                                <td>$(B, 256, 32, 32)$</td>
+                                <td>$\text{Conv } 3\times 3, \text{stride}=2 \to \text{ResBlock}(256)$</td>
+                                <td>Không gian đặc trưng sâu nhất, học ánh xạ chiếu sáng tổng thể.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Skip Connections (Gated)</strong></td>
+                                <td>Đồng bộ kênh Decoder</td>
+                                <td>$\text{Conv } 1\times 1 \text{ Gating Filter}$</td>
+                                <td><strong>Học từ Edge-LLIE:</strong> Chặn nhiễu hạt trước khi concat vào Decoder.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Decoder Stage 3, 2, 1</strong></td>
+                                <td>$(B, 128 \to 64 \to 32)$</td>
+                                <td>$\text{Bilinear Upsample } (2\times) \to \text{Concat} \to \text{Conv } 3\times 3$</td>
+                                <td>Khôi phục chi tiết không gian độ phân giải cao từng cấp.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Output Head</strong></td>
+                                <td>$(B, 3, 256, 256)$</td>
+                                <td>$\text{Conv } 1\times 1 \to \text{Sigmoid}$</td>
+                                <td>Tạo ảnh đã tăng cường $\hat{x}$, ép giá trị trong $[0, 1]$.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 4.2 COMPOSITE LOSS FUNCTION -->
+            <div id="mod4-loss">
+                <h3 class="sub-heading">4.2 Thiết Kế Hàm Mất Mát Kết Hợp Đa Thành Phần (Composite Loss)</h3>
+                <p>
+                    Để huấn luyện mô hình đạt chất lượng hài hòa giữa độ chính xác mức điểm ảnh và cảm nhận thị giác tự nhiên, chúng ta xây dựng hàm mất mát kết hợp:
+                </p>
+
+                <div class="callout def">
+                    $$\mathcal{L}_{total} = \mathcal{L}_1 + \lambda_{ssim} \mathcal{L}_{ssim} + \lambda_{edge} \mathcal{L}_{edge}$$
+                </div>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Thành Phần Hàm Mất Mát</th>
+                                <th>Công Thức Toán Học Cụ Thể</th>
+                                <th>Trọng Số Thực Nghiệm</th>
+                                <th>Lý Do Lựa Chọn & Triệt Tiêu Khuyết Tật Của MSE</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>$\mathcal{L}_1$ (Pixel L1 Loss)</strong></td>
+                                <td>$\mathcal{L}_1 = \frac{1}{N}\sum |x_i - \hat{x}_i|$</td>
+                                <td>$\lambda_1 = 1.0$</td>
+                                <td>Tránh hiện tượng ảnh bị mờ bệt (oversmoothing) của MSE ($L_2$) khi gặp nhiễu cảm biến nặng.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>$\mathcal{L}_{ssim}$ (Structural Loss)</strong></td>
+                                <td>$\mathcal{L}_{ssim} = 1 - \text{SSIM}(x, \hat{x})$</td>
+                                <td>$\lambda_{ssim} = 0.5$</td>
+                                <td>Đo lường độ tương quan độ chói (luminance), tương phản (contrast) và cấu trúc (structure) theo thị giác người.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>$\mathcal{L}_{edge}$ (Gradient Edge Loss)</strong></td>
+                                <td>$\mathcal{L}_{edge} = \frac{1}{N}\|\nabla x - \nabla \hat{x}\|_1$</td>
+                                <td>$\lambda_{edge} = 0.05$</td>
+                                <td>Áp dụng toán tử đạo hàm Sobel/Laplacian để ép mạng tái tạo gờ cạnh sắc nét (học từ DarkIR).</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 4.3 INTERACTIVE LAYER EXPLORER -->
+            <div id="mod4-explorer">
+                <h3 class="sub-heading">4.3 Trình Khám Phá Tensor Từng Tầng Mạng (Interactive Tensor Explorer)</h3>
+                <p>Nhấp vào từng khối tầng mạng bên dưới để xem hình dạng tensor, số tham số và chức năng toán học chi tiết:</p>
+
+                <div class="layer-pipeline">
+                    <div class="layer-node" onclick="showLayerDetail('enc1')">
+                        <div class="layer-info">
+                            <div class="layer-icon">E1</div>
+                            <div class="layer-desc">
+                                <h5>Encoder Stage 1 (Stem + Conv 3x3)</h5>
+                                <p>Trích xuất cạnh biên nông, giữ nguyên độ phân giải không gian gốc.</p>
+                            </div>
+                        </div>
+                        <span class="layer-tensor-badge">[B, 32, 256, 256] • 960 params</span>
+                    </div>
+
+                    <div class="layer-node" onclick="showLayerDetail('enc2')">
+                        <div class="layer-info">
+                            <div class="layer-icon">E2</div>
+                            <div class="layer-desc">
+                                <h5>Encoder Stage 2 (Strided Conv + ResBlock)</h5>
+                                <p>Hạ mẫu 2x, học hoa văn kết cấu vi mô (texture) và triệt tiêu nhiễu sơ cấp.</p>
+                            </div>
+                        </div>
+                        <span class="layer-tensor-badge">[B, 64, 128, 128] • ~74K params</span>
+                    </div>
+
+                    <div class="layer-node" onclick="showLayerDetail('enc3')">
+                        <div class="layer-info">
+                            <div class="layer-icon">E3</div>
+                            <div class="layer-desc">
+                                <h5>Encoder Stage 3 (Strided Conv + ResBlock)</h5>
+                                <p>Hạ mẫu 4x, nắm bắt cấu trúc hình học vật thể và ánh sáng vùng.</p>
+                            </div>
+                        </div>
+                        <span class="layer-tensor-badge">[B, 128, 64, 64] • ~295K params</span>
+                    </div>
+
+                    <div class="layer-node" onclick="showLayerDetail('bottleneck')">
+                        <div class="layer-info">
+                            <div class="layer-icon">B</div>
+                            <div class="layer-desc">
+                                <h5>Bottleneck Layer (Tầng Đáy Không Gian Sâu)</h5>
+                                <p>Trường tiếp nhận lớn nhất, điều tiết cường độ sáng toàn cảnh.</p>
+                            </div>
+                        </div>
+                        <span class="layer-tensor-badge">[B, 256, 32, 32] • ~590K params</span>
+                    </div>
+
+                    <div class="layer-node" onclick="showLayerDetail('skip')">
+                        <div class="layer-info">
+                            <div class="layer-icon" style="color:var(--data-emerald);">SG</div>
+                            <div class="layer-desc">
+                                <h5>Gated Skip Connections (Conv 1x1 Gating)</h5>
+                                <p>Lọc chặn hạt nhiễu cảm biến trước khi đưa sang Decoder (học từ Edge-LLIE).</p>
+                            </div>
+                        </div>
+                        <span class="layer-tensor-badge">Gated Filter • ~16K params</span>
+                    </div>
+
+                    <div class="layer-node" onclick="showLayerDetail('dec')">
+                        <div class="layer-info">
+                            <div class="layer-icon" style="color:var(--data-purple);">D</div>
+                            <div class="layer-desc">
+                                <h5>Decoder & Upsampling Pyramid (Giải Mã Tái Tạo)</h5>
+                                <p>Nội suy song tuyến tính, kết hợp đặc trưng sạch từ Skip Connection.</p>
+                            </div>
+                        </div>
+                        <span class="layer-tensor-badge">[B, 3, 256, 256] • ~380K params</span>
+                    </div>
+                </div>
+
+                <div id="layer-detail-box">
+                    <h4 id="layer-detail-title">Chi Tiết Tầng Mạng</h4>
+                    <p id="layer-detail-text">Chọn một tầng mạng ở trên để xem phân tích chi tiết.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULE 05: EXPERIMENTAL PLAN & BENCHMARKS -->
+        <section id="mod5-datasets">
+            <h2 class="section-heading"><span class="section-num">05</span> Kế Hoạch Thực Nghiệm & Bộ Dữ Liệu Đối Chuẩn</h2>
+            <p>
+                Để đánh giá khách quan và khoa học, chúng ta phân chia kế hoạch thực nghiệm thành 3 mức độ rõ ràng, kết hợp huấn luyện trên các bộ dữ liệu chụp thật có Ground Truth và kiểm thử tổng quát trên ảnh đêm thực tế.
+            </p>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Bộ Dữ Liệu</th>
+                            <th>Phân Loại</th>
+                            <th>Số Cặp Train</th>
+                            <th>Số Cặp Test</th>
+                            <th>Đặc Điểm & Vai Trò Trong Đồ Án</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>LOL-v1</strong> (BMVC 2018)</td>
+                            <td>Chụp thật (DSLR)</td>
+                            <td>485</td>
+                            <td>15</td>
+                            <td><span class="badge-tag badge-blue">Benchmark Cốt Lõi</span> Cố định chân máy, chụp cặp ảnh chuẩn xác từng pixel.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>LOL-v2 Real</strong> (IJCV 2021)</td>
+                            <td>Chụp thật đa dạng</td>
+                            <td>689</td>
+                            <td>100</td>
+                            <td><span class="badge-tag badge-purple">Mở Rộng Dữ Liệu</span> Tăng độ phức tạp cảnh đêm thực tế và mức nhiễu cảm biến cao.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>LOL-v2 Synthetic</strong> (IJCV 2021)</td>
+                            <td>Ảnh tổng hợp</td>
+                            <td>900</td>
+                            <td>100</td>
+                            <td><span class="badge-tag badge-orange">Kiểm Tra Phân Phối</span> Sinh từ phân rã Retinex để kiểm chứng độ bền vững.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ExDark</strong> (CVIU 2019)</td>
+                            <td>Chụp đêm tự nhiên</td>
+                            <td>—</td>
+                            <td>7,363</td>
+                            <td><span class="badge-tag badge-green">In-the-wild Demo</span> 10 điều kiện ánh sáng cực đoan, đánh giá trực quan (Zero-shot).</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- ABLATION MATRIX -->
+            <div id="mod5-ablation">
+                <h3 class="sub-heading">5.2 Ma Trận Đánh Giá Độc Lập Giữa Các Mức Độ Mô Hình (Ablation Study)</h3>
+                <p>
+                    Đây là xương sống của đồ án khi báo cáo trước hội đồng: chứng minh sự tiến hóa rõ ràng qua từng nấc thang kỹ thuật mà không cần phải chạy theo các mô hình khổng lồ.
+                </p>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Mức Độ Mô Hình</th>
+                                <th>Thuật Toán / Kiến Trúc</th>
+                                <th>Kỳ Vọng PSNR (dB) ↑</th>
+                                <th>Kỳ Vọng SSIM ↑</th>
+                                <th>Số Tham Số (Params)</th>
+                                <th>Tốc Độ Dự Kiến (FPS)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Input (Chưa xử lý)</strong></td>
+                                <td>Ảnh thiếu sáng thô ban đầu</td>
+                                <td>~10.90 dB</td>
+                                <td>~0.350</td>
+                                <td>—</td>
+                                <td>—</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Mức 0: Truyền thống A</strong></td>
+                                <td>Cân bằng lược đồ toàn cục (HE)</td>
+                                <td>~14.20 dB</td>
+                                <td>~0.480</td>
+                                <td>—</td>
+                                <td>&gt; 120 FPS</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Mức 0: Truyền thống B</strong></td>
+                                <td>Cân bằng thích nghi (CLAHE)</td>
+                                <td>~16.10 dB</td>
+                                <td>~0.530</td>
+                                <td>—</td>
+                                <td>&gt; 90 FPS</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Mức 0: Truyền thống C</strong></td>
+                                <td>Retinex cổ điển (MSRCR)</td>
+                                <td>~16.80 dB</td>
+                                <td>~0.560</td>
+                                <td>—</td>
+                                <td>15 - 30 FPS</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Mức 1: Deep Learning A</strong></td>
+                                <td>Plain CNN (Tuần tự không skip connection)</td>
+                                <td>~18.50 dB</td>
+                                <td>~0.680</td>
+                                <td>~0.45M</td>
+                                <td>&gt; 80 FPS</td>
+                            </tr>
+                            <tr style="background:var(--primary-light); font-weight:600;">
+                                <td><strong>Mức 2: Compact U-Net (Ours)</strong></td>
+                                <td><strong>U-Net + Gated Skip + Composite Loss</strong></td>
+                                <td><span style="color:var(--primary);">Target: &gt; 23.50 dB</span></td>
+                                <td><span style="color:var(--primary);">Target: &gt; 0.820</span></td>
+                                <td><strong>~1.35M</strong></td>
+                                <td><strong>&gt; 50 FPS</strong></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Mức 3: Mở rộng HVI (Optional)</strong></td>
+                                <td>Compact U-Net + Tiền xử lý HVI Space</td>
+                                <td>Target: &gt; 25.00 dB</td>
+                                <td>Target: &gt; 0.850</td>
+                                <td>~1.35M (0 param tăng thêm)</td>
+                                <td>~45 FPS</td>
+                            </tr>
+                            <tr style="color:var(--text-tertiary); font-style:italic;">
+                                <td><em>Tham chiếu SOTA CVF (DarkIR/HVI)</em></td>
+                                <td><em>MetaFormer / CIDNet (CVPR 2025)</em></td>
+                                <td><em>~27.0 - 28.2 dB</em></td>
+                                <td><em>~0.88 - 0.89</em></td>
+                                <td><em>1.88M - 3.31M</em></td>
+                                <td><em>~20 - 30 FPS</em></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="callout intuition">
+                    <div class="callout-title">🌱 Kế Hoạch Huấn Luyện Khi Không Có GPU Trên Laptop Cá Nhân</div>
+                    <p style="margin-bottom:0;">
+                        Do máy tính xách tay cá nhân không có card đồ họa rời (GPU), toàn bộ mã nguồn `src/` (mô hình, DataLoader, hàm mất mát, kịch bản huấn luyện) được lập trình chuẩn hóa hoàn toàn trên repository cục bộ này. Sau đó, chúng ta sẽ đẩy lên Google Colab (sử dụng GPU T4 hoặc A100 miễn phí) để thực thi huấn luyện qua file cấu hình. Kết quả thực nghiệm (weights `best_model.pth`, log TensorBoard, biểu đồ PSNR/SSIM và ảnh đầu ra) sẽ được kéo ngược về thư mục `docs/reports/` để tổng hợp báo cáo.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULE 06: DEFENSE Q&A (15 QUESTIONS ACCORDION) -->
+        <section id="mod6-qa">
+            <h2 class="section-heading"><span class="section-num">06</span> Bộ 15 Câu Hỏi Phản Biện Của Hội Đồng & Kịch Bản Bảo Vệ</h2>
+            <p>
+                Tổng hợp 15 câu hỏi bẫy kinh điển và các điểm xoáy kỹ thuật mà các Thầy Cô trong Hội đồng chấm đồ án ngành Khoa học Máy tính tại UIT thường đặt ra để kiểm tra mức độ hiểu sâu bài toán của học viên:
+            </p>
+
+            <div class="qa-grid" id="qa-container">
+                <!-- Injected dynamically via js/qa-accordion.js -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Modular Script Imports -->
+    <script src="js/theme.js"></script>
+    <script src="js/navigation.js"></script>
+    <script src="js/pixel-matrix.js"></script>
+    <script src="js/three-viz.js"></script>
+    <script src="js/simulator.js"></script>
+    <script src="js/tensor-explorer.js"></script>
+    <script src="js/qa-accordion.js"></script>
+    <script src="js/papers-data.js"></script>
+    <script src="js/papers-reader.js"></script>
+
+    <!-- Master Application Initializer -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // 1. Math formulas auto-rendering
+            if (window.renderMathInElement) {
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false},
+                        {left: '\\[', right: '\\]', display: true},
+                        {left: '\\(', right: '\\)', display: false}
+                    ],
+                    throwOnError: false
+                });
+            }
+
+            // 2. Navigation & ScrollSpy
+            if (window.initNavigation) window.initNavigation();
+
+            // 3. Micro-Pixel Matrix Simulation & Inspector
+            if (window.initPixelMatrix) window.initPixelMatrix();
+
+            // 4. Defense Q&A Accordion
+            if (window.initQA) window.initQA();
+
+            // 5. 2D Luminance & Histogram Simulator
+            if (window.initHistogramSimulator) window.initHistogramSimulator();
+
+            // 6. 3D WebGL Heightmap Visualization
+            if (window.initThreeJS) window.initThreeJS();
+        });
+    </script>
+</body>
+</html>
