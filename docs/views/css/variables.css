@@ -1,0 +1,128 @@
+/* ==========================================================================
+   DESIGN SYSTEM TOKENS - LIGHT & BESPOKE OLED DARK MODE
+   CS2203 - UIT VNUHCM
+   ========================================================================== */
+
+:root {
+    --sidebar-width: 310px;
+    --font-main: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'JetBrains Mono', Consolas, monospace;
+
+    /* Radius Tokens */
+    --radius-xs: 6px;
+    --radius-sm: 10px;
+    --radius-md: 14px;
+    --radius-lg: 18px;
+    --radius-xl: 28px;
+    --radius-full: 9999px;
+
+    /* Transitions */
+    --transition-theme: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* 🌙 PURE OBSIDIAN OLED DARK MODE (MẶC ĐỊNH CHO ĐỒ ÁN) */
+[data-theme="dark"] {
+    --bg-page: #06090E;           /* Đen OLED vũ trụ sâu thẳm với ánh lam vi mô */
+    --bg-sidebar: #090D15;        /* Bảng điều hướng đen tuyền tinh tế */
+    --bg-card: #0D121D;           /* Nền thẻ Soft Card đen Midnight sang trọng */
+    --bg-card-hover: #121927;
+    --bg-subtle: #131A29;         /* Lớp nền lún (wells), metric boxes */
+    --bg-subtle-hover: #1A2337;
+
+    /* Viền & Phân Cách Trong Suốt Phát Quang */
+    --border-hairline: rgba(255, 255, 255, 0.07);
+    --border-card: rgba(255, 255, 255, 0.12);
+    --border-card-hover: rgba(56, 189, 248, 0.4);
+
+    /* Hệ Thống Chữ Phản Tương Phản Chuẩn WCAG AAA */
+    --text-primary: #F8FAFC;      /* Trắng bạch kim sắc nét */
+    --text-secondary: #94A3B8;    /* Bạc ánh lam mịn màng dễ đọc lâu */
+    --text-tertiary: #64748B;     /* Xám khói cho metadata */
+    --ink: #FFFFFF;
+
+    /* Bộ Màu Dữ Liệu Phát Quang (Luminous Neon Palette) */
+    --primary: #38BDF8;           /* Cyber Sky Blue phát sáng */
+    --primary-dark: #0284C7;
+    --primary-light: rgba(56, 189, 248, 0.12);
+
+    --data-blue: #38BDF8;
+    --data-purple: #A78BFA;
+    --data-emerald: #34D399;
+    --data-orange: #FB923C;
+    --data-alert: #F87171;
+    --data-cyan: #22D3EE;
+
+    /* Đổ Bóng & Hiệu Ứng Hào Quang (Ambient Occlusion + Glow) */
+    --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.6), 0 0 1px rgba(255, 255, 255, 0.08);
+    --shadow-card-hover: 0 12px 36px rgba(0, 0, 0, 0.8), 0 0 20px rgba(56, 189, 248, 0.18), 0 0 1px rgba(56, 189, 248, 0.4);
+    --shadow-control: 0 2px 4px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.12);
+    --shadow-primary: 0 0 24px rgba(56, 189, 248, 0.4);
+
+    /* Bảng Màu Callout Dark Mode */
+    --callout-def-bg: rgba(56, 189, 248, 0.08);
+    --callout-def-border: #38BDF8;
+    --callout-def-text: #E0F2FE;
+
+    --callout-int-bg: rgba(52, 211, 153, 0.08);
+    --callout-int-border: #34D399;
+    --callout-int-text: #D1FAE5;
+
+    --callout-warn-bg: rgba(248, 113, 113, 0.08);
+    --callout-warn-border: #F87171;
+    --callout-warn-text: #FEE2E2;
+
+    --callout-ins-bg: rgba(167, 139, 250, 0.08);
+    --callout-ins-border: #A78BFA;
+    --callout-ins-text: #EDE9FE;
+}
+
+/* ☀️ CLEAN SOFT LIGHT MODE (TÙY CHỌN DỰ PHÒNG) */
+[data-theme="light"] {
+    --bg-page: #F8F9FA;
+    --bg-sidebar: #FFFFFF;
+    --bg-card: #FFFFFF;
+    --bg-card-hover: #F8FAFC;
+    --bg-subtle: #F1F5F9;
+    --bg-subtle-hover: #E2E8F0;
+
+    --border-hairline: #E2E8F0;
+    --border-card: #CBD5E1;
+    --border-card-hover: #93C5FD;
+
+    --text-primary: #0F172A;
+    --text-secondary: #475569;
+    --text-tertiary: #94A3B8;
+    --ink: #020617;
+
+    --primary: #1F5FFF;
+    --primary-dark: #1040C0;
+    --primary-light: #EBF2FF;
+
+    --data-blue: #1F5FFF;
+    --data-purple: #8B5CF6;
+    --data-emerald: #10B981;
+    --data-orange: #F97316;
+    --data-alert: #EF4444;
+    --data-cyan: #06B6D4;
+
+    --shadow-card: 0 1px 3px rgba(15, 23, 42, 0.04), 0 10px 30px rgba(15, 23, 42, 0.06);
+    --shadow-card-hover: 0 4px 6px rgba(15, 23, 42, 0.04), 0 20px 40px rgba(15, 23, 42, 0.09);
+    --shadow-control: 0 1px 2px rgba(15, 23, 42, 0.08), 0 0 0 1px rgba(15, 23, 42, 0.04);
+    --shadow-primary: 0 8px 20px rgba(31, 95, 255, 0.25);
+
+    --callout-def-bg: #EFF6FF;
+    --callout-def-border: #2563EB;
+    --callout-def-text: #1E3A8A;
+
+    --callout-int-bg: #ECFDF5;
+    --callout-int-border: #10B981;
+    --callout-int-text: #064E3B;
+
+    --callout-warn-bg: #FEF2F2;
+    --callout-warn-border: #EF4444;
+    --callout-warn-text: #7F1D1D;
+
+    --callout-ins-bg: #FAF5FF;
+    --callout-ins-border: #8B5CF6;
+    --callout-ins-text: #4C1D95;
+}

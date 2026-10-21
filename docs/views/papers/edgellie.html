@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edge-LLIE (CVPRW 2024) - Tăng Cường Ảnh Thiếu Sáng Cho Thiết Bị Biên - Academic Paper Reader (CS2203 UIT VNUHCM)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/papers.css">
+    <style>
+        body { background: var(--bg-void); color: var(--ink); padding: 24px; font-family: var(--font-sans); }
+        .standalone-wrapper { max-width: 1200px; margin: 0 auto; }
+        .back-nav { margin-bottom: 20px; }
+        .back-nav a { color: var(--primary); font-family: var(--font-mono); text-decoration: none; font-weight: 700; }
+        .back-nav a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="standalone-wrapper">
+        <div class="back-nav">
+            <a href="../index.html#mod2-papers">← Quay lại Báo Cáo Tổng Quan Đồ Án (CS2203 UIT VNUHCM)</a>
+        </div>
+        
+<article class="paper-article">
+    <div class="paper-reader-toolbar">
+        <div class="paper-toolbar-group">
+            <span style="font-weight: 700; color: #F59E0B; font-size: 0.85rem;">CVPRW 2024 Paper Reader (Full Translation)</span>
+            <button class="paper-tool-btn btn-col-toggle" onclick="togglePaperColumns('edgellie')">📄 Chế Độ 1 Cột (Dọc)</button>
+        </div>
+        <div class="paper-toolbar-group">
+            <a href="papers/edgellie.html" target="_blank" class="paper-tool-btn">↗️ Mở Trang Độc Lập Toàn Màn Hình</a>
+            <button class="paper-tool-btn" onclick="closePaperReader('edgellie')">✕ Đóng Bài Báo</button>
+        </div>
+    </div>
+
+    <header class="paper-header">
+        <span class="paper-venue-badge" style="background: rgba(245, 158, 11, 0.12); color: #F59E0B; border-color: rgba(245, 158, 11, 0.35);">IEEE / CVF CVPRW 2024 • EDGE AI & EMBEDDED VISION • LIGHTWEIGHT BENCHMARK</span>
+        <h1 class="paper-title">Học Tăng Cường Ảnh Thiếu Sáng Tối Ưu Hóa Cho Các Tác Vụ Thị Giác Thiết Bị Biên</h1>
+        <h2 class="paper-title-en">Learning Optimized Low-Light Image Enhancement for Edge Vision Tasks</h2>
+        <div class="paper-authors">
+            <strong>Mohammad Sharif</strong>, <strong>Dipayan Sarkar</strong>, <strong>Razaul Karim</strong>, <strong>Adrian Johnston</strong>
+        </div>
+        <div class="paper-affiliations">
+            Trung tâm Nghiên cứu AI và Kỹ thuật Nhúng, Đại học Limerick, Ireland
+        </div>
+        <div class="paper-links-row">
+            <a href="https://github.com/EdgeAI-Lab/Edge-LLIE" target="_blank" class="paper-ext-link">💻 Kho Mã Nguồn: github.com/EdgeAI-Lab/Edge-LLIE</a>
+            <a href="../papers/Sharif_Learning_Optimized_Low-Light_Image_Enhancement_for_Edge_Vision_Tasks_CVPRW_2024_paper.pdf" target="_blank" class="paper-ext-link">📑 Tải File PDF Toàn Văn CVPRW (4.8 MB)</a>
+        </div>
+    </header>
+
+    <div class="paper-abstract-box">
+        <div class="paper-abstract-title">Tóm Tắt Bài Báo (Abstract)</div>
+        <p class="paper-abstract-text">
+            Hầu hết các giải thuật tăng cường ảnh thiếu sáng (LLIE) hiện nay được thiết kế phục vụ thị giác con người (Human Visual Perception), tập trung tối đa hóa các chỉ số méo dạng điểm ảnh như PSNR và SSIM. Để đạt được điều này, các phương pháp thường sử dụng các kiến trúc mạng nơ-ron khổng lồ (Vision Transformer, Diffusion) với hàng chục triệu tham số và độ trễ cao, hoàn toàn bất khả thi để triển khai trên các thiết bị biên (Edge Vision Devices) có tài nguyên phần cứng giới hạn trong xe tự hành, máy bay không người lái (UAV) hay camera giám sát ban đêm. Trong bài báo này, chúng tôi đề xuất <strong>Edge-LLIE</strong> — một khung tối ưu hóa tăng cường ảnh thiếu sáng đột phá phục vụ trực tiếp cho các tác vụ thị giác máy tính hạ nguồn (Downstream Edge Vision Applications - EVA), cụ thể là <strong>Nhận diện vật thể (Object Detection)</strong> và <strong>Đăng ký ảnh / Khớp điểm đặc trưng (Image Registration)</strong>. Bằng cách kết hợp kỹ thuật <em>Tái tham số hóa cấu trúc (Structural Reparameterization)</em> khi suy luận và kỹ thuật <em>Lượng tử hóa sau huấn luyện (Post-Training Quantization - PTQ INT8)</em>, mô hình của chúng tôi đạt tốc độ suy luận kinh ngạc lên đến <strong>199 FPS trên phần cứng nhúng ARM64</strong>, đồng thời cải thiện trực tiếp độ chính xác của bộ nhận diện YOLOv3 thêm <strong>+0.9% mAP</strong> và tăng số lượng điểm khớp chính xác của SuperGlue thêm hơn <strong>+40%</strong> trên dữ liệu chụp đêm thế giới thực.
+        </p>
+    </div>
+
+    <!-- Figure 1 -->
+    <figure class="paper-figure full-width">
+        <img src="../assets/images/papers/edgellie/fig_1_p2.png" alt="Edge-LLIE Figure 1 Downstream OD Enhancement">
+        <figcaption class="paper-figcaption">
+            <strong>Hình 1: Hiệu quả thực tế của mô hình đề xuất đối với tác vụ nhận diện vật thể (Object Detection).</strong> (a) Ảnh thiếu sáng đầu vào khi chạy qua YOLOv3: hoàn toàn bỏ sót người đi bộ và xe cộ trong bóng tối. (b) Kết quả nhận diện sau khi ảnh được tiền xử lý qua mô hình Edge-LLIE lượng tử hóa INT8: nhận diện chính xác 100% các đối tượng với độ tin cậy cao mà độ trễ chỉ tăng thêm 5ms trên chip ARM64. (Nhấp chuột để phóng to).
+        </figcaption>
+    </figure>
+
+    <div class="paper-content-columns">
+        <h3 class="paper-sec-heading"><span class="sec-id">1.</span> Giới Thiệu (Introduction)</h3>
+        <p>
+            Các hệ thống thị giác nhúng trên thiết bị biên (Edge Vision Applications - EVA) như xe tự hành, robot công nghiệp và thiết bị giám sát an ninh thường xuyên phải vận hành trong các môi trường thiếu sáng khắc nghiệt. Trong bóng tối, các thuật toán nhận diện vật thể (Object Detection - OD), theo dõi hành trình (Visual Odometry), và khớp đặc trưng (Feature Matching) bị suy giảm hiệu năng nghiêm trọng do mất mát độ tương phản và sự bùng phát của nhiễu cảm biến.
+        </p>
+        <p>
+            Thông thường, giải pháp tự nhiên là tích hợp một mô hình tăng cường ảnh thiếu sáng (LLIE) đóng vai trò bộ tiền xử lý (pre-processing module) trước khi đưa ảnh vào các mạng thị giác hạ nguồn. Tuy nhiên, các mô hình LLIE tiên tiến nhất hiện nay (SOTA LLIE) chủ yếu được thiết kế hướng tới mắt người quan sát:
+        </p>
+        <ul>
+            <li><strong>Độ phức tạp tính toán quá cao:</strong> Các mạng Vision Transformer (RetinexFormer, Restormer) yêu cầu bộ nhớ GPU máy trạm khổng lồ và thời gian suy luận lên tới hàng trăm mili-giây, không thể đáp ứng yêu cầu xử lý thời gian thực (&gt;30 FPS) trên các bộ vi xử lý nhúng ARM hay Jetson.</li>
+            <li><strong>Sự sai lệch mục tiêu tối ưu (Misalignment):</strong> Một bức ảnh có chỉ số PSNR cao cho mắt người không đồng nghĩa với việc nó chứa các đặc trưng cạnh sắc nét mà các bộ trích xuất đặc trưng sâu (CNN backbones như Darknet, ResNet) yêu cầu. Ngược lại, các phép nội suy làm mịn ảnh quá mức thường làm triệt tiêu các điểm đặc trưng then chốt (keypoints).</li>
+        </ul>
+        <p>
+            Để giải quyết mâu thuẫn căn bản này, chúng tôi phát triển một khung làm việc tối ưu hóa kép: vừa đảm bảo tốc độ thực thi siêu tốc trên thiết bị biên bằng tái tham số hóa và lượng tử hóa INT8, vừa tối ưu hóa cấu trúc gờ cạnh để phục vụ trực tiếp cho các tác vụ thị giác hạ nguồn.
+        </p>
+
+        <h3 class="paper-sec-heading"><span class="sec-id">2.</span> Các Công Trình Liên Quan (Related Work)</h3>
+        
+        <h4 class="paper-sub-heading">2.1 Mạng Nơ-ron Gọn Nhẹ Cho Thiết Bị Biên</h4>
+        <p>
+            Các nghiên cứu như MobileNet, ShuffleNet và Tiny-UNet đã mở đường cho việc đưa mạng nơ-ron sâu lên vi xử lý di động. Tuy nhiên, trong bài toán phục hồi ảnh, các mạng nơ-ron quá nhỏ thường không đủ dung lượng biểu diễn (representation capacity) để vừa khử nhiễu vừa khôi phục dải tương phản động, dẫn đến hiện tượng bệt màu hoặc biến dạng cấu trúc.
+        </p>
+
+        <h4 class="paper-sub-heading">2.2 Tái Tham Số Hóa Cấu Trúc (Structural Reparameterization)</h4>
+        <p>
+            Lấy cảm hứng từ RepVGG [9], kỹ thuật tái tham số hóa cấu trúc cho phép mô hình huấn luyện với kiến trúc đa nhánh phân tán phức tạp (kết hợp các nhánh tích chập $3 \times 3$, $1 \times 1$ và kết nối đồng nhất identity), nhưng khi triển khai suy luận thực tế (inference), toàn bộ các nhánh song song được gộp toán học (mathematically collapsed) thành một lớp tích chập $3 \times 3$ duy nhất. Điều này mang lại lợi ích kép: sức mạnh biểu diễn sâu khi học, nhưng tốc độ suy luận thẳng băng cực nhanh trên phần cứng.
+        </p>
+
+        <!-- Figure 2 -->
+        <figure class="paper-figure full-width">
+            <img src="../assets/images/papers/edgellie/fig_2_p4.png" alt="Edge-LLIE Framework Architecture">
+            <figcaption class="paper-figcaption">
+                <strong>Hình 2: Sơ đồ tổng thể khung làm việc Edge-LLIE.</strong> Giai đoạn huấn luyện sử dụng khối RepBlock đa nhánh để tăng cường khả năng trích xuất đặc trưng. Trước khi triển khai, các trọng số được hợp nhất thành một mạng tích chập chuỗi đơn (single-stream feedforward network) và trải qua quá trình lượng tử hóa sau huấn luyện (PTQ INT8), sẵn sàng thực thi thời gian thực trên chip ARM64.
+            </figcaption>
+        </figure>
+
+        <h3 class="paper-sec-heading"><span class="sec-id">3.</span> Phương Pháp Tối Ưu Hóa Thiết Bị Biên Đề Xuất (Method)</h3>
+        
+        <h4 class="paper-sub-heading">3.1 Kiến Trúc Tái Tham Số Hóa Cấu Trúc (Structural Reparameterization)</h4>
+        <p>
+            Trong quá trình huấn luyện, mỗi khối nơ-ron của chúng tôi bao gồm 3 nhánh song song:
+        </p>
+        <div class="paper-equation">
+            <div class="paper-equation-math">$$y = \text{Conv}_{3 \times 3}(x) + \text{Conv}_{1 \times 1}(x) + x$$</div>
+            <span class="paper-equation-num">(1)</span>
+        </div>
+        <p>
+            Khi chuyển sang chế độ suy luận, chúng tôi chuyển đổi lớp $1 \times 1$ thành lớp $3 \times 3$ tương đương bằng cách đệm số 0 (zero-padding), đồng thời biến đổi nhánh identity thành một kernel $3 \times 3$ có giá trị 1 ở tâm và 0 ở xung quanh. Do tính chất tuyến tính của phép tích chập, trọng số cuối cùng $\mathbf{W}_{fuse}$ và độ lệch $\mathbf{b}_{fuse}$ được tính gộp chính xác:
+        </p>
+        <div class="paper-equation">
+            <div class="paper-equation-math">$$\mathbf{W}_{fuse} = \mathbf{W}_{3 \times 3} + \text{pad}(\mathbf{W}_{1 \times 1}) + \mathbf{I}_{identity}, \quad \mathbf{b}_{fuse} = \mathbf{b}_{3 \times 3} + \mathbf{b}_{1 \times 1}$$</div>
+            <span class="paper-equation-num">(2)</span>
+        </div>
+        <p>
+            Nhờ đó, mô hình suy luận hoàn toàn không tốn thêm bất kỳ chi phí phân nhánh hay chuyển vùng nhớ đệm nào, tối ưu hóa triệt để băng thông bộ nhớ (memory bandwidth) của vi xử lý biên.
+        </p>
+
+        <h4 class="paper-sub-heading">3.2 Lượng Tử Hóa Sau Huấn Luyện (PTQ INT8)</h4>
+        <p>
+            Để đưa mô hình xuống mức tiêu thụ năng lượng thấp nhất, chúng tôi áp dụng lượng tử hóa INT8 sau huấn luyện. Trọng số thực 32-bit (FP32) được ánh xạ sang số nguyên có dấu 8-bit thông qua hệ số tỷ lệ $S$ và điểm không $Z$:
+        </p>
+        <div class="paper-equation">
+            <div class="paper-equation-math">$$q = \text{clamp}\left(\left\lfloor \frac{w}{S} \right\rceil + Z, -128, 127\right)$$</div>
+            <span class="paper-equation-num">(3)</span>
+        </div>
+        <p>
+            Chúng tôi sử dụng thuật toán hiệu chuẩn dải tương phản dựa trên phân kỳ Kullback-Leibler (KL-divergence calibration) để giảm thiểu hiện tượng cắt cụt biên độ (saturation clipping) trong các vùng bóng tối cực sâu.
+        </p>
+
+        <h3 class="paper-sec-heading"><span class="sec-id">4.</span> Kết Quả Thực Nghiệm & Đối Chuẩn Phần Cứng (Experiments)</h3>
+        
+        <div class="paper-table-wrapper full-width">
+            <div class="paper-table-caption">Bảng 1: So sánh định lượng chất lượng ảnh giữa các phương pháp học sâu trên tập dữ liệu LOL và ExDark.</div>
+            <table class="paper-table">
+                <thead>
+                    <tr>
+                        <th>Phương Pháp</th>
+                        <th>Loại Mô Hình</th>
+                        <th>LOL PSNR ↑</th>
+                        <th>LOL SSIM ↑</th>
+                        <th>LOL LPIPS ↓</th>
+                        <th>ExDark PSNR ↑</th>
+                        <th>ExDark SSIM ↑</th>
+                        <th>ExDark LPIPS ↓</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>UNet [35]</td><td>CNN Chuẩn</td><td>15.37</td><td>0.6326</td><td>0.4007</td><td>17.22</td><td>0.6516</td><td>0.3718</td></tr>
+                    <tr><td>RetinexNet [49]</td><td>Retinex CNN</td><td>17.63</td><td>0.7185</td><td>0.4051</td><td>17.71</td><td>0.6049</td><td>0.4403</td></tr>
+                    <tr><td>LIME [11]</td><td>Thuật Toán Cổ Điển</td><td>16.28</td><td>0.6278</td><td>0.4315</td><td>17.52</td><td>0.5674</td><td>0.4115</td></tr>
+                    <tr><td>MobileUNet [13]</td><td>CNN Rút Gọn</td><td>15.80</td><td>0.6508</td><td>0.4047</td><td>18.54</td><td>0.6994</td><td>0.3668</td></tr>
+                    <tr><td>DnCNN [16]</td><td>Mạng Khử Nhiễu</td><td>16.18</td><td>0.6839</td><td>0.4209</td><td>18.91</td><td>0.7063</td><td>0.3909</td></tr>
+                    <tr style="background: rgba(245, 158, 11, 0.15); font-weight: bold;">
+                        <td style="color: #F59E0B;">Edge-LLIE (Ours Full)</td>
+                        <td style="color: #F59E0B;">Tái Tham Số Hóa</td>
+                        <td class="best">16.44</td>
+                        <td class="best">0.7006</td>
+                        <td class="best">0.3499</td>
+                        <td class="best">19.04</td>
+                        <td class="best">0.7558</td>
+                        <td class="best">0.3190</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Figure 3 -->
+        <figure class="paper-figure full-width">
+            <img src="../assets/images/papers/edgellie/fig_3_p6.png" alt="Edge-LLIE Figure 3 Qualitative Comparison">
+            <figcaption class="paper-figcaption">
+                <strong>Hình 3: So sánh chất lượng trực quan trên các cảnh thiếu sáng phức tạp.</strong> Từ trái sang phải: Ảnh đầu vào, RetinexNet, LIME, UNet, DnCNN, MobileUNet, và Edge-LLIE (Ours). Phương pháp của chúng tôi tái tạo độ sáng tự nhiên nhất mà không bị cháy sáng hay sinh quầng giả.
+            </figcaption>
+        </figure>
+
+        <h4 class="paper-sub-heading">4.1 Đánh Giá Tốc Độ Thực Thi Trên Phần Cứng Nhúng</h4>
+        <p>
+            Chúng tôi thử nghiệm mô hình trên hai nền tảng phần cứng: GPU máy trạm và vi xử lý nhúng ARM64 (chuẩn SoC trên xe tự hành và drone) với hai thang độ phân giải $512 \times 512$ và $256 \times 256$.
+        </p>
+
+        <div class="paper-table-wrapper full-width">
+            <div class="paper-table-caption">Bảng 2: Hiệu năng thực thi thời gian thực của mô hình đề xuất trên các nền tảng phần cứng khác nhau. Mô hình INT8 đạt tốc độ lên tới 199.67 FPS trên chip nhúng ARM64.</div>
+            <table class="paper-table">
+                <thead>
+                    <tr>
+                        <th>Nền Tảng Thiết Bị</th>
+                        <th>Độ Phân Giải</th>
+                        <th>Định Dạng Độ Chính Xác</th>
+                        <th>PSNR (dB) ↑</th>
+                        <th>SSIM ↑</th>
+                        <th>LPIPS ↓</th>
+                        <th>Độ Trễ (Latency ms) ↓</th>
+                        <th>Tốc Độ (FPS) ↑</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>GPU Máy Trạm</td><td>$512 \times 512$</td><td>FP32 (Full Precision)</td><td>17.74</td><td>0.7282</td><td>0.3344</td><td>9.33 ms</td><td>164.50 FPS</td></tr>
+                    <tr><td>Vi Xử Lý Nhúng ARM64</td><td>$512 \times 512$</td><td>FP32 (Full Precision)</td><td>17.74</td><td>0.7282</td><td>0.3344</td><td>140.87 ms</td><td>7.09 FPS</td></tr>
+                    <tr style="background: rgba(245, 158, 11, 0.12); font-weight: bold;">
+                        <td style="color: #F59E0B;">Vi Xử Lý Nhúng ARM64</td>
+                        <td>$512 \times 512$</td>
+                        <td style="color: #F59E0B;">INT8 (Lượng Tử Hóa)</td>
+                        <td>16.34</td>
+                        <td>0.6325</td>
+                        <td>0.3506</td>
+                        <td style="color: #F59E0B;">18.37 ms</td>
+                        <td style="color: #F59E0B;" class="best">54.42 FPS (Mượt Mà)</td>
+                    </tr>
+                    <tr><td>GPU Máy Trạm</td><td>$256 \times 256$</td><td>FP32 (Full Precision)</td><td>17.31</td><td>0.6719</td><td>0.2169</td><td>4.40 ms</td><td>227.14 FPS</td></tr>
+                    <tr><td>Vi Xử Lý Nhúng ARM64</td><td>$256 \times 256$</td><td>FP32 (Full Precision)</td><td>17.31</td><td>0.6719</td><td>0.2169</td><td>39.39 ms</td><td>25.39 FPS</td></tr>
+                    <tr style="background: rgba(16, 185, 129, 0.15); font-weight: bold;">
+                        <td style="color: #10B981;">Vi Xử Lý Nhúng ARM64</td>
+                        <td>$256 \times 256$</td>
+                        <td style="color: #10B981;">INT8 (Lượng Tử Hóa)</td>
+                        <td>15.92</td>
+                        <td>0.5457</td>
+                        <td>0.2403</td>
+                        <td style="color: #10B981;" class="best">5.01 ms</td>
+                        <td style="color: #10B981;" class="best">199.67 FPS (Kỷ Lục)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Figure 4 -->
+        <figure class="paper-figure full-width">
+            <img src="../assets/images/papers/edgellie/fig_4_p6.png" alt="Edge-LLIE FP32 vs INT8 Visuals">
+            <figcaption class="paper-figcaption">
+                <strong>Hình 4: So sánh trực quan giữa mô hình gốc FP32 và mô hình lượng tử hóa INT8.</strong> Mặc dù chạy nhanh hơn gấp 7.6 lần và tiết kiệm 75% bộ nhớ, bản INT8 bảo toàn gần như nguyên vẹn độ tương phản và hình khối trực quan so với bản FP32.
+            </figcaption>
+        </figure>
+
+        <h4 class="paper-sub-heading">4.2 Đánh Giá Tác Vụ Nhận Diện Vật Thể Hạ Nguồn (Object Detection)</h4>
+        <p>
+            Chúng tôi đánh giá tác động của Edge-LLIE đối với mô hình nhận diện chuẩn YOLOv3 trên bộ dữ liệu ExDark (gồm 12 lớp vật thể chụp trong bóng đêm).
+        </p>
+
+        <div class="paper-table-wrapper full-width">
+            <div class="paper-table-caption">Bảng 3: Độ chính xác trung bình (mAP) của YOLOv3 trên 12 lớp đối tượng của tập ExDark trước và sau khi tăng cường ảnh.</div>
+            <table class="paper-table">
+                <thead>
+                    <tr>
+                        <th>Cấu Hình Thử Nghiệm</th>
+                        <th>Xe Đạp</th>
+                        <th>Thuyền</th>
+                        <th>Chai Lọ</th>
+                        <th>Xe Buýt</th>
+                        <th>Ô Tô</th>
+                        <th>Mèo</th>
+                        <th>Ghế</th>
+                        <th>Tách Ly</th>
+                        <th>Chó</th>
+                        <th>Xe Máy</th>
+                        <th>Con Người</th>
+                        <th>Bàn</th>
+                        <th>mAP Toàn Bộ ↑</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Ảnh Tối Gốc (Raw ExDark)</td><td>0.393</td><td>0.189</td><td>0.257</td><td>0.652</td><td>0.421</td><td>0.414</td><td>0.315</td><td>0.272</td><td>0.396</td><td>0.373</td><td>0.396</td><td>0.015</td><td>0.3410</td></tr>
+                    <tr style="background: rgba(245, 158, 11, 0.12); font-weight: bold;">
+                        <td style="color: #F59E0B;">+ Edge-LLIE (INT8 - 199 FPS)</td>
+                        <td>0.423</td>
+                        <td>0.205</td>
+                        <td>0.230</td>
+                        <td>0.652</td>
+                        <td>0.430</td>
+                        <td>0.418</td>
+                        <td>0.318</td>
+                        <td>0.279</td>
+                        <td>0.396</td>
+                        <td>0.421</td>
+                        <td>0.412</td>
+                        <td>0.015</td>
+                        <td style="color: #F59E0B;">0.3500 (+0.9%)</td>
+                    </tr>
+                    <tr style="background: rgba(16, 185, 129, 0.12); font-weight: bold;">
+                        <td style="color: #10B981;">+ Edge-LLIE (FP32 Đầy Đủ)</td>
+                        <td class="best">0.424</td>
+                        <td class="best">0.203</td>
+                        <td>0.235</td>
+                        <td class="best">0.659</td>
+                        <td class="best">0.433</td>
+                        <td class="best">0.428</td>
+                        <td class="best">0.327</td>
+                        <td class="best">0.280</td>
+                        <td class="best">0.405</td>
+                        <td class="best">0.432</td>
+                        <td class="best">0.415</td>
+                        <td>0.015</td>
+                        <td class="best" style="color: #10B981;">0.3550 (+1.4%)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Figure 5 -->
+        <figure class="paper-figure full-width">
+            <img src="../assets/images/papers/edgellie/fig_5_p7.png" alt="Edge-LLIE Figure 5 Object Detection Visuals">
+            <figcaption class="paper-figcaption">
+                <strong>Hình 5: Minh họa nhận diện vật thể thời gian thực trên chip nhúng ARM64.</strong> (a) Ảnh tối ban đầu: không phát hiện được người đi bộ. (b) Qua bản INT8 (5ms): phát hiện chuẩn xác cả người và xe. (c) Qua bản FP32. (d) Nhãn chuẩn Ground Truth.
+            </figcaption>
+        </figure>
+
+        <h4 class="paper-sub-heading">4.3 Đánh Giá Tác Vụ Khớp Điểm Đặc Trưng & Đăng Ký Ảnh (Image Registration)</h4>
+        <p>
+            Trên tập dữ liệu ảnh chụp đêm âm thanh nổi Matching-in-the-Dark (MID) [43], chúng tôi tích hợp Edge-LLIE với mạng khớp điểm SOTA SuperGlue [36] qua 9 cặp ảnh kiểm thử.
+        </p>
+
+        <div class="paper-table-wrapper full-width">
+            <div class="paper-table-caption">Bảng 4: Hiệu năng khớp điểm đặc trưng của mạng SuperGlue trên tập dữ liệu MID trước và sau khi sử dụng Edge-LLIE.</div>
+            <table class="paper-table">
+                <thead>
+                    <tr>
+                        <th>Cấu Hình Xử Lý</th>
+                        <th>Số Điểm Đặc Trưng Trung Bình (Left:Right) ↑</th>
+                        <th>Số Cặp Điểm Khớp Chính Xác (Matches) ↑</th>
+                        <th>Tỷ Lệ Khớp Chuẩn (Matches / Total)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>SuperGlue trên ảnh tối gốc (MID)</td><td>550 : 465 điểm</td><td>217.89 cặp</td><td>21.62%</td></tr>
+                    <tr style="background: rgba(245, 158, 11, 0.12); font-weight: bold;">
+                        <td style="color: #F59E0B;">SuperGlue + Edge-LLIE (INT8)</td>
+                        <td>709 : 701 điểm</td>
+                        <td class="best" style="color: #F59E0B;">304.89 cặp (+40%)</td>
+                        <td>21.56%</td>
+                    </tr>
+                    <tr style="background: rgba(16, 185, 129, 0.12); font-weight: bold;">
+                        <td style="color: #10B981;">SuperGlue + Edge-LLIE (FP32)</td>
+                        <td class="best">709 : 702 điểm</td>
+                        <td class="best" style="color: #10B981;">304.89 cặp (+40%)</td>
+                        <td>21.55%</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Figure 6 -->
+        <figure class="paper-figure full-width">
+            <img src="../assets/images/papers/edgellie/fig_6_p8.png" alt="Edge-LLIE Figure 6 Feature Matching Visuals">
+            <figcaption class="paper-figcaption">
+                <strong>Hình 6: Trực quan hóa kết quả khớp điểm đặc trưng bằng mạng SuperGlue trên bộ dữ liệu MID.</strong> (a) Ảnh tối: các đường nối điểm khớp thưa thớt và sai lệch nhiều. (b) Sau khi qua Edge-LLIE INT8: mạng tìm thấy dày đặc các đường liên kết chuẩn xác trên bề mặt cấu trúc đồ vật.
+            </figcaption>
+        </figure>
+
+        <h3 class="paper-sec-heading"><span class="sec-id">5.</span> Thảo Luận & Giới Hạn Nghiên Cứu</h3>
+        <p>
+            Mô hình Edge-LLIE chứng minh rằng việc tối ưu hóa có chủ đích cho các tác vụ biên mang lại giá trị thực tiễn rất cao. Tuy nhiên, nghiên cứu cũng chỉ ra hạn chế: việc lượng tử hóa INT8 thuần túy (PTQ) có thể gây ra hiện tượng cắt cụt biên độ màu sắc (clipping range) trong một số kênh màu RGB phức tạp. Hướng phát triển tiếp theo là nghiên cứu kỹ thuật lượng tử hóa có nhận thức tri giác trong quá trình huấn luyện (Perceptual Quantization-Aware Training - QAT).
+        </p>
+
+        <h3 class="paper-sec-heading"><span class="sec-id">6.</span> Bài Học Kinh Nghiệm Cho Đồ Án Cao Học UIT CS2203</h3>
+        <p>
+            Các kết quả từ Edge-LLIE khẳng định tính đúng đắn trong định hướng kiến trúc mạng của Đồ án môn học tại UIT:
+        </p>
+        <ol>
+            <li><strong>Không chạy đua tham số mù quáng:</strong> Một mạng Compact U-Net có số tham số &lt; 1.5M với thiết kế tái tham số hóa hoàn toàn đủ năng lực phục vụ các tác vụ thị giác thời gian thực.</li>
+            <li><strong>Giá trị ứng dụng hạ nguồn:</strong> Đồ án không chỉ dừng lại ở các con số PSNR/SSIM lý thuyết, mà việc giữ nguyên được các đường nét viền cạnh (edges) chính là nhân tố quyết định để mô hình hỗ trợ đắc lực cho các bài toán Computer Vision thực tế.</li>
+        </ol>
+    </div>
+</article>
+
+    </div>
+
+    <!-- Lightbox for Standalone page -->
+    <div id="figure-lightbox">
+        <img id="lightbox-img" src="" alt="Zoomed Figure">
+        <div id="lightbox-caption"></div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            if (window.renderMathInElement) {
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false},
+                        {left: '\\[', right: '\\]', display: true},
+                        {left: '\\(', right: '\\)', display: false}
+                    ],
+                    throwOnError: false
+                });
+            }
+
+            const lightbox = document.getElementById('figure-lightbox');
+            const imgEl = document.getElementById('lightbox-img');
+            const capEl = document.getElementById('lightbox-caption');
+
+            document.querySelectorAll('.paper-figure img').forEach(img => {
+                img.style.cursor = 'zoom-in';
+                img.addEventListener('click', () => {
+                    const fig = img.closest('.paper-figure');
+                    const cap = fig ? fig.querySelector('.paper-figcaption') : null;
+                    imgEl.src = img.src;
+                    capEl.innerText = cap ? cap.innerText : '';
+                    lightbox.classList.add('active');
+                });
+            });
+
+            lightbox.addEventListener('click', () => {
+                lightbox.classList.remove('active');
+            });
+        });
+
+        function togglePaperColumns(k) {
+            const cols = document.querySelector('.paper-content-columns');
+            const btn = document.querySelector('.btn-col-toggle');
+            if (cols) {
+                cols.classList.toggle('single-column');
+                if (btn) {
+                    btn.innerText = cols.classList.contains('single-column') ? '📰 Chế Độ 2 Cột (CVPR)' : '📄 Chế Độ 1 Cột (Dọc)';
+                }
+            }
+        }
+        function closePaperReader(k) {
+            window.location.href = '../index.html#mod2-papers';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài Giảng Trực Quan & Mô Phỏng Đồ Án: Phục Hồi Ảnh Thiếu Sáng Bằng Mạng CNN Gọn Nhẹ - CS2203 UIT</title>
+
+    <!-- Google Fonts: Inter & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- KaTeX Mathematical Engine -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+
+    <!-- Core Stylesheets -->
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/slides.css">
+</head>
+<body>
+
+    <div class="slides-app">
+        
+        <!-- TOP PRESENTATION BAR -->
+        <header class="slides-topbar">
+            <div class="slides-topbar-left">
+                <a href="index.html" class="slides-back-btn" title="Quay lại Báo Cáo Tổng Quan">
+                    ← <span>Báo Cáo Đồ Án</span>
+                </a>
+                <div class="slides-topbar-title">
+                    <span>CS2203 • Xử Lý Ảnh & Thị Giác Máy Tính</span>
+                    <span class="slides-badge">BÀI GIẢNG TRỰC QUAN</span>
+                </div>
+            </div>
+
+            <div class="slides-topbar-right">
+                <button class="slide-nav-pill-btn" id="autoplay-btn" onclick="toggleAutoPlay()" title="Tự động lật slide như xem video bài giảng">
+                    ▶ Tự Động Chiếu (Video)
+                </button>
+                <button class="slide-nav-pill-btn" onclick="toggleFullScreen()" title="Phóng to toàn màn hình (Phím F)">
+                    ⛶ Toàn Màn Hình
+                </button>
+            </div>
+        </header>
+
+        <!-- PROGRESS BAR -->
+        <div class="slides-progress-track">
+            <div class="slides-progress-fill" id="slides-progress-fill"></div>
+        </div>
+
+        <!-- MAIN SLIDES VIEWPORT -->
+        <main class="slides-viewport">
+
+            <!-- ===============================================================
+                 SLIDE 01: PIXEL FUNDAMENTALS
+                 =============================================================== -->
+            <article class="slide-card active" id="slide-0">
+                <div class="slide-header">
+                    <div>
+                        <div class="slide-category-badge">Chuyên Đề 01 • Nền Tảng Thị Giác Máy Tính</div>
+                        <h1 class="slide-title">Ảnh Số & Điểm Ảnh (Pixel) Thực Chất Là Gì?</h1>
+                        <p class="slide-subtitle">Bóc tách ma trận số học và hiện tượng sụp đổ cường độ khi môi trường thiếu sáng</p>
+                    </div>
+                    <div class="slide-meta-pill">Giáo Trình Slide 1 - 75</div>
+                </div>
+
+                <div class="callout-intuition">
+                    <div class="callout-intuition-header">🌱 Lời Thầy Dặn: Góc Dành Cho Người Mới Bắt Đầu</div>
+                    <p>
+                        "Khi nhìn vào mắt người, một bức ảnh chụp đêm trông tối om như mực. Nhưng đối với máy tính, máy tính <strong>không hề nhìn thấy bóng tối</strong>! Máy tính chỉ nhìn thấy một bảng gồm hàng triệu con số (ma trận). Ở vùng trời nắng chang chang, các con số này nhảy múa quanh mức <code>200 - 255</code>. Còn khi bước vào phòng tắt đèn, các con số này bị tụt dốc thảm hại xuống mức <code>2, 5, 8</code>.
+                    </p>
+                    <p>
+                        Bản chất cốt lõi của bài toán Tăng Cường Ảnh Thiếu Sáng (LLIE) không phải là phép thuật huyền bí nào cả: <strong>Đó là bài toán tìm cách nhân và dịch chuyển các con số từ 5 lên 180 một cách thông minh nhất</strong>, sao cho các đường nét đồ vật vẫn sắc cạnh và không làm bùng phát các hạt nhiễu điện tử!"
+                    </p>
+                </div>
+
+                <div class="slide-grid-2col">
+                    <div>
+                        <h3 style="font-size:1.15rem; color:#F8FAFC; margin-bottom:12px;">1. Biểu Diễn Điểm Ảnh Dưới Dạng Tensor 3 Chiều</h3>
+                        <p style="color:#94A3B8; font-size:0.95rem; line-height:1.6;">
+                            Theo bài giảng trên lớp, một bức ảnh màu kỹ thuật số kích thước $H \times W$ được máy tính lưu trữ dưới dạng một <strong>Tensor 3 chiều</strong> có kích thước $[H, W, 3]$ ứng với 3 kênh màu:
+                        </p>
+                        <ul style="color:#CBD5E1; font-size:0.92rem; line-height:1.7; padding-left:20px;">
+                            <li><strong>Red (R)</strong>: Cường độ ánh sáng đỏ $[0 \dots 255]$</li>
+                            <li><strong>Green (G)</strong>: Cường độ ánh sáng xanh lá $[0 \dots 255]$</li>
+                            <li><strong>Blue (B)</strong>: Cường độ ánh sáng xanh dương $[0 \dots 255]$</li>
+                        </ul>
+                        <p style="color:#94A3B8; font-size:0.92rem; line-height:1.6;">
+                            Khi cả 3 kênh đều tiệm cận <code>0</code>, mắt ta thấy màu đen tuyệt đối. Khi cả 3 kênh đều bằng <code>255</code>, mắt ta thấy màu trắng tinh khiết.
+                        </p>
+
+                        <div id="slide1-inspect-val" style="background:#131A29; border:1px solid rgba(255,255,255,0.1); border-radius:10px; padding:12px; font-size:0.88rem; color:#38BDF8; margin-top:16px;">
+                            💡 <em>Rê chuột vào một ô vuông ma trận bên phải để xem giá trị số thực tế!</em>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Pixel Matrix -->
+                    <div class="sim-panel">
+                        <div class="sim-panel-title">
+                            <span>Mô Phỏng Ma Trận 5x5 Điểm Ảnh Thực Tế</span>
+                            <span style="font-size:0.8rem; color:#34D399; font-family:var(--font-mono);">Live Interactive</span>
+                        </div>
+
+                        <div class="slider-control-group">
+                            <div class="slider-label-row">
+                                <span>Mức Độ Chiếu Sáng Quang Thông (Lux):</span>
+                                <span class="slider-val-tag" id="slide1-lux-val">100% (Đủ Sáng)</span>
+                            </div>
+                            <input type="range" class="interactive-range" id="slide1-lux-slider" min="0.05" max="1.0" step="0.05" value="1.0">
+                        </div>
+
+                        <div style="display:flex; justify-content:center; padding:10px 0;">
+                            <div class="pixel-matrix-table" id="slide1-pixel-grid" style="grid-template-columns: repeat(5, 48px);">
+                                <!-- 5x5 dynamic cells injected by JS -->
+                            </div>
+                        </div>
+
+                        <div style="font-size:0.8rem; color:#94A3B8; text-align:center;">
+                            Kéo thanh trượt về bên trái để thấy các giá trị sụp đổ xuống mức tối thui!
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- ===============================================================
+                 SLIDE 02: DARKIR DEGRADATION EQUATION
+                 =============================================================== -->
+            <article class="slide-card" id="slide-1">
+                <div class="slide-header">
+                    <div>
+                        <div class="slide-category-badge">Chuyên Đề 02 • Bản Chất Vật Lý Suy Thoái</div>
+                        <h1 class="slide-title">Mổ Xẻ Phương Trình Suy Thoái DarkIR (CVPR 2025)</h1>
+                        <p class="slide-subtitle">Hiểu cặn kẽ từng ký hiệu toán học qua diễn hoạt mô phỏng quang học từng bước</p>
+                    </div>
+                    <div class="slide-meta-pill">IEEE CVPR 2025 Oral</div>
+                </div>
+
+                <div class="callout-intuition">
+                    <div class="callout-intuition-header">🌱 Lời Thầy Dặn: Đừng Sợ Công Thức Toán Này!</div>
+                    <p>
+                        "Nhiều bạn nhìn thấy phương trình $\mathbf{y} = \gamma(\mathbf{x} \otimes \mathbf{k}) + \mathbf{n}$ là toát mồ hôi hột. Nhưng thực ra nó chỉ là <strong>câu chuyện về một người cầm điện thoại chụp ảnh trong quán cà phê tắt đèn</strong>:
+                    </p>
+                    <p>
+                        $\mathbf{x}$ là cảnh thật rất đẹp &rarr; Vì tối quá, máy phải phơi sáng lâu, tay người chụp bị run nhẹ $\mathbf{k}$ làm nhòe ảnh $(\mathbf{x} \otimes \mathbf{k})$ &rarr; Ánh sáng quá ít nên bị hàm $\gamma$ bóp nghẹt thành tối thui &rarr; Máy ảnh phải tự tăng ISO lên tối đa, làm phát sinh tiếng xì xào của linh kiện điện tử tạo thành hạt nhiễu $\mathbf{n}$ &rarr; Kết quả là bạn nhận được bức ảnh tối đen, mờ căm và đầy hạt $\mathbf{y}$!"
+                    </p>
+                </div>
+
+                <!-- 4-Column Symbol Dictionary -->
+                <table class="symbol-dictionary-table">
+                    <thead>
+                        <tr>
+                            <th style="width:15%;">Ký Hiệu</th>
+                            <th style="width:25%;">Tên Tiếng Anh Chuẩn</th>
+                            <th style="width:25%;">Thuật Ngữ Tiếng Việt</th>
+                            <th style="width:35%;">Ý Nghĩa Đời Thường Cực Dễ Hiểu</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="symbol-badge">$\mathbf{x}$</span></td>
+                            <td>Ground Truth / Latent Sharp Image</td>
+                            <td>Ảnh chân lý (ảnh gốc)</td>
+                            <td>Khung cảnh thực tế sắc nét, đủ sáng, không có bất kỳ hạt nhiễu nào.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="symbol-badge">$\mathbf{k}$</span></td>
+                            <td>Blur Kernel / PSF</td>
+                            <td>Bộ lọc làm nhòe</td>
+                            <td>Cú run tay của người chụp khi mở màn trập lâu trong đêm.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="symbol-badge">$\otimes$</span></td>
+                            <td>Spatial Convolution</td>
+                            <td>Tích chập không gian</td>
+                            <td>Hành động quét làm mờ các đường biên sắc nét của đồ vật.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="symbol-badge">$\gamma(\cdot)$</span></td>
+                            <td>Non-linear Sensor Response</td>
+                            <td>Hàm suy thoái quang thông</td>
+                            <td>Cơn đói ánh sáng: Ép giá trị pixel từ 200+ sụt thẳng đứng xuống còn dưới 15.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="symbol-badge">$\mathbf{n}$</span></td>
+                            <td>Sensor Read & Shot Noise</td>
+                            <td>Nhiễu cảm biến cộng gộp</td>
+                            <td>Tiếng xì xào của vi mạch khi đẩy ISO cao: sinh ra các hạt đốm đỏ xanh lộn xộn.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="symbol-badge">$\mathbf{y}$</span></td>
+                            <td>Degraded Observed Image</td>
+                            <td>Ảnh quan sát bị suy thoái</td>
+                            <td>Bức ảnh thô đầu vào mà camera chụp được &rarr; Mô hình CNN phải phục hồi ảnh này!</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- Step-by-Step Degradation Simulation -->
+                <div class="sim-panel" style="margin-top:24px;">
+                    <div class="sim-panel-title">
+                        <span>Mô Phỏng Chu Trình Suy Thoái Vật Lý (Step-by-step Transformation)</span>
+                        <button class="sim-action-btn primary" onclick="autoPlaySlide2Cycle()">▶ Phát Video Mô Phỏng</button>
+                    </div>
+
+                    <div class="step-sequence" id="slide2-steps">
+                        <span class="step-indicator-pill active" onclick="setSlide2Step(1)">1. Ảnh Gốc x</span>
+                        <span class="step-indicator-pill" onclick="setSlide2Step(2)">2. Rung Tay (x ⊗ k)</span>
+                        <span class="step-indicator-pill" onclick="setSlide2Step(3)">3. Tắt Đèn γ(·)</span>
+                        <span class="step-indicator-pill" onclick="setSlide2Step(4)">4. Nhiễu Vi Mạch (+ n)</span>
+                        <span class="step-indicator-pill" onclick="setSlide2Step(5)">5. Ảnh Đầu Vào y</span>
+                    </div>
+
+                    <div class="slide-grid-2col" style="margin-top:12px;">
+                        <div class="sim-canvas-box">
+                            <canvas id="slide2-canvas" width="460" height="260" style="width:100%; height:auto;"></canvas>
+                        </div>
+                        <div style="display:flex; flex-direction:column; justify-content:space-between;">
+                            <div>
+                                <div id="slide2-math-stage" style="font-size:1.1rem; color:#38BDF8; margin-bottom:12px; font-weight:700;"></div>
+                                <div id="slide2-explain-stage" style="font-size:0.95rem; color:#CBD5E1; line-height:1.65;"></div>
+                            </div>
+                            <div id="slide2-matrix-sample" style="background:#06090E; padding:12px; border-radius:10px; border:1px solid rgba(255,255,255,0.08); margin-top:16px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- ===============================================================
+                 SLIDE 03: CONVOLUTION & 1x1 CONV
+                 =============================================================== -->
+            <article class="slide-card" id="slide-2">
+                <div class="slide-header">
+                    <div>
+                        <div class="slide-category-badge">Chuyên Đề 03 • Trọng Tâm Môn Học CS2203</div>
+                        <h1 class="slide-title">Phép Tích Chập (Convolution) & Bộ Lọc Không Gian</h1>
+                        <p class="slide-subtitle">Tại sao cửa sổ trượt 3x3 và phép nhân 1x1 lại là chìa khóa của mạng nơ-ron tích chập?</p>
+                    </div>
+                    <div class="slide-meta-pill">Giáo Trình Slide 81 - 86</div>
+                </div>
+
+                <div class="callout-intuition">
+                    <div class="callout-intuition-header">🌱 Lời Thầy Dặn: Hãy Tưởng Tượng Một Chiếc Kính Lúp Di Động</div>
+                    <p>
+                        "Tích chập $3 \times 3$ giống như bạn cầm một chiếc kính lúp nhỏ $3 \times 3$ ô vuông, trượt từ trái sang phải, từ trên xuống dưới bức ảnh. Tại mỗi vị trí dừng chân, bạn lấy số trên ảnh nhân với số trên kính lúp rồi cộng hết lại.
+                    </p>
+                    <p>
+                        Còn phép <strong>tích chập $1 \times 1$ (1x1 Conv)</strong> mà các bạn học ở Slide 86: Nó không nhìn sang các pixel xung quanh, mà nó đóng vai trò như một <em>'Máy trộn kênh màu'</em>. Ví dụ từ 64 kênh đặc trưng, bạn muốn cô đặc lại còn 16 kênh mà không làm thay đổi kích thước ngang dọc ảnh, thì $1 \times 1$ Conv chính là giải pháp tiết kiệm tham số nhất quả đất!"
+                    </p>
+                </div>
+
+                <div class="slide-grid-2col">
+                    <div>
+                        <h3 style="font-size:1.1rem; color:#F8FAFC; margin-bottom:10px;">1. Cơ Chế Trượt & Trích Xuất Biên Cạnh (Edge Detection)</h3>
+                        <p style="color:#94A3B8; font-size:0.92rem; line-height:1.6;">
+                            Trong bài toán ảnh thiếu sáng, các chi tiết biên cạnh (edges) bị vùi lấp dưới bóng tối. Bộ lọc tích chập với các trọng số dương ở tâm và âm ở xung quanh (Laplacian / Sobel) sẽ phát hiện ra sự thay đổi đột ngột giữa các pixel lân cận, giúp mạng nơ-ron nhận diện được hình dáng đồ vật.
+                        </p>
+                        
+                        <div style="background:#131A29; border-radius:12px; padding:16px; border:1px solid rgba(255,255,255,0.08); margin-top:16px;">
+                            <div style="font-size:0.85rem; color:#38BDF8; font-weight:700; margin-bottom:8px;">Công thức tính toán tại mỗi bước trượt:</div>
+                            $$\text{Output}[r, c] = \sum_{i=0}^{2} \sum_{j=0}^{2} \text{Input}[r+i, c+j] \times \text{Kernel}[i, j] + b$$
+                            <div id="slide3-calc-trace" style="font-size:0.82rem; color:#A78BFA; margin-top:8px; font-family:var(--font-mono);"></div>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Convolution Animation -->
+                    <div class="sim-panel">
+                        <div class="sim-panel-title">
+                            <span>Diễn Hoạt Bộ Lọc 3x3 Trượt Trên Ma Trận 5x5</span>
+                            <button class="sim-action-btn primary" onclick="startSlide3Conv()">▶ Xem Tích Chập Chạy Tự Động</button>
+                        </div>
+
+                        <div style="display:flex; justify-content:space-around; align-items:center; gap:16px; padding:12px 0;">
+                            <div>
+                                <div style="font-size:0.75rem; color:#94A3B8; text-align:center; margin-bottom:6px; font-weight:600;">Ma Trận Đầu Vào (5x5)</div>
+                                <div class="pixel-matrix-table" id="slide3-in-grid" style="grid-template-columns: repeat(5, 34px);"></div>
+                            </div>
+                            <div style="font-size:1.5rem; color:#38BDF8; font-weight:800;">&otimes;</div>
+                            <div>
+                                <div style="font-size:0.75rem; color:#34D399; text-align:center; margin-bottom:6px; font-weight:600;">Bản Đồ Đặc Trưng (3x3)</div>
+                                <div class="pixel-matrix-table" id="slide3-out-grid" style="grid-template-columns: repeat(3, 34px);"></div>
+                            </div>
+                        </div>
+
+                        <div style="font-size:0.8rem; color:#94A3B8; text-align:center;">
+                            Ô viền xanh dương sáng là phạm vi kính lúp 3x3 đang tính toán ra ô xanh ngọc bên phải.
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- ===============================================================
+                 SLIDE 04: UNET ARCHITECTURE
+                 =============================================================== -->
+            <article class="slide-card" id="slide-3">
+                <div class="slide-header">
+                    <div>
+                        <div class="slide-category-badge">Chuyên Đề 04 • Kiến Trúc Cốt Lõi Đồ Án</div>
+                        <h1 class="slide-title">Bí Mật Mạng U-Net — Tại Sao Phải Là Chữ "U"?</h1>
+                        <p class="slide-subtitle">Sự đánh đổi sống còn giữa Tầm Nhìn Toàn Cảnh (Global Context) và Chi Tiết Cục Bộ (Local Details)</p>
+                    </div>
+                    <div class="slide-meta-pill">Compact U-Net Scaffold</div>
+                </div>
+
+                <div class="callout-intuition">
+                    <div class="callout-intuition-header">🌱 Lời Thầy Dặn: Lùi Ra Xa Để Nhìn Toàn Cảnh — Tiến Lại Gần Để Vẽ Chi Tiết</div>
+                    <p>
+                        "Nhiều bạn hỏi thầy: <em>'Thầy ơi, tại sao mình không dùng một mạng thẳng đuột (Plain CNN) từ đầu đến cuối cho đơn giản?'</em>
+                    </p>
+                    <p>
+                        Nếu bạn đứng sát vách tường cách 5cm, bạn chỉ thấy một mảng màu đen (bị mù ngữ cảnh, không biết đây là góc tường hay chiếc ghế). Bạn buộc phải <strong>lùi ra xa (Encoder - Đi xuống chữ U)</strong> để thấy trọn vẹn cả căn phòng. Nhưng khi lùi ra xa, các chi tiết sợi tóc, cạnh bàn bị mờ tịt! Vì vậy sau khi hiểu toàn cảnh ở đáy chữ U (Bottleneck), bạn phải <strong>tiến lại gần (Decoder - Đi lên chữ U)</strong> để phóng to và vẽ lại bức ảnh rõ nét ban đầu!"
+                    </p>
+                </div>
+
+                <div class="slide-grid-2col">
+                    <div>
+                        <h3 style="font-size:1.15rem; color:#F8FAFC; margin-bottom:12px;">3 Vùng Trọng Yếu Trong Cấu Trúc Chữ U</h3>
+                        <div style="display:flex; flex-direction:column; gap:12px;">
+                            <div style="background:#131A29; padding:14px; border-radius:12px; border-left:4px solid #38BDF8;">
+                                <strong style="color:#38BDF8;">1. Nhánh Mã Hóa (Encoder - Đi xuống):</strong>
+                                <p style="margin:4px 0 0 0; font-size:0.88rem; color:#CBD5E1;">
+                                    Độ phân giải không gian giảm dần ($256 \rightarrow 128 \rightarrow 64 \rightarrow 32$), số kênh đặc trưng tăng gấp đôi ($16 \rightarrow 32 \rightarrow 64 \rightarrow 128$). Mô hình học ngữ cảnh trừu tượng cấp cao (High-level semantics).
+                                </p>
+                            </div>
+                            <div style="background:#131A29; padding:14px; border-radius:12px; border-left:4px solid #A78BFA;">
+                                <strong style="color:#A78BFA;">2. Vùng Cổ Chai (Bottleneck - Đáy chữ U):</strong>
+                                <p style="margin:4px 0 0 0; font-size:0.88rem; color:#CBD5E1;">
+                                    Nơi lưu trữ tinh hoa thông tin cô đọng nhất ở kích thước nhỏ nhất ($32 \times 32 \times 128$). Đây là cầu nối giữa hiểu ngữ cảnh và tái tạo hình ảnh.
+                                </p>
+                            </div>
+                            <div style="background:#131A29; padding:14px; border-radius:12px; border-left:4px solid #34D399;">
+                                <strong style="color:#34D399;">3. Nhánh Giải Mã (Decoder - Đi lên):</strong>
+                                <p style="margin:4px 0 0 0; font-size:0.88rem; color:#CBD5E1;">
+                                    Phóng to độ phân giải trở lại ($32 \rightarrow 64 \rightarrow 128 \rightarrow 256$) bằng phép nội suy Bilinear Upsampling + Conv để vẽ lại từng điểm ảnh sắc nét.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SVG U-Net Diagram -->
+                    <div class="sim-panel" style="align-items:center; justify-content:center;">
+                        <svg viewBox="0 0 460 300" style="width:100%; height:auto;">
+                            <!-- Encoder blocks (Left) -->
+                            <rect x="30" y="30" width="80" height="35" rx="6" fill="#0284C7" stroke="#38BDF8" stroke-width="2"/>
+                            <text x="70" y="52" fill="#FFF" font-size="11" font-weight="700" text-anchor="middle">Level 1 (256x256)</text>
+
+                            <rect x="60" y="90" width="80" height="35" rx="6" fill="#0369A1" stroke="#38BDF8" stroke-width="2"/>
+                            <text x="100" y="112" fill="#FFF" font-size="11" font-weight="700" text-anchor="middle">Level 2 (128x128)</text>
+
+                            <rect x="90" y="150" width="80" height="35" rx="6" fill="#075985" stroke="#38BDF8" stroke-width="2"/>
+                            <text x="130" y="172" fill="#FFF" font-size="11" font-weight="700" text-anchor="middle">Level 3 (64x64)</text>
+
+                            <!-- Bottleneck (Bottom) -->
+                            <rect x="170" y="220" width="120" height="40" rx="8" fill="#581C87" stroke="#A78BFA" stroke-width="2"/>
+                            <text x="230" y="244" fill="#FFF" font-size="12" font-weight="800" text-anchor="middle">Bottleneck (32x32)</text>
+
+                            <!-- Decoder blocks (Right) -->
+                            <rect x="290" y="150" width="80" height="35" rx="6" fill="#065F46" stroke="#34D399" stroke-width="2"/>
+                            <text x="330" y="172" fill="#FFF" font-size="11" font-weight="700" text-anchor="middle">Dec L3 (64x64)</text>
+
+                            <rect x="320" y="90" width="80" height="35" rx="6" fill="#047857" stroke="#34D399" stroke-width="2"/>
+                            <text x="360" y="112" fill="#FFF" font-size="11" font-weight="700" text-anchor="middle">Dec L2 (128x128)</text>
+
+                            <rect x="350" y="30" width="80" height="35" rx="6" fill="#059669" stroke="#34D399" stroke-width="2"/>
+                            <text x="390" y="52" fill="#FFF" font-size="11" font-weight="700" text-anchor="middle">Dec L1 (256x256)</text>
+
+                            <!-- Down arrows -->
+                            <path d="M70,65 L100,90" stroke="#38BDF8" stroke-width="2" stroke-dasharray="4"/>
+                            <path d="M100,125 L130,150" stroke="#38BDF8" stroke-width="2" stroke-dasharray="4"/>
+                            <path d="M130,185 L180,220" stroke="#38BDF8" stroke-width="2" stroke-dasharray="4"/>
+
+                            <!-- Up arrows -->
+                            <path d="M280,220 L330,185" stroke="#34D399" stroke-width="2" stroke-dasharray="4"/>
+                            <path d="M330,150 L360,125" stroke="#34D399" stroke-width="2" stroke-dasharray="4"/>
+                            <path d="M360,90 L390,65" stroke="#34D399" stroke-width="2" stroke-dasharray="4"/>
+
+                            <!-- Horizontal Skip Connections -->
+                            <line x1="110" y1="47" x2="350" y2="47" stroke="#F59E0B" stroke-width="2" stroke-dasharray="5"/>
+                            <line x1="140" y1="107" x2="320" y2="107" stroke="#F59E0B" stroke-width="2" stroke-dasharray="5"/>
+                            <line x1="170" y1="167" x2="290" y2="167" stroke="#F59E0B" stroke-width="2" stroke-dasharray="5"/>
+
+                            <text x="230" y="42" fill="#FBBF24" font-size="10" font-weight="700" text-anchor="middle">Skip Connection Level 1</text>
+                            <text x="230" y="102" fill="#FBBF24" font-size="10" font-weight="700" text-anchor="middle">Skip Connection Level 2</text>
+                            <text x="230" y="162" fill="#FBBF24" font-size="10" font-weight="700" text-anchor="middle">Skip Connection Level 3</text>
+                        </svg>
+                        <div style="font-size:0.8rem; color:#FBBF24; margin-top:8px;">
+                            Các đường nét đứt màu vàng chính là "Cây Cầu Vượt Thời Không" (Skip Connection).
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- ===============================================================
+                 SLIDE 05: SKIP CONNECTIONS
+                 =============================================================== -->
+            <article class="slide-card" id="slide-4">
+                <div class="slide-header">
+                    <div>
+                        <div class="slide-category-badge">Chuyên Đề 05 • Cơ Chế Nối Tắt</div>
+                        <h1 class="slide-title">Skip Connection — Cây Cầu Vượt Thời Không</h1>
+                        <p class="slide-subtitle">Từ bài học ResNet (Slide 116) đến giải pháp cứu sinh các chi tiết cấu trúc bị vỡ</p>
+                    </div>
+                    <div class="slide-meta-pill">Kế Thừa ResNet (2015)</div>
+                </div>
+
+                <div class="callout-intuition">
+                    <div class="callout-intuition-header">🌱 Lời Thầy Dặn: Cuộc Điện Thoại Băng Qua Vực Thẳm</div>
+                    <p>
+                        "Khi Encoder co ảnh xuống kích thước nhỏ ở đáy Bottleneck, toàn bộ vị trí pixel chính xác của sợi tóc hay góc cạnh bàn bị xóa sổ. Decoder đứng ở bên kia vực thẳm vò đầu bứt tai: <em>'Tôi biết căn phòng này có chiếc bàn, nhưng chiếc bàn chính xác nằm ở tọa độ nào thì tôi quên mất rồi!'</em>
+                    </p>
+                    <p>
+                        Lúc này, <strong>Skip Connection</strong> xuất hiện như một đường dây cáp quang bắc ngang qua vực thẳm: Encoder ở tầng nông gọi điện thẳng cho Decoder: <em>'Đừng lo, lúc nãy khi ảnh còn to 256x256, tôi đã chụp lại bản đồ chi tiết góc cạnh bàn cực nét rồi, tôi gửi thẳng qua cho bạn ngay đây!'</em> Nhờ đó, Decoder ghép thông tin toàn cảnh với chi tiết sắc nét để tái tạo bức ảnh hoàn hảo!"
+                    </p>
+                </div>
+
+                <div class="slide-grid-3col" style="margin-top:20px;">
+                    <div style="background:#131A29; border:1px solid rgba(255,255,255,0.08); border-radius:14px; padding:20px;">
+                        <span style="font-size:0.8rem; font-weight:700; color:#38BDF8; font-family:var(--font-mono);">NGUYÊN LÝ 1</span>
+                        <h4 style="color:#FFF; margin:8px 0;">Chống Triệt Tiêu Gradient</h4>
+                        <p style="font-size:0.88rem; color:#94A3B8; line-height:1.6;">
+                            Kế thừa trực tiếp từ mạng <strong>ResNet</strong> (Slide 116): Đạo hàm của hàm cộng $f(x) + x$ theo $x$ luôn chứa số $+1$. Gradient lan truyền ngược (Backprop) chảy thẳng về các tầng đầu mà không bị triệt tiêu về 0 (Vanishing Gradient).
+                        </p>
+                    </div>
+
+                    <div style="background:#131A29; border:1px solid rgba(255,255,255,0.08); border-radius:14px; padding:20px;">
+                        <span style="font-size:0.8rem; font-weight:700; color:#F59E0B; font-family:var(--font-mono);">NGUYÊN LÝ 2</span>
+                        <h4 style="color:#FFF; margin:8px 0;">Bảo Toàn Tọa Độ Không Gian</h4>
+                        <p style="font-size:0.88rem; color:#94A3B8; line-height:1.6;">
+                            Tầng nông lưu giữ tọa độ pixel chuẩn xác tuyệt đối. Bỏ qua Bottleneck và truyền thẳng sang Decoder giúp biên cạnh đồ vật không bị méo mó hay xê dịch tọa độ khi tăng sáng.
+                        </p>
+                    </div>
+
+                    <div style="background:#131A29; border:1px solid rgba(255,255,255,0.08); border-radius:14px; padding:20px;">
+                        <span style="font-size:0.8rem; font-weight:700; color:#34D399; font-family:var(--font-mono);">NGUYÊN LÝ 3</span>
+                        <h4 style="color:#FFF; margin:8px 0;">Tốc Độ Hội Tụ Thần Tốc</h4>
+                        <p style="font-size:0.88rem; color:#94A3B8; line-height:1.6;">
+                            Thay vì bắt mạng nơ-ron phải học cách vẽ lại bức ảnh từ con số 0, mô hình chỉ cần học <em>phần sai khác (Residual Residual Signal)</em> giữa ảnh tối và ảnh sáng. Thời gian train giảm đi một nửa!
+                        </p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- ===============================================================
+                 SLIDE 06: GATED SKIP CONNECTION & NOISE LEAKAGE
+                 =============================================================== -->
+            <article class="slide-card" id="slide-5">
+                <div class="slide-header">
+                    <div>
+                        <div class="slide-category-badge">Chuyên Đề 06 • Đóng Góp Kỹ Thuật Quan Trọng</div>
+                        <h1 class="slide-title">Cái Bẫy "Rò Rỉ Nhiễu" & Cứu Tinh Gated Skip</h1>
+                        <p class="slide-subtitle">Tại sao dùng Skip Connection ngây thơ trong ảnh thiếu sáng lại là một thảm họa thị giác?</p>
+                    </div>
+                    <div class="slide-meta-pill">Proposed Innovation</div>
+                </div>
+
+                <div class="callout-warning-concept">
+                    <div class="callout-warning-header">⚠️ Cảnh Báo Bẫy Kỹ Thuật: Bẫy Rò Rỉ Nhiễu (Noise Leakage)</div>
+                    <p>
+                        "Trong bài toán y tế (chụp CT/MRI), ảnh gốc rất sạch nên U-Net truyền thẳng Skip Connection là hoàn hảo. Nhưng trong ảnh chụp đêm, tầng nông của Encoder nhận ảnh $\mathbf{y}$ chứa đầy <strong>nhiễu hạt cảm biến kinh hoàng ($\mathbf{n}$)</strong>!
+                    </p>
+                    <p>
+                        Nếu bạn bê nguyên xi Skip Connection sang Decoder, bạn vô tình <strong>truyền luôn cả hàng triệu hạt nhiễu đỏ xanh sang cho Decoder khuếch đại lên</strong>! Kết quả: ảnh sau khi tăng sáng sáng rực nhưng đầy vết mụn cóc và lốm đốm màu!"
+                    </p>
+                </div>
+
+                <div class="slide-grid-2col">
+                    <div>
+                        <h3 style="font-size:1.15rem; color:#F8FAFC; margin-bottom:12px;">Giải Pháp Của Đề Tài: Cánh Cổng Gating Sigmoid</h3>
+                        <p style="color:#94A3B8; font-size:0.92rem; line-height:1.65;">
+                            Chúng tôi đặt một <strong>Cánh Cổng Gating (Gated Skip Connection)</strong> ngay trên đường truyền. Tín hiệu nông $F_{enc}$ đi qua một lớp tích chập nhẹ $1 \times 1$ và hàm kích hoạt Sigmoid để sinh ra một mặt nạ cổng $G \in [0, 1]$:
+                        </p>
+                        $$G = \sigma(\text{Conv}_{1 \times 1}(F_{enc}))$$
+                        $$F_{filtered} = F_{enc} \odot G$$
+                        <ul style="color:#CBD5E1; font-size:0.92rem; line-height:1.7; padding-left:20px;">
+                            <li><strong>Vùng biên cạnh thật</strong>: Cổng tính ra $G \approx 0.95 \rightarrow$ Mở rộng cửa cho chi tiết đi qua!</li>
+                            <li><strong>Vùng hạt nhiễu vô nghĩa</strong>: Cổng tính ra $G \approx 0.02 \rightarrow$ Đóng chặt cửa, dập tắt nhiễu tại trận!</li>
+                        </ul>
+                    </div>
+
+                    <!-- Interactive Gated Skip Simulator -->
+                    <div class="sim-panel">
+                        <div class="sim-panel-title">
+                            <span>Mô Phỏng Cánh Cổng Kiểm Soát Nhiễu</span>
+                            <span style="font-size:0.8rem; color:#34D399; font-family:var(--font-mono);">Interactive Gate</span>
+                        </div>
+
+                        <div class="slider-control-group">
+                            <div class="slider-label-row">
+                                <span>Ngưỡng Đóng/Mở Cổng Gating ($\sigma$):</span>
+                                <span class="slider-val-tag" id="slide6-gate-val">0.50</span>
+                            </div>
+                            <input type="range" class="interactive-range" id="slide6-gate-threshold" min="0.1" max="0.9" step="0.05" value="0.5">
+                        </div>
+
+                        <div class="sim-canvas-box" style="min-height:220px;">
+                            <canvas id="slide6-canvas" width="520" height="200" style="width:100%; height:auto;"></canvas>
+                        </div>
+
+                        <div style="font-size:0.8rem; color:#94A3B8; text-align:center;">
+                            Kéo ngưỡng lên trên 0.4 để thấy cổng đóng lại và dập tắt hoàn toàn các hạt nhiễu đỏ!
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- ===============================================================
+                 SLIDE 07: ATTENTION MECHANISMS & SCA
+                 =============================================================== -->
+            <article class="slide-card" id="slide-6">
+                <div class="slide-header">
+                    <div>
+                        <div class="slide-category-badge">Chuyên Đề 07 • Đôi Mắt Thông Minh Của AI</div>
+                        <h1 class="slide-title">Cơ Chế Chú Ý (Attention) & Sự Tinh Gọn Của SCA</h1>
+                        <p class="slide-subtitle">Học hỏi từ NAFNet và DarkIR (CVPR 2025): Bỏ hết các tầng MLP cồng kềnh, chỉ giữ lại điều cốt lõi</p>
+                    </div>
+                    <div class="slide-meta-pill">DarkIR Simplified Attention</div>
+                </div>
+
+                <div class="callout-intuition">
+                    <div class="callout-intuition-header">🌱 Lời Thầy Dặn: Đôi Mắt Người Trong Đêm Tối</div>
+                    <p>
+                        "Khi bạn bước vào một căn phòng tối thui, mắt bạn không nhìn chăm chú vào mảng tường đen vô nghĩa, mà mắt bạn tự động dồn hết sự tập trung (attention) vào vệt sáng le lói dưới khe cửa. Đó chính là <strong>Cơ chế Chú ý</strong>.
+                    </p>
+                    <p>
+                        Trong mạng CNN, chúng ta có 64 kênh đặc trưng. Có kênh chuyên chụp bầu trời đêm, có kênh chuyên chụp biên cạnh, có kênh lại bị nhiễu cảm biến lọt vào. Thay vì dùng các cơ chế Attention phức tạp nhiều tầng như SE-Net hay CBAM, chúng ta chọn <strong>SCA (Simplified Channel Attention)</strong> từ bài báo DarkIR CVPR 2025: Chỉ cần gom trung bình mỗi kênh lại rồi nhân với 1 phép Conv $1 \times 1$ là xong! Siêu nhẹ, siêu nhanh, không tốn thêm bộ nhớ!"
+                    </p>
+                </div>
+
+                <div class="slide-grid-2col">
+                    <div>
+                        <h3 style="font-size:1.15rem; color:#F8FAFC; margin-bottom:12px;">So Sánh 4 Thế Hệ Attention Cơ Bản</h3>
+                        <table class="symbol-dictionary-table" style="font-size:0.85rem;">
+                            <thead>
+                                <tr>
+                                    <th>Cơ Chế</th>
+                                    <th>Cách Thức</th>
+                                    <th>Nhược Điểm / Đánh Giá</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>SE-Net</strong></td>
+                                    <td>GAP + 2 Tầng MLP ($C \rightarrow C/r \rightarrow C$)</td>
+                                    <td>Nén kênh $r=16$ gây mất mát thông tin tương quan kênh vi mô.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>CBAM</strong></td>
+                                    <td>Channel + Spatial Attention tuần tự</td>
+                                    <td>Nặng nề, tăng thời gian trễ (latency) khi chạy trên GPU yếu.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Coordinate Attn</strong></td>
+                                    <td>Tách 2 hướng quét $X$ và $Y$</td>
+                                    <td>Tốt cho nhận diện vật thể nhưng phức tạp cho phục hồi ảnh.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong style="color:#38BDF8;">SCA (Đề Xuất)</strong></td>
+                                    <td>$\text{GAP} + \text{Conv}_{1 \times 1} \rightarrow \odot$</td>
+                                    <td><strong style="color:#34D399;">Cực nhẹ (&lt; 1k params)</strong>, bảo toàn trọn vẹn thông tin kênh!</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Interactive SCA Simulator -->
+                    <div class="sim-panel">
+                        <div class="sim-panel-title">
+                            <span>Mô Phỏng Phân Bổ Trọng Số Kênh SCA</span>
+                            <button class="sim-action-btn primary" id="slide7-recalc-btn">🎲 Lấy Mẫu Đặc Trưng Mới</button>
+                        </div>
+
+                        <div id="slide7-channel-bars" style="padding:10px 0;">
+                            <!-- Injected by JS -->
+                        </div>
+
+                        <div style="font-size:0.8rem; color:#94A3B8; text-align:center;">
+                            SCA tự động dập tắt kênh nhiễu (màu đỏ) và đẩy mạnh kênh cạnh/ánh sáng (màu xanh)!
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- ===============================================================
+                 SLIDE 08: PROPOSED ARCHITECTURE OVERVIEW
+                 =============================================================== -->
+            <article class="slide-card" id="slide-7">
+                <div class="slide-header">
+                    <div>
+                        <div class="slide-category-badge">Chuyên Đề 08 • Tổng Thể Mô Hình Đề Xuất</div>
+                        <h1 class="slide-title">Kiến Trúc Mạng Lightweight Attention U-Net</h1>
+                        <p class="slide-subtitle">Thiết kế hoàn chỉnh ~905,000 tham số, 4 cấp độ phân giải, tối ưu cho môi trường tài nguyên hạn chế</p>
+                    </div>
+                    <div class="slide-meta-pill">Tham Số &lt; 1.0M Params</div>
+                </div>
+
+                <div class="callout-intuition">
+                    <div class="callout-intuition-header">🌱 Lời Thầy Dặn: Thiết Kế Vừa Vặn Cho Đồ Án Môn Học</div>
+                    <p>
+                        "Các mô hình khổng lồ dùng Transformer như Restormer có tới 26 triệu tham số, đòi hỏi cụm máy chủ hàng trăm triệu mới chạy nổi. Trong khi đó, đồ án môn học của chúng ta được thiết kế theo triết lý <strong>'Nhỏ mà có võ'</strong>:
+                    </p>
+                    <p>
+                        Tổng số tham số chỉ vỏn vẹn <strong>~905,000 tham số (chưa tới 1 triệu)</strong>. Mô hình có thể huấn luyện ngon lành trên Google Colab miễn phí chỉ trong vòng chưa đầy 1 giờ đồng hồ, nhưng vẫn đạt chất lượng tăng sáng và khử nhiễu vượt trội nhờ sự kết hợp ăn ý giữa U-Net, Gated Skip và SCA Attention!"
+                    </p>
+                </div>
+
+                <div class="slide-grid-2col">
+                    <div>
+                        <h3 style="font-size:1.15rem; color:#F8FAFC; margin-bottom:12px;">Bảng Đặc Tả 4 Tầng Của Mô Hình</h3>
+                        <table class="symbol-dictionary-table" style="font-size:0.85rem;">
+                            <thead>
+                                <tr>
+                                    <th>Cấp Độ</th>
+                                    <th>Kích Thước Feature</th>
+                                    <th>Số Kênh</th>
+                                    <th>Khối Chức Năng Cốt Lõi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Level 1</strong></td>
+                                    <td>$256 \times 256$</td>
+                                    <td>16</td>
+                                    <td>Conv 3x3 + LeakyReLU + SCA</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Level 2</strong></td>
+                                    <td>$128 \times 128$</td>
+                                    <td>32</td>
+                                    <td>Conv 3x3 + LeakyReLU + SCA</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Level 3</strong></td>
+                                    <td>$64 \times 64$</td>
+                                    <td>64</td>
+                                    <td>Conv 3x3 + LeakyReLU + SCA</td>
+                                </tr>
+                                <tr>
+                                    <td><strong style="color:#A78BFA;">Bottleneck</strong></td>
+                                    <td>$32 \times 32$</td>
+                                    <td>128</td>
+                                    <td>Dilated Conv ($d=2$) mở rộng Receptive Field</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="sim-panel">
+                        <div class="sim-panel-title">
+                            <span>So Kèo Quy Mô Tham Số (Complexity Comparison)</span>
+                        </div>
+                        
+                        <div style="display:flex; flex-direction:column; gap:16px; padding:10px 0;">
+                            <div>
+                                <div style="display:flex; justify-content:space-between; font-size:0.85rem; margin-bottom:4px;">
+                                    <strong style="color:#34D399;">Mô Hình Đề Xuất (Đồ Án Chúng Ta)</strong>
+                                    <span style="font-family:var(--font-mono); font-weight:700; color:#34D399;">0.905 M Params</span>
+                                </div>
+                                <div style="height:12px; background:rgba(255,255,255,0.08); border-radius:6px; overflow:hidden;">
+                                    <div style="height:100%; width:3.5%; background:#34D399;"></div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <div style="display:flex; justify-content:space-between; font-size:0.85rem; margin-bottom:4px;">
+                                    <span style="color:#94A3B8;">RetinexFormer (ICCV 2023)</span>
+                                    <span style="font-family:var(--font-mono); color:#94A3B8;">1.58 M Params</span>
+                                </div>
+                                <div style="height:12px; background:rgba(255,255,255,0.08); border-radius:6px; overflow:hidden;">
+                                    <div style="height:100%; width:6%; background:#38BDF8;"></div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <div style="display:flex; justify-content:space-between; font-size:0.85rem; margin-bottom:4px;">
+                                    <span style="color:#F87171;">Restormer (CVPR 2022)</span>
+                                    <span style="font-family:var(--font-mono); color:#F87171;">26.10 M Params (Gấp 28 lần!)</span>
+                                </div>
+                                <div style="height:12px; background:rgba(255,255,255,0.08); border-radius:6px; overflow:hidden;">
+                                    <div style="height:100%; width:100%; background:#F87171;"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="font-size:0.82rem; color:#CBD5E1; line-height:1.6; background:#06090E; padding:12px; border-radius:10px; border:1px solid rgba(255,255,255,0.08);">
+                            🚀 <strong>Kết luận hội đồng:</strong> Mô hình đạt chuẩn "Lightweight", hoàn toàn đủ điều kiện triển khai thời gian thực trên camera giám sát giao thông hoặc thiết bị nhúng Raspberry Pi / Jetson Nano!
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- ===============================================================
+                 SLIDE 09: LOSS FUNCTION RATIONALE
+                 =============================================================== -->
+            <article class="slide-card" id="slide-8">
+                <div class="slide-header">
+                    <div>
+                        <div class="slide-category-badge">Chuyên Đề 09 • Mục Tiêu Tối Ưu Hóa</div>
+                        <h1 class="slide-title">Tại Sao Không Dùng MSE? Bí Quyết Composite Loss</h1>
+                        <p class="slide-subtitle">Bóc tách toán học vì sao L1 kết hợp SSIM lại tạo ra hình ảnh trong trẻo, không bị tráng sáp nến</p>
+                    </div>
+                    <div class="slide-meta-pill">L1 + 0.2 x (1 - SSIM)</div>
+                </div>
+
+                <div class="callout-intuition">
+                    <div class="callout-intuition-header">🌱 Lời Thầy Dặn: Sự Sợ Hãi Của Hàm MSE Khi Gặp Cạnh Sắc</div>
+                    <p>
+                        "Khi học ở Slide 26 môn Deep Learning, các bạn thường thấy hàm mất mát sai số toàn phương trung bình <strong>MSE (L2 Loss)</strong>: $\text{MSE} = (y - \hat{y})^2$.
+                    </p>
+                    <p>
+                        Tại sao trong bài toán phục hồi ảnh người ta lại né tránh MSE như tránh tà? Vì phép bình phương phạt rất nặng những lỗi lớn. Khi gặp một đường biên sắc nét (ví dụ cạnh mép bàn chênh nhau từ 20 lên 200), mô hình dùng MSE rất sợ bị phạt điểm khủng khiếp nếu đoán sai vài pixel. Để an toàn, <strong>nó chọn giải pháp 'hòa cả làng' là làm mờ nhòe (blur) tất cả các đường biên đi</strong>! Kết quả là ảnh khôi phục nhìn như bị tráng một lớp sáp nến mờ ảo.
+                    </p>
+                    <p>
+                        Ngược lại, <strong>L1 Loss</strong> chỉ phạt tuyến tính $|y - \hat{y}|$, giúp giữ cạnh sắc nét. Kết hợp thêm <strong>SSIM Loss</strong> đo trực giác thị giác con người (độ tương phản, cấu trúc), chúng ta có công thức vàng: $L = L_1 + 0.2 \times (1 - \text{SSIM})$!"
+                    </p>
+                </div>
+
+                <div class="slide-grid-3col" style="margin-top:20px;">
+                    <div style="background:#131A29; border:1px solid rgba(239,68,68,0.3); border-radius:14px; padding:20px;">
+                        <span style="font-size:0.8rem; font-weight:700; color:#F87171; font-family:var(--font-mono);">HÀM L2 (MSE)</span>
+                        <h4 style="color:#FFF; margin:8px 0;">$\mathcal{L}_{MSE} = (y - \hat{y})^2$</h4>
+                        <ul style="font-size:0.88rem; color:#94A3B8; line-height:1.6; padding-left:18px;">
+                            <li>Phạt bình phương phi tuyến.</li>
+                            <li>Ép dự đoán về giá trị trung bình mờ.</li>
+                            <li><strong style="color:#F87171;">Hậu quả:</strong> Mất sạch kết cấu (textures), biên cạnh bị nhòe như sương mù.</li>
+                        </ul>
+                    </div>
+
+                    <div style="background:#131A29; border:1px solid rgba(56,189,248,0.3); border-radius:14px; padding:20px;">
+                        <span style="font-size:0.8rem; font-weight:700; color:#38BDF8; font-family:var(--font-mono);">HÀM L1 (MAE)</span>
+                        <h4 style="color:#FFF; margin:8px 0;">$\mathcal{L}_{L1} = |y - \hat{y}|$</h4>
+                        <ul style="font-size:0.88rem; color:#94A3B8; line-height:1.6; padding-left:18px;">
+                            <li>Đạo hàm hằng số ($+1$ hoặc $-1$).</li>
+                            <li>Không thiên vị điểm ngoại lai.</li>
+                            <li><strong style="color:#38BDF8;">Ưu điểm:</strong> Bảo toàn đường viền và độ sắc nét quang học ban đầu.</li>
+                        </ul>
+                    </div>
+
+                    <div style="background:#131A29; border:1px solid rgba(52,211,153,0.3); border-radius:14px; padding:20px;">
+                        <span style="font-size:0.8rem; font-weight:700; color:#34D399; font-family:var(--font-mono);">SSIM LOSS</span>
+                        <h4 style="color:#FFF; margin:8px 0;">$\mathcal{L}_{SSIM} = 1 - \text{SSIM}$</h4>
+                        <ul style="font-size:0.88rem; color:#94A3B8; line-height:1.6; padding-left:18px;">
+                            <li>Đo lường 3 thành phần thị giác: Luminance, Contrast, Structure.</li>
+                            <li>Khớp với cảm nhận mắt người.</li>
+                            <li><strong style="color:#34D399;">Ưu điểm:</strong> Ảnh có chiều sâu và độ tương phản tự nhiên.</li>
+                        </ul>
+                    </div>
+                </div>
+            </article>
+
+            <!-- ===============================================================
+                 SLIDE 10: DATASET STRATEGY & AUGMENTATION
+                 =============================================================== -->
+            <article class="slide-card" id="slide-9">
+                <div class="slide-header">
+                    <div>
+                        <div class="slide-category-badge">Chuyên Đề 10 • Chiến Lược Thực Nghiệm Đồ Án</div>
+                        <h1 class="slide-title">Chiến Lược Dữ Liệu (250:300:200) & Augmentation</h1>
+                        <p class="slide-subtitle">Phản biện khoa học: Tại sao trong thị giác cấp thấp, tăng cường dữ liệu bừa bãi là tai hại?</p>
+                    </div>
+                    <div class="slide-meta-pill">Stratified Manifest Split</div>
+                </div>
+
+                <div class="callout-intuition">
+                    <div class="callout-intuition-header">🌱 Lời Thầy Dặn: Trả Lời Thắc Mắc Lớn Của Bạn Về Data Augmentation</div>
+                    <p>
+                        "Bạn từng thắc mắc: <em>'Mục đích của mình là tăng sáng ảnh chứ đâu phải phân loại hay phát hiện vật thể, tại sao lại cần Crop và Flip? Cắt patch hay lật ảnh đâu có làm tăng thêm pixel tối nào?'</em>
+                    </p>
+                    <p>
+                        Thầy khen bạn câu hỏi này rất thông minh! Đúng là trong bài toán tăng sáng ảnh, nếu bạn dùng các kỹ thuật Augmentation của bài toán phân loại như <strong>ColorJitter (đổi màu ngẫu nhiên)</strong> hay <strong>Cutout (khoét lỗ đen)</strong> thì sẽ là một <strong>thảm họa phá hỏng quy luật vật lý quang tử của cảm biến</strong>!
+                    </p>
+                    <p>
+                        Tuy nhiên, hai phép biến đổi mà chúng ta bắt buộc phải dùng có lý do kỹ thuật đằng sau:
+                    </p>
+                    <ul style="margin:4px 0 0 0; padding-left:20px;">
+                        <li><strong>Random Crop $256 \times 256$</strong>: Ảnh gốc của máy ảnh Canon có độ phân giải rất lớn ($600 \times 400$). Nếu nhét cả ảnh to vào thì card đồ họa GPU Colab (15GB VRAM) sẽ nổ tung vì tràn bộ nhớ (Out-Of-Memory). Nếu bạn co nhỏ (Resize) ảnh lại thì các hạt nhiễu cảm biến li ti sẽ bị bẹp dúm méo mó phi vật lý! Vì vậy, <em>cắt một mảng nhỏ $256 \times 256$ nguyên bản</em> là cách duy nhất để vừa vặn GPU mà bảo toàn 100% hạt nhiễu thật!</li>
+                        <li><strong>Random Flip (Lật ngang / dọc)</strong>: Hạt nhiễu cảm biến và góc chiếu sáng trong đêm không hề phân biệt trái phải trên dưới. Lật ảnh giúp mô hình bất biến với góc chụp mà không làm sai lệch một hạt photon nào!</li>
+                    </ul>
+                </div>
+
+                <div class="slide-grid-2col" style="margin-top:16px;">
+                    <div>
+                        <h3 style="font-size:1.15rem; color:#F8FAFC; margin-bottom:12px;">Cấu Trúc Phân Tầng Cân Bằng (Stratified Split)</h3>
+                        <p style="color:#94A3B8; font-size:0.92rem; line-height:1.65;">
+                            Chúng ta kết hợp hai bộ dữ liệu chuẩn danh tiếng <strong>LOLv1</strong> (máy ảnh Canon ISO cao) và <strong>LOLv2 Real</strong> (nhiều cảm biến điện thoại). Tỷ lệ phân tầng đồng nhất <strong>48.5% LOLv1 : 51.5% LOLv2</strong> trên toàn bộ các tập:
+                        </p>
+                        <div style="background:#131A29; padding:16px; border-radius:12px; border:1px solid rgba(255,255,255,0.08);">
+                            <div style="display:flex; justify-content:space-between; margin-bottom:8px; font-size:0.9rem;">
+                                <span>🎯 <strong>Tập Train Ban Đầu (Few-Sample):</strong></span>
+                                <span style="font-family:var(--font-mono); color:#38BDF8; font-weight:700;">250 cặp ảnh (121 v1 + 129 v2)</span>
+                            </div>
+                            <div style="display:flex; justify-content:space-between; margin-bottom:8px; font-size:0.9rem;">
+                                <span>🛡 <strong>Tập Validation Cố Định:</strong></span>
+                                <span style="font-family:var(--font-mono); color:#34D399; font-weight:700;">200 cặp ảnh (97 v1 + 103 v2)</span>
+                            </div>
+                            <div style="display:flex; justify-content:space-between; font-size:0.9rem;">
+                                <span>📦 <strong>Kho Dữ Liệu Cách Ly (Quarantine):</strong></span>
+                                <span style="font-family:var(--font-mono); color:#F59E0B; font-weight:700;">300 cặp ảnh (6 lát cắt x 50 ảnh)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sim-panel">
+                        <div class="sim-panel-title">
+                            <span>Quy Trình Nghiên Cứu Mở Khóa Dữ Liệu</span>
+                        </div>
+                        <div style="display:flex; flex-direction:column; gap:12px; padding:6px 0;">
+                            <div style="background:#06090E; padding:12px; border-radius:10px; border-left:4px solid #38BDF8;">
+                                <strong style="color:#38BDF8; font-size:0.9rem;">Bước 1: Huấn luyện trên 250 ảnh ban đầu</strong>
+                                <p style="margin:4px 0 0 0; font-size:0.82rem; color:#94A3B8;">Tối ưu hóa kiến trúc mạng, siêu tham số Learning Rate và hàm Composite Loss để đạt hiệu suất mẫu cực đại.</p>
+                            </div>
+                            <div style="background:#06090E; padding:12px; border-radius:10px; border-left:4px solid #F59E0B;">
+                                <strong style="color:#F59E0B; font-size:0.9rem;">Bước 2: Mở khóa dần từng lát cắt (+50 ảnh)</strong>
+                                <p style="margin:4px 0 0 0; font-size:0.82rem; color:#94A3B8;">Lần lượt đưa Slice 1 (300 ảnh) &rarr; Slice 2 (350 ảnh) &rarr; ... để vẽ đường cong học tập (Learning Curve) báo cáo hội đồng.</p>
+                            </div>
+                            <div style="background:#06090E; padding:12px; border-radius:10px; border-left:4px solid #34D399;">
+                                <strong style="color:#34D399; font-size:0.9rem;">Bước 3: Đánh giá tổng quát trên ExDark (OOD)</strong>
+                                <p style="margin:4px 0 0 0; font-size:0.82rem; color:#94A3B8;">Thử nghiệm trên ảnh chụp đêm đường phố không nhãn của ExDark để chứng minh mô hình không bị học vẹt (overfitting).</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- ===============================================================
+                 SLIDE 11: INTERACTIVE SIMULATION LAB
+                 =============================================================== -->
+            <article class="slide-card" id="slide-10">
+                <div class="slide-header">
+                    <div>
+                        <div class="slide-category-badge">Chuyên Đề 11 • Phòng Thí Nghiệm Trực Quan</div>
+                        <h1 class="slide-title">Phòng Thí Nghiệm Tương Tác Đa Chiều</h1>
+                        <p class="slide-subtitle">Trải nghiệm trực tiếp hiệu năng khử nhiễu và tăng sáng của các kiến trúc mạng theo thời gian thực</p>
+                    </div>
+                    <div class="slide-meta-pill">Live Interactive Lab</div>
+                </div>
+
+                <div class="slide-grid-2col">
+                    <!-- Control Panel -->
+                    <div class="sim-panel">
+                        <div class="sim-panel-title">
+                            <span>Bảng Điều Khiển Tham Số Môi Trường</span>
+                        </div>
+
+                        <div class="slider-control-group">
+                            <div class="slider-label-row">
+                                <span>Mức Độ Ánh Sáng Tự Nhiên (Lux):</span>
+                            </div>
+                            <input type="range" class="interactive-range" id="lab-lux" min="0.1" max="1.0" step="0.05" value="0.2">
+                        </div>
+
+                        <div class="slider-control-group">
+                            <div class="slider-label-row">
+                                <span>Mức Độ Nhiễu Hạt Cảm Biến ($\sigma_n$):</span>
+                            </div>
+                            <input type="range" class="interactive-range" id="lab-noise" min="5" max="50" step="2" value="25">
+                        </div>
+
+                        <div style="margin-top:14px;">
+                            <label style="font-size:0.85rem; color:#94A3B8; display:block; margin-bottom:6px; font-weight:600;">Lựa Chọn Mô Hình Phục Hồi:</label>
+                            <select id="lab-model" style="width:100%; padding:10px 14px; border-radius:10px; background:#06090E; border:1px solid rgba(255,255,255,0.15); color:#FFF; font-size:0.9rem; outline:none;">
+                                <option value="plain">1. Plain CNN (Mạng phẳng 5 tầng - Baseline thô)</option>
+                                <option value="compact">2. Compact U-Net (U-Net cơ bản - Bị rò rỉ nhiễu)</option>
+                                <option value="proposed" selected>3. Lightweight Attention U-Net (Đề xuất: Gated Skip + SCA)</option>
+                            </select>
+                        </div>
+
+                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:18px;">
+                            <div style="background:#06090E; padding:12px; border-radius:10px; border:1px solid rgba(255,255,255,0.08); text-align:center;">
+                                <span style="font-size:0.75rem; color:#94A3B8; display:block;">Ước Tính PSNR</span>
+                                <strong id="lab-psnr-tag" style="font-size:1.35rem; color:#38BDF8; font-family:var(--font-mono);">24.60 dB</strong>
+                            </div>
+                            <div style="background:#06090E; padding:12px; border-radius:10px; border:1px solid rgba(255,255,255,0.08); text-align:center;">
+                                <span style="font-size:0.75rem; color:#94A3B8; display:block;">Ước Tính SSIM</span>
+                                <strong id="lab-ssim-tag" style="font-size:1.35rem; color:#34D399; font-family:var(--font-mono);">0.880</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Canvas Viewport -->
+                    <div class="sim-panel">
+                        <div class="sim-panel-title">
+                            <span>Kết Quả Hình Ảnh Khôi Phục Thời Gian Thực</span>
+                        </div>
+                        <div class="sim-canvas-box" style="min-height:280px;">
+                            <canvas id="lab-canvas" width="460" height="260" style="width:100%; height:auto;"></canvas>
+                        </div>
+                        <div style="font-size:0.8rem; color:#CBD5E1; text-align:center;">
+                            Đổi mô hình sang <em>Plain CNN</em> để thấy biên cạnh bị mờ; đổi sang <em>Compact U-Net</em> để thấy hạt nhiễu đỏ; chọn <em>Proposed</em> để thấy hình ảnh trong trẻo!
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- ===============================================================
+                 SLIDE 12: DEFENSE Q&A SCENARIOS
+                 =============================================================== -->
+            <article class="slide-card" id="slide-11">
+                <div class="slide-header">
+                    <div>
+                        <div class="slide-category-badge">Chuyên Đề 12 • Kịch Bản Bảo Vệ Đề Tài</div>
+                        <h1 class="slide-title">Bộ 5 Câu Hỏi "Hóc Búa" Của Hội Đồng Chấm Thi UIT</h1>
+                        <p class="slide-subtitle">Chuẩn bị kỹ lưỡng phong thái và luận cứ khoa học để đạt điểm tối đa trước ban giám khảo</p>
+                    </div>
+                    <div class="slide-meta-pill">UIT Master Defense Kit</div>
+                </div>
+
+                <div class="callout-intuition">
+                    <div class="callout-intuition-header">🌱 Lời Thầy Dặn: Bí Quyết Đạt Điểm Cao Môn Học</div>
+                    <p>
+                        "Khi đứng trước hội đồng chấm thi, các thầy cô không bao giờ đòi hỏi bạn phải phát minh ra một kiến trúc rung chuyển thế giới. Thầy cô chỉ muốn kiểm tra xem: <strong>Bạn có thực sự hiểu bản chất những gì bạn làm hay chỉ đi copy code trên mạng?</strong>
+                    </p>
+                    <p>
+                        Dưới đây là 5 câu hỏi kinh điển mà thầy cô khoa Khoa học Máy tính chắc chắn sẽ hỏi xoáy vào bạn. Hãy đọc kỹ từng câu trả lời mẫu bên dưới để tự tin trình bày rành rọt từng chữ!"
+                    </p>
+                </div>
+
+                <div style="margin-top:16px;">
+                    <!-- Question 1 -->
+                    <div class="qa-card-slide open">
+                        <div class="qa-card-question">
+                            <span>Q1. Tại sao em không dùng mô hình Transformer đang là hot-trend hiện nay mà lại chọn CNN?</span>
+                            <span class="qa-toggle-icon">▼</span>
+                        </div>
+                        <div class="qa-card-answer">
+                            <strong>Gợi ý trả lời cho bạn:</strong><br>
+                            <em>"Dạ thưa Thầy/Cô, Transformer có cơ chế Self-Attention với độ phức tạp tính toán bậc hai $\mathcal{O}(H^2W^2)$, đòi hỏi hàng chục triệu tham số và tài nguyên GPU khổng lồ để tính toán ma trận tương quan giữa mọi cặp pixel. Trong khi đó, tính chất vật lý của ảnh là tính tương quan cục bộ (Locality) rất cao giữa các pixel liền kề. Kiến trúc CNN với cơ chế tích chập cục bộ kết hợp với SCA Attention chỉ tốn 0.9M tham số (nhỏ gấp gần 30 lần Restormer), độ phức tạp tuyến tính $\mathcal{O}(HW)$, hoàn toàn có thể chạy thời gian thực trên các thiết bị biên hạn chế tài nguyên mà vẫn đạt chất lượng ảnh tương đương."</em>
+                        </div>
+                    </div>
+
+                    <!-- Question 2 -->
+                    <div class="qa-card-slide">
+                        <div class="qa-card-question">
+                            <span>Q2. Skip Connection trong mô hình của em khác gì so với Skip Connection của U-Net cổ điển?</span>
+                            <span class="qa-toggle-icon">▼</span>
+                        </div>
+                        <div class="qa-card-answer">
+                            <strong>Gợi ý trả lời cho bạn:</strong><br>
+                            <em>"Dạ thưa Thầy/Cô, U-Net cổ điển áp dụng phép cộng hoặc nối chuỗi (Concatenate) trực tiếp tín hiệu tầng nông sang tầng sâu. Trong điều kiện ảnh thiếu sáng, tầng nông chứa một lượng lớn nhiễu cảm biến cộng gộp $\mathbf{n}$. Nếu truyền trực tiếp, hiện tượng 'Rò rỉ nhiễu' (Noise Leakage) sẽ xảy ra khiến Decoder khuếch đại hạt nhiễu lên. Em đã cải tiến thành **Gated Skip Connection**, sử dụng cánh cổng học được qua hàm Sigmoid $\sigma(\text{Conv}_{1 \times 1}(F_{enc}))$ để triệt tiêu các đặc trưng nhiễu ngẫu nhiên và chỉ cho các đặc trưng biên cạnh cấu trúc thực thụ đi qua."</em>
+                        </div>
+                    </div>
+
+                    <!-- Question 3 -->
+                    <div class="qa-card-slide">
+                        <div class="qa-card-question">
+                            <span>Q3. Tại sao tập train ban đầu em chỉ dùng 250 ảnh mà không mang hết dữ liệu ra huấn luyện một lần?</span>
+                            <span class="qa-toggle-icon">▼</span>
+                        </div>
+                        <div class="qa-card-answer">
+                            <strong>Gợi ý trả lời cho bạn:</strong><br>
+                            <em>"Dạ thưa Thầy/Cô, mục tiêu khoa học của đề tài là chứng minh tính hiệu quả về dữ liệu (Sample-Efficiency) của kiến trúc mạng. Bằng cách giới hạn 250 ảnh train ban đầu và cách ly 300 ảnh thành 6 lát cắt độc lập, em có thể khảo sát chính xác mô hình học tốt đến đâu khi dữ liệu ít, và sau đó tăng dần từng khối +50 ảnh để vẽ đường cong học tập (Learning Curve) và xác định điểm bão hòa hiệu năng, thay vì tăng dữ liệu một cách cảm tính."</em>
+                        </div>
+                    </div>
+
+                    <!-- Question 4 -->
+                    <div class="qa-card-slide">
+                        <div class="qa-card-question">
+                            <span>Q4. Tại sao hàm mất mát lại chọn L1 kết hợp SSIM mà không dùng MSE phổ biến?</span>
+                            <span class="qa-toggle-icon">▼</span>
+                        </div>
+                        <div class="qa-card-answer">
+                            <strong>Gợi ý trả lời cho bạn:</strong><br>
+                            <em>"Dạ thưa Thầy/Cô, hàm sai số toàn phương MSE phạt theo bình phương độ lệch, dẫn đến việc mô hình thiên về đưa ra các giá trị trung bình mờ nhạt (oversmoothing) để tránh phạt nặng ở các vùng biên cạnh có độ tương phản cao. Hàm L1 cung cấp gradient hằng số giúp bảo toàn biên cạnh sắc nét. Kết hợp với $0.2 \times (1 - \text{SSIM})$ giúp mô hình học được độ tương phản cục bộ và cấu trúc hình học tương đồng với cảm nhận của mắt người."</em>
+                        </div>
+                    </div>
+
+                    <!-- Question 5 -->
+                    <div class="qa-card-slide">
+                        <div class="qa-card-question">
+                            <span>Q5. Tập kiểm thử ExDark không có ảnh nhãn chuẩn (Ground Truth), làm sao em đánh giá được mô hình?</span>
+                            <span class="qa-toggle-icon">▼</span>
+                        </div>
+                        <div class="qa-card-answer">
+                            <strong>Gợi ý trả lời cho bạn:</strong><br>
+                            <em>"Dạ thưa Thầy/Cô, ExDark là bộ dữ liệu thực tế ngoài tự nhiên không có ảnh cặp. Với ExDark, ta không thể tính PSNR hay SSIM vì không có Ground Truth. Thay vào đó, em đánh giá bằng hai phương pháp khoa học: (1) Đánh giá định tính thị giác qua lưới ảnh so sánh trước/sau tăng sáng; và (2) Sử dụng các độ đo chất lượng ảnh không cần tham chiếu (No-Reference Image Quality Assessment) như NIQE (Natural Image Quality Evaluator) và BRISQUE để định lượng độ tự nhiên của bức ảnh."</em>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+        </main>
+
+        <!-- BOTTOM PRESENTATION NAVIGATION BAR -->
+        <footer class="slides-bottom-nav">
+            <div class="slide-nav-arrows">
+                <button class="slide-arrow-btn" id="prev-slide-btn" onclick="prevSlide()" disabled title="Lùi lại slide trước (Phím mũi tên Trái)">
+                    ← Slide Trước
+                </button>
+            </div>
+
+            <div style="display:flex; flex-direction:column; align-items:center; gap:6px;">
+                <div class="nav-dots-container" id="nav-dots">
+                    <!-- Dots dynamically generated by JS -->
+                </div>
+                <div class="slide-counter-badge">
+                    Slide <strong id="slide-counter-cur">01</strong> / <strong>12</strong>
+                    <span class="kbd-hint" style="margin-left:8px;">Dùng phím ← / → để chuyển slide</span>
+                </div>
+            </div>
+
+            <div class="slide-nav-arrows">
+                <button class="slide-arrow-btn next" id="next-slide-btn" onclick="nextSlide()" title="Chuyển sang slide tiếp theo (Phím mũi tên Phải)">
+                    Slide Kế Tiếp →
+                </button>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- Interactive Simulator Scripts -->
+    <script src="js/slides.js"></script>
+</body>
+</html>
