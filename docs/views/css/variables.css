@@ -23,6 +23,7 @@
 /* 🌙 PURE OBSIDIAN OLED DARK MODE (MẶC ĐỊNH CHO ĐỒ ÁN) */
 [data-theme="dark"] {
     --bg-page: #06090E;           /* Đen OLED vũ trụ sâu thẳm với ánh lam vi mô */
+    --bg-void: #06090E;           /* Alias dự phòng cho trang độc lập */
     --bg-sidebar: #090D15;        /* Bảng điều hướng đen tuyền tinh tế */
     --bg-card: #0D121D;           /* Nền thẻ Soft Card đen Midnight sang trọng */
     --bg-card-hover: #121927;
@@ -79,6 +80,7 @@
 /* ☀️ CLEAN SOFT LIGHT MODE (TÙY CHỌN DỰ PHÒNG) */
 [data-theme="light"] {
     --bg-page: #F8F9FA;
+    --bg-void: #F8F9FA;
     --bg-sidebar: #FFFFFF;
     --bg-card: #FFFFFF;
     --bg-card-hover: #F8FAFC;
