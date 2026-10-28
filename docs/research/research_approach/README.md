@@ -5,9 +5,9 @@
 
 ---
 
-## Cấu Trúc 3 Tài Liệu Nghiên Cứu Trọng Tâm
+## Cấu Trúc Các Tài Liệu Nghiên Cứu Trọng Tâm
 
-Hệ thống tài liệu nghiên cứu và thực nghiệm của đồ án được cấu trúc tinh gọn thành **3 tài liệu chuẩn mực**, loại bỏ hoàn toàn sự trùng lặp và phân mảnh:
+Hệ thống tài liệu nghiên cứu và thực nghiệm của đồ án được cấu trúc tinh gọn thành **4 tài liệu chuẩn mực**, loại bỏ hoàn toàn sự trùng lặp và phân mảnh:
 
 ```
 docs/research/research_approach/
@@ -20,8 +20,11 @@ docs/research/research_approach/
 ├── 02_dataset_strategy_and_proposal_enhancement.md       # TẬP 2: Phân vùng 1.000 cặp ảnh (50:30):20, đánh giá phản biện
 │                                                         #        hướng đi người dùng và 3 đề xuất cải tiến khoa học.
 │
-└── 03_technical_solution_and_colab_guide.md              # TẬP 3: Đặc tả 4 cấp độ mô hình, cẩm nang Google Colab, bảng kỳ vọng
-                                                          #        thực nghiệm và 5 câu hỏi bảo vệ trước Hội đồng UIT.
+├── 03_technical_solution_and_colab_guide.md              # TẬP 3: Đặc tả 4 cấp độ mô hình, cẩm nang Google Colab, bảng kỳ vọng
+│                                                         #        thực nghiệm và 5 câu hỏi bảo vệ trước Hội đồng UIT.
+│
+└── 04_darkir_cvpr2025_dataset_audit_and_preparation.md   # TẬP 4: Khảo sát đối chuẩn chi tiết bộ dữ liệu DarkIR (CVPR 2025),
+                                                          #        thống kê số lượng, đặc tả cây thư mục & chuẩn bị thực nghiệm.
 ```
 
 ---
@@ -46,3 +49,10 @@ docs/research/research_approach/
 - Hướng dẫn thực hành từng bước trên Google Colab với GPU Tesla T4 (thời gian chạy chỉ 15–20 phút/100 epochs).
 - Bộ tiêu chuẩn kỳ vọng đường cong hội tụ và cẩm nang xử lý sự cố (Overfitting, Underfitting, Color Cast).
 - 5 câu hỏi cốt lõi và câu trả lời chuẩn mực giúp sinh viên bảo vệ đồ án tự tin trước Hội đồng chấm thi UIT.
+
+### [Tập 4: Khảo Sát & Chuẩn Bị Dữ Liệu Thực Nghiệm Theo Chuẩn DarkIR (CVPR 2025)](file:///E:/MyProject/low-light-image-enhancement-cnn/docs/research/research_approach/04_darkir_cvpr2025_dataset_audit_and_preparation.md)
+- Khảo sát toàn diện các bộ dữ liệu từ bài báo và repository DarkIR (CVPR 2025).
+- Bảng thống kê chi tiết số lượng ảnh (Train/Test/Val), phân loại cặp có tham chiếu (LOLBlur: 12k cặp, LOLv2-Real: 789 cặp, LOLv2-Synth: 1.000 cặp, LSRW: 5.650 cặp) và không cặp thế giới thực (Real-LOLBlur: 482 / 1.354 ảnh, DICM, LIME, MEF, NPE, VV: 204 ảnh, ExDark).
+- Bản chất vật lý và pipeline tạo suy thoái (nhiễu cảm biến thực tế, vệt mờ chuyển động chân thực, làm tối phi tuyến).
+- Đặc tả cây thư mục `DarkIR/data/datasets/` khớp 100% mã nguồn Data Loader và lệnh chạy kiểm thử `testing.py`, `testing_unpaired.py`.
+- Định hướng kế thừa dữ liệu cho đề tài Lightweight CNN.
