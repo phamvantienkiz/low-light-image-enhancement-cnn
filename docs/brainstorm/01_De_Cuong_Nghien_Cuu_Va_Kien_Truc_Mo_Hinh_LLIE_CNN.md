@@ -86,9 +86,10 @@ Nhằm đáp ứng trọn vẹn yêu cầu sư phạm của Giảng viên hướ
 
 - **Bài toán:** Phục hồi và tăng cường chất lượng ảnh thiếu sáng (Supervised Low-Light Image Enhancement - LLIE).
 - **Cách tiếp cận:** Học ánh xạ trực tiếp từ ảnh sang ảnh (Image-to-Image Learning) sử dụng mạng tích chập gọn nhẹ (Lightweight CNN).
-- **Phạm vi kỹ thuật:**
+- **Triết lý dữ liệu & Quy mô thực nghiệm:** Gom toàn bộ dữ liệu huấn luyện đa cảm biến đã chuẩn hóa thành một tập huấn luyện duy nhất và nhất quán $D_{\text{train}} = 1.200$ cặp ảnh, đạt tỷ lệ cân bằng xấp xỉ 1:1 giữa máy ảnh chuyên nghiệp DSLR (639 cặp LOLv2-Real) và camera điện thoại thông minh Smartphone (561 cặp LSRW-Huawei). Cách tiếp cận này đảm bảo mô hình học hội tụ toàn diện trên phân phối quang học thực tế của cả hai loại cảm biến phổ biến, tối ưu hóa năng lực khái quát hóa mà vẫn nằm trọn vẹn trong ngân sách tính toán thực tế ($\le 1.500$ cặp ảnh cho toàn dự án).
+- **Phạm vi kỹ thuật & Mô hình Duy nhất:**
   - **KHÔNG sử dụng:** Transformer khổng lồ (Restormer, RetinexFormer), Diffusion Models (hàng chục bước lấy mẫu lặp), Foundation Models, hay Transfer Learning mượn từ mạng phân loại ảnh ImageNet.
-  - **TẬP TRUNG VÀO:** Mạng tích chập tự thiết kế từ đầu (Trained from scratch) dựa trên kiến trúc **U-Net rút gọn (Compact U-Net)** có skip connections, kết hợp cơ chế chú ý kênh tinh gọn (**Simplified Channel Attention - SCA**) kế thừa từ các công trình CVPR hàng đầu.
+  - **TẬP TRUNG VÀO DUY NHẤT MỘT KIẾN TRÚC MÔ HÌNH ĐỀ XUẤT:** `DarkIR-Edge (C=24)` (~1.93M tham số). Nhóm chấn chỉnh dứt khoát: **chỉ thiết kế, huấn luyện và đánh giá duy nhất một mô hình hoàn chỉnh này song song với một baseline Standard U-Net cùng quy mô tham số để đối chuẩn, tuyệt đối không phân tán nguồn lực vào các cấu hình kiến trúc thử nghiệm khác**. Mô hình bảo toàn 100% cấu trúc bất đối xứng của DarkIR (CVPR 2025) gồm nhánh Fourier FFT (`FreMLP`) ở Encoder để điều chỉnh độ sáng toàn cục, cụm tích chập đa tỷ lệ `Di-SpAM` ở Decoder để khử nhiễu/làm nét, cơ chế chú ý kênh `SCA`, đáy mạng 2 EBlocks + 2 DBlocks; đồng thời tích hợp 2 cải tiến tinh gọn: kênh tiên nghiệm **Max-RGB Illumination Prior ($I_{\max}$)** làm đầu vào thứ 4 và cổng lọc nhiễu **Residual Gated Skip Connections** từ Edge-LLIE.
 
 ## 2. Vì Sao Chọn Cấu Trúc U-Net Thay Vì CNN Phẳng Tuần Tự?
 
@@ -112,15 +113,14 @@ Trong môi trường ánh sáng yếu hoặc ban đêm, ảnh số bị suy tho�
 2. **Nhiễu cảm biến nặng hạt (High-ISO Sensor Noise):** Mạch ISP tự động khuếch đại tín hiệu analog làm nổ cả nhiễu lượng tử Poisson (shot noise) và nhiễu đọc Gaussian (read noise).
 3. **Vệt mờ chuyển động (Motion/Defocus Blur):** Thuật toán máy ảnh kéo dài thời gian phơi sáng (slow shutter) dẫn đến rung tay hoặc nhòe vật thể chuyển động.
 
-Mô hình toán học suy thoái tổng quát (chuẩn hóa theo DarkIR CVPR 2025):
-$$\mathbf{y} = \gamma\left(\mathbf{x} \otimes \mathbf{k}\right) + \mathbf{n}$$
+Mô hình toán học suy thoái thực tế của bài toán (chuẩn hóa khi đã lược bỏ deblurring, đặt hạt nhân mờ $\mathbf{k} = \boldsymbol{\delta}$):
+$$\mathbf{y} = \gamma\left(\mathbf{x}\right) + \mathbf{n}$$
 Trong đó:
 
-- $\mathbf{y} \in \mathbb{R}^{H \times W \times 3}$: Ảnh quan sát đầu vào (tối, mờ, nhiễu).
+- $\mathbf{y} \in \mathbb{R}^{H \times W \times 3}$: Ảnh quan sát đầu vào (thiếu sáng, suy giảm tương phản, nhiễu hạt).
 - $\mathbf{x} \in \mathbb{R}^{H \times W \times 3}$: Cảnh sắc nét, đủ sáng lý tưởng (Ground Truth).
-- $\mathbf{k}$: Hạt nhân mờ (Point-Spread Function - PSF) do chuyển động.
-- $\mathbf{n}$: Nhiễu cảm biến cộng tính (Shot noise + Read noise).
-- $\gamma$: Hàm phi tuyến điều khiển dải động và độ bão hòa quang học.
+- $\mathbf{n}$: Nhiễu cảm biến thực tế. Cần lưu ý rằng đối với ảnh định dạng sRGB sau pipeline ISP của máy ảnh/smartphone, nhiễu $\mathbf{n}$ đã trở thành phi tuyến và có tương quan không gian (spatially correlated), khác với mô hình nhiễu Poisson-Gaussian thuần túy ở miền RAW.
+- $\gamma$: Hàm phi tuyến điều khiển đáp ứng dải động quang học của cảm biến. Bài toán LLIE bản chất là ánh xạ một-nhiều (one-to-many mapping) vì độ sáng đích của Ground Truth chỉ là một lựa chọn phơi sáng trong nhiều lựa chọn hợp lý.
 
 ## 2. Giải Mã Bài Báo Tham Khảo Cốt Lõi: DarkIR (CVPR 2025)
 
@@ -141,22 +141,22 @@ Trong khi xu hướng chung lạm dụng Vision Transformers (>26M tham số, h�
 2. **Dilated-Spatial Attention Module (Di-SpAM):** Kết hợp các nhánh tích chập sâu (Depthwise Conv) với dilation rates = 1, 4, 9 để mở rộng trường tiếp nhận bao trùm vùng tối rộng mà không tăng thêm trọng số.
 3. **Phân tách tần số Fourier (Fre-MLP):** Đưa tensor sang miền tần số qua 2D FFT, tăng sáng trên phần biên độ (Amplitude) và giữ nguyên pha (Phase).
 
-### 2.3. Lọc bỏ và điều chỉnh cho phù hợp với đồ án môn học
+### 2.3. Kế thừa và điều chỉnh cho phù hợp với đồ án môn học
 
-- **Học hỏi:** Triết lý CNN-first, khối SCA siêu nhẹ, hàm mất mát đo trên miền không gian.
-- **Lược bỏ:** Nhánh Fourier FFT số phức (do khó triển khai trên phần cứng biên và phức tạp toán học ngoài phạm vi) và nhánh khử mờ deblurring đa nhiệm (tập trung thuần túy vào LLIE để bảo toàn tính tập trung của đề tài).
+- **Bảo toàn và kế thừa cốt lõi:** Giữ nguyên kiến trúc Encoder-Decoder bất đối xứng của DarkIR với nhánh Fourier FFT (`FreMLP`) ở Encoder để điều chỉnh độ sáng toàn cục ở miền tần số biên độ, kết hợp khối `Di-SpAM` (Dilated Depthwise Convolutions $d=[1, 4, 9]$) và `SCA` ở Decoder để khử nhiễu và làm nét không gian; duy trì nhánh giám sát sâu ở đáy mạng $\hat{x}_{\downarrow 8}$ ($\mathcal{L}_{\text{side}}$) để dẫn hướng tái tạo độ rọi.
+- **Lọc bỏ và điều chỉnh phạm vi:** Lược bỏ bài toán Deblurring đa nhiệm trên tập dữ liệu tổng hợp khổng lồ LOL-Blur để tập trung toàn lực vào bài toán phục hồi ảnh thiếu sáng đa cảm biến thế giới thực (DSLR + Smartphone), tinh chỉnh số kênh cơ sở $C$ về mức 1.5M – 2.5M tham số để huấn luyện nhanh và sẵn sàng triển khai trên thiết bị biên/smartphone.
 
 ## 3. Ba Bài Báo Vệ Tinh Bổ Trợ (CVF 2024–2025)
 
 1. **HVI Color Space (Yan et al., CVPR 2025):**
    - _Phát hiện:_ Tăng sáng trực tiếp trên sRGB dễ gây ám màu (Color Bias) do R, G, B bị ràng buộc phi tuyến. Tách không gian sang HSV thì bị đứt gãy màu đỏ ($h=0 \leftrightarrow h=6$) và nổ nhiễu ở vùng tối đen.
-   - _Ứng dụng:_ Bổ sung hàm mất mát cấu trúc SSIM kết hợp Channel Attention để kìm hãm sự phân kỳ màu sắc giữa các kênh.
+   - _Ứng dụng:_ Kế thừa tư tưởng phân tách độ rọi của HVI và lý thuyết Retinex, trích xuất **Max-RGB Illumination Prior ($I_{\max} = \max(R, G, B)$)** ghép vào đầu vào mạng (tensor 4 kênh) kết hợp hàm mất mát **Cosine Color Loss ($\mathcal{L}_{\text{color}}$)** để hỗ trợ định hướng độ sáng và giảm lệch màu mà không làm tăng tham số suy luận.
 2. **Edge-LLIE (Sharif et al., CVPRW 2024):**
    - _Phát hiện:_ Trên kiến trúc U-Net, đường Skip Connection thô từ tầng nông vô tình bơm trực tiếp nhiễu hạt cảm biến sang Decoder, làm ảnh sau tăng sáng bị lốm đốm nhiễu.
-   - _Ứng dụng:_ Đặt bộ cổng lọc `GatedSkipConnection` ($1\times1$ Conv + Sigmoid) trên đường tắt để lọc sạch nhiễu hạt.
+   - _Ứng dụng:_ Đặt bộ cổng lọc `ResidualGatedSkipConnection` ($1\times1$ Conv + Sigmoid) trên đường tắt để lọc sạch nhiễu hạt.
 3. **NTIRE 2024 Challenge on Low-Light Enhancement (Liu et al., CVPRW 2024):**
    - _Ứng dụng:_ Thiết lập phương pháp luận đo lường chuẩn xác bằng PSNR, SSIM và kỹ thuật cắt mảng ngẫu nhiên (Random Crop $256 \times 256$) giữ nguyên cấu trúc hạt nhiễu vật lý.
 
 ---
 
-> Có thể tối ưu để khi áp dụng lượng tử hóa FB16/INT8 (Post-Training Quantization), kích thước mô hình giảm còn **~0.9 MB**, đạt tốc độ suy luận thời gian thực (>60 FPS) trên các thiết bị nhúng.
+> **Ghi chú về triển khai & lượng tử hóa:** Mô hình được thiết kế tinh giản ở quy mô ~1.9M tham số (~7.6 MB FP32; về mặt lý thuyết tương đương ~1.9 MB khi chuyển sang định dạng lượng tử hóa INT8). Tuy nhiên, do phép toán biến đổi Fourier phức (`rfft2`) hiện có độ hỗ trợ khác nhau giữa các runtime NPU/TensorRT/CoreML, đề tài sẽ đo đạc thông lượng thực tế (FPS, Latency) trực tiếp trên GPU môi trường thực nghiệm (NVIDIA T4/L4) làm căn cứ kiểm chứng xác thực; các chỉ số trên vi xử lý nhúng NPU chuyên dụng được xem là mục tiêu mở rộng trong tương lai.
