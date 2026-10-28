@@ -22,6 +22,10 @@ Thư mục này chứa 4 báo cáo nghiên cứu học thuật chuyên sâu đư
    *HVI: A New Color Space for Low-light Image Enhancement* (Qingsen Yan et al. - Northwestern Polytechnical Univ. & SMU).  
    👉 *Trọng tâm:* Đột phá về không gian màu; chỉ ra và giải quyết tận gốc 2 khuyết tật hình học của HSV (Red Discontinuity và Black Plane Noise) bằng không gian màu HVI có tham số co sụp học được $C_k$, kết hợp mạng 2 nhánh CIDNet (1.88M params) đạt kỷ lục SOTA trên 10 bộ dữ liệu benchmark.
 
+5. [**Báo Cáo 05: Chiến Lược Thực Hiện, Tối Ưu Hóa Không Tăng Tham Số & Phân Vùng Dữ Liệu Đa Nguồn Trên Colab**](05_Implementation_Strategy_and_Optimization_Report.md)  
+   *Tổng hợp hướng đi thực nghiệm kết hợp DarkIR + 3 bài báo vệ tinh, chiến lược trộn dữ liệu đa thiết bị (DSLR + Smartphone) và tối ưu hóa thời gian huấn luyện trên Google Colab.*  
+   👉 *Trọng tâm:* 5 kỹ thuật nâng cấp Zero/Micro-Parameter (< 1M params, nhẹ hơn DarkIR-m 3.6 lần) để chạy thời gian thực trên thiết bị biên/smartphone; đánh giá phản biện cách chia dữ liệu phân tầng `(250 : 300 : 200)` kèm mở rộng ảnh smartphone (LSRW-Huawei / Custom Phone); bài toán định lượng thời gian chạy trên Google Colab (T4/L4) chỉ mất 8–20 phút/100 epochs thay vì 5–10 tiếng.
+
 ---
 
 ## 📊 Bảng So Sánh Đối Chiếu Tổng Quan Giữa 4 Công Trình
