@@ -273,7 +273,10 @@
     <aside class="dual-sidebar">
         <!-- Back Navigation to Master Dashboard (Same tab window) -->
         <a href="../index.html#mod2-darkir" class="nav-back-btn">
-            <span>←</span> Quay Lại Đồ Án Tổng Quan
+            <span>&larr;</span> Quay Lại Đồ Án Tổng Quan
+        </a>
+        <a href="darkir-solution.html" class="nav-back-btn" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(56, 189, 248, 0.25)); border: 1.5px solid rgba(56, 189, 248, 0.6); color: #38BDF8; font-weight: 800; box-shadow: 0 0 16px rgba(56, 189, 248, 0.25); margin-top: 6px;">
+            <span>⚡</span> Sơ Đồ Kiến Trúc &amp; Giải Pháp
         </a>
         
         <div class="sidebar-brand">
@@ -324,6 +327,7 @@
                 <sup>†</sup> Tác giả liên hệ: {danfei, marcos.conde}@cidaut.es
             </div>
             <div class="paper-links-row" style="margin-top: 20px;">
+                <a href="darkir-solution.html" class="paper-ext-link" style="border-color: #38BDF8; color: #38BDF8; font-weight: 800; background: rgba(56, 189, 248, 0.12); box-shadow: 0 0 14px rgba(56, 189, 248, 0.25);">⚡ Khám Phá Sơ Đồ Kiến Trúc &amp; Trực Quan Hóa Toàn Diện DarkIR &rarr;</a>
                 <a href="https://github.com/cidautai/DarkIR" target="_blank" class="paper-ext-link">💻 GitHub Chính Thức: github.com/cidautai/DarkIR</a>
                 <a href="../../papers/Feijoo_DarkIR_Robust_Low-Light_Image_Restoration_CVPR_2025_paper.pdf" target="_blank" class="paper-ext-link">📑 Tải File PDF Kỷ Yếu CVPR (9.2 MB)</a>
             </div>
@@ -689,6 +693,15 @@
                 <div class="paper-passage-body">
                     <h3 class="paper-passage-subheading">3. Phương pháp đề xuất (3. Method)</h3>
 
+<div style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(56, 189, 248, 0.18)); border: 1.5px solid rgba(56, 189, 248, 0.5); border-radius: 14px; padding: 18px 22px; margin: 20px 0; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; box-shadow: 0 4px 20px rgba(0,0,0,0.2);">
+    <div style="max-width: 750px;">
+        <div style="font-weight: 800; color: #38BDF8; font-size: 0.96rem; margin-bottom: 4px;">⚡ SƠ ĐỒ TRỰC QUAN HÓA &amp; MÔ PHỎNG HOẠT HỌA KIẾN TRÚC TOÀN DIỆN DARKIR</div>
+        <div style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5;">Trang chuyên biệt: Trực quan hóa toàn bộ các khối EBlock Fourier, Di-SpAM giãn nở 3 nhánh (1, 4, 9), bộ mô phỏng luồng tensor hoạt họa từng bước và đối chiếu quy trình 2 bước truyền thống.</div>
+    </div>
+    <a href="darkir-solution.html" style="display: inline-flex; align-items: center; gap: 8px; text-decoration: none; padding: 10px 20px; font-weight: 800; font-size: 0.88rem; background: #38BDF8; color: #06090E; border-radius: 8px; box-shadow: 0 0 16px rgba(56, 189, 248, 0.4); white-space: nowrap;">
+        Mở Sơ Đồ Tương Tác &rarr;
+    </a>
+</div>
 <figure class="paper-figure full-width">
     <img src="../assets/images/papers/darkir/figure_02.png" alt="Hình 2. Sơ đồ tổng quan của DarkIR. Mạng nơ-ron tuân theo kiến trúc bộ mã hóa - giải mã (encoder-decoder). Chúng tôi sử dụng các khối khác nhau cho quá trình mã hóa và giải mã theo cấu trúc Metaformer [56]. Bộ mã hóa tập trung vào các vấn đề chiếu sáng trong điều kiện ánh sáng yếu bằng cách sử dụng thông tin Fourier. Nhờ đó, bộ mã hóa tạo ra một hình ảnh tái tạo độ phân giải thấp ˆx↓8 với độ sáng đã được hiệu chỉnh. Bộ giải mã tập trung vào việc nâng độ phân giải (upscaling) và giảm độ mờ bằng cách sử dụng các đặc trưng đã được mã hóa tăng cường ánh sáng trước đó. Để đạt được điều này, bộ giải mã sử dụng cơ chế chú ý không gian có trường tiếp nhận lớn (large receptive field spatial attention). Thiết kế này cho phép mô hình gọn nhẹ của chúng tôi có ít tham số và FLOPs hơn so với các phương pháp trước đây." class="paper-figure-img">
     <figcaption class="paper-figcaption"><strong>Hình 2. Sơ đồ tổng quan của DarkIR. Mạng nơ-ron tuân theo kiến trúc bộ mã hóa - giải mã (encoder-decoder). Chúng tôi sử dụng các khối khác nhau cho quá trình mã hóa và giải mã theo cấu trúc Metaformer [56]. Bộ mã hóa tập trung vào các vấn đề chiếu sáng trong điều kiện ánh sáng yếu bằng cách sử dụng thông tin Fourier. Nhờ đó, bộ mã hóa tạo ra một hình ảnh tái tạo độ phân giải thấp ˆx↓8 với độ sáng đã được hiệu chỉnh. Bộ giải mã tập trung vào việc nâng độ phân giải (upscaling) và giảm độ mờ bằng cách sử dụng các đặc trưng đã được mã hóa tăng cường ánh sáng trước đó. Để đạt được điều này, bộ giải mã sử dụng cơ chế chú ý không gian có trường tiếp nhận lớn (large receptive field spatial attention). Thiết kế này cho phép mô hình gọn nhẹ của chúng tôi có ít tham số và FLOPs hơn so với các phương pháp trước đây.</strong></figcaption>
