@@ -283,7 +283,6 @@ tasks/
 AGENTS.md
 docs/ai/
 docs/temp/
-docs/views/
 DarkIR/
 # Local test run directory
 llie_run/

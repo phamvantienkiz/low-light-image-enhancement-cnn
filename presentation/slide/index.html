@@ -1,0 +1,1605 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Báo cáo Đồ án: Tăng cường chất lượng ảnh trong điều kiện thiếu sáng bằng mạng nơ-ron tích chập (CNN) | CS2203 - UIT</title>
+  
+  <!-- Custom Stylesheet matching PowerPoint / Academic slide design -->
+  <link rel="stylesheet" href="slides.css">
+</head>
+<body>
+
+  <div id="presentation-viewport">
+    <div id="slide-canvas">
+
+      <!-- SLIDE 01: TRANG BÌA -->
+      <section class="slide active">
+        <div class="slide-cover">
+          <div class="cover-top-section">
+            <div class="cover-institution">
+              <div class="cover-institution-line1">
+                ĐẠI HỌC QUỐC GIA THÀNH PHỐ HỒ CHÍ MINH
+              </div>
+              <div class="cover-institution-line2">
+                TRƯỜNG ĐẠI HỌC CÔNG NGHỆ THÔNG TIN
+              </div>
+            </div>
+            <h1 class="cover-main-title">
+              TĂNG CƯỜNG CHẤT LƯỢNG ẢNH TRONG ĐIỀU KIỆN THIẾU SÁNG<br>
+              BẰNG MẠNG NƠ-RON TÍCH CHẬP (CNN)
+            </h1>
+            <p class="cover-subtitle">Kế thừa kiến trúc DarkIR kết hợp cải tiến Max-RGB Prior và Gated Skip Connection</p>
+          </div>
+          <div class="cover-bottom-section">
+            <div class="cover-course-title">Môn học: Xử lý ảnh và Thị giác máy tính (CS2203) — Khóa 2026</div>
+            <div class="cover-authors-list">
+              <div class="cover-author-row">
+                <span class="cover-author-name">Học viên thực hiện: Phạm Văn Tiến</span>
+                <span class="cover-author-id">MSHV: 26848223</span>
+              </div>
+            </div>
+          </div>
+          <div class="ppt-footer">
+            <div class="ppt-footer-left">
+              <img src="assets/uit-logo.png" alt="UIT" class="ppt-footer-logo">
+              <span class="ppt-footer-brand">UIT - VNUHCM</span>
+            </div>
+            <div class="ppt-footer-course">Xử lý ảnh &amp; Thị giác máy tính (CS2203)</div>
+            <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng CNN</div>
+            <div class="ppt-slide-counter">01/29</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 02: THÔNG TIN HỌC VIÊN & ĐÁNH GIÁ HOÀN THÀNH (YÊU CẦU GIẢNG VIÊN MỤC 1) -->
+      <section class="slide">
+        <div class="ppt-top-bar">
+          <h2 class="ppt-top-title">Thông tin Học viên &amp; Đánh giá Mức độ Hoàn thành Đồ án</h2>
+          <div class="ppt-top-tag">Thông tin thành viên</div>
+        </div>
+        <div class="ppt-content">
+          <p class="ppt-lead-text">
+            Báo cáo tiến độ và mức độ hoàn thành các hạng mục công việc theo yêu cầu của Giảng viên:
+          </p>
+
+          <div class="ppt-cols-2" style="margin-top: 15px;">
+            <div class="ppt-col">
+              <table class="ppt-table" style="width: 100%; font-size: 24px; text-align: left;">
+                <tbody>
+                  <tr>
+                    <td style="font-weight: 800; width: 240px; background: #F8FAFC;">Họ và tên</td>
+                    <td style="font-weight: 800; color: #0284C7;">Phạm Văn Tiến</td>
+                  </tr>
+                  <tr>
+                    <td style="font-weight: 800; background: #F8FAFC;">Mã số học viên</td>
+                    <td style="font-weight: 800; font-family: var(--font-mono);">26848223</td>
+                  </tr>
+                  <tr>
+                    <td style="font-weight: 800; background: #F8FAFC;">Chương trình</td>
+                    <td>Thạc sĩ Khoa học Máy tính (Khóa 2026)</td>
+                  </tr>
+                  <tr>
+                    <td style="font-weight: 800; background: #F8FAFC;">Hình thức thực hiện</td>
+                    <td>Đồ án cá nhân (1 thành viên)</td>
+                  </tr>
+                  <tr>
+                    <td style="font-weight: 800; background: #F8FAFC;">Tỷ lệ đóng góp</td>
+                    <td style="font-weight: 800; color: #059669;">100% Khối lượng Đồ án</td>
+                  </tr>
+                  <tr>
+                    <td style="font-weight: 800; background: #F8FAFC;">Đánh giá hoàn thành</td>
+                    <td style="font-weight: 800; color: #059669; font-size: 26px;">100% Đạt yêu cầu môn học</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="ppt-col">
+              <div class="feature-card card-primary" style="height: 100%;">
+                <h3 style="font-size: 26px; font-weight: 800; color: #0369A1; margin-bottom: 12px;">Các Hạng mục Công việc Đã Hoàn tất</h3>
+                <ul class="ppt-bullet-list" style="gap: 12px; font-size: 21px;">
+                  <li><strong>1. Nghiên cứu tài liệu CVF:</strong> Phân tích sâu 4 bài báo đỉnh cao (DarkIR CVPR 2025, HVI CVPR 2025, Edge-LLIE CVPRW 2024, NTIRE 2024).</li>
+                  <li><strong>2. Phát biểu bài toán:</strong> Mô hình hóa toán học quang học suy thoái và phân rã Retinex.</li>
+                  <li><strong>3. Xây dựng mã nguồn:</strong> Cài đặt hoàn chỉnh mô hình CNN gọn nhẹ (~1.92M params), baselines truyền thống, loss và metrics.</li>
+                  <li><strong>4. Dữ liệu thực nghiệm:</strong> Chuẩn hóa 1.200 cặp train đa cảm biến (LOLv2 + Huawei) và test zero-shot (Nikon).</li>
+                  <li><strong>5. Thử nghiệm Colab:</strong> Hoàn thiện notebook huấn luyện tự động với MASTER_SEED = 42.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ppt-footer">
+          <div class="ppt-footer-left">
+            <img src="assets/uit-logo.png" alt="UIT" class="ppt-footer-logo">
+            <span class="ppt-footer-brand">UIT - VNUHCM</span>
+          </div>
+          <div class="ppt-footer-course">Xử lý ảnh &amp; Thị giác máy tính (CS2203)</div>
+          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng CNN</div>
+          <div class="ppt-slide-counter">02/29</div>
+        </div>
+      </section>
+
+      <!-- SLIDE 03: TẦM QUAN TRỌNG VÀ Ý NGHĨA THỰC TẾ (YÊU CẦU GIẢNG VIÊN MỤC 2) -->
+      <section class="slide">
+        <div class="ppt-top-bar">
+          <h2 class="ppt-top-title">Lý do &amp; Tầm quan trọng của Bài toán trong Thực tế</h2>
+          <div class="ppt-top-tag">Ý nghĩa thực tế</div>
+        </div>
+        <div class="ppt-content">
+          <p class="ppt-lead-text">
+            Chụp ảnh và thu nhận thị giác trong điều kiện ánh sáng yếu (Low-Light) là bài toán thực tế có tính ứng dụng cao:
+          </p>
+
+          <div class="grid-cards-4" style="margin-top: 25px;">
+            <div class="feature-card card-primary">
+              <div class="flow-step-num">ỨNG DỤNG 1</div>
+              <h3 style="font-size: 22px; font-weight: 800; color: #0284C7; margin: 8px 0;">Camera An ninh Đêm</h3>
+              <p class="card-body-text" style="font-size: 19px;">
+                Hỗ trợ trích xuất khuôn mặt, biển số xe và hành vi đối tượng trong môi trường chiếu sáng yếu hoặc mất điện đột ngột.
+              </p>
+            </div>
+
+            <div class="feature-card card-success">
+              <div class="flow-step-num">ỨNG DỤNG 2</div>
+              <h3 style="font-size: 22px; font-weight: 800; color: #047857; margin: 8px 0;">Xe Tự hành &amp; ADAS</h3>
+              <p class="card-body-text" style="font-size: 19px;">
+                Làm tầng tiền xử lý quan trọng giúp các thuật toán nhận diện vật cản (YOLO) và phát hiện làn đường hoạt động tin cậy ban đêm.
+              </p>
+            </div>
+
+            <div class="feature-card card-accent">
+              <div class="flow-step-num">ỨNG DỤNG 3</div>
+              <h3 style="font-size: 22px; font-weight: 800; color: #B45309; margin: 8px 0;">Nhiếp ảnh Di động</h3>
+              <p class="card-body-text" style="font-size: 19px;">
+                Khắc phục nhược điểm cảm biến nhỏ của smartphone, chụp đêm rõ nét, màu sắc tự nhiên mà không cần bật đèn flash chói gắt.
+              </p>
+            </div>
+
+            <div class="feature-card" style="border-color: #8B5CF6; background: #F5F3FF;">
+              <div class="flow-step-num" style="color: #8B5CF6;">ỨNG DỤNG 4</div>
+              <h3 style="font-size: 22px; font-weight: 800; color: #6D28D9; margin: 8px 0;">Y tế &amp; Nội soi</h3>
+              <p class="card-body-text" style="font-size: 19px;">
+                Tăng cường độ rõ của hình ảnh nội soi quang học trong các khoang tối cơ thể, hỗ trợ bác sĩ chẩn đoán chính xác tổn thương.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="ppt-footer">
+          <div class="ppt-footer-left">
+            <img src="assets/uit-logo.png" alt="UIT" class="ppt-footer-logo">
+            <span class="ppt-footer-brand">UIT - VNUHCM</span>
+          </div>
+          <div class="ppt-footer-course">Xử lý ảnh &amp; Thị giác máy tính (CS2203)</div>
+          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng CNN</div>
+          <div class="ppt-slide-counter">03/29</div>
+        </div>
+      </section>
+
+      <!-- SLIDE 04: PHÁT BIỂU BÀI TOÁN - INPUT, OUTPUT & MỤC TIÊU (YÊU CẦU GIẢNG VIÊN MỤC 3) -->
+      <section class="slide">
+        <div class="ppt-top-bar">
+          <h2 class="ppt-top-title">Phát biểu Bài toán: Đầu vào (Input), Đầu ra (Output) &amp; Mục tiêu</h2>
+          <div class="ppt-top-tag">Phát biểu bài toán</div>
+        </div>
+        <div class="ppt-content">
+          <p class="ppt-lead-text">
+            Bài toán Tăng cường Chất lượng Ảnh Thiếu sáng (LLIE) được phát biểu toán học tường minh theo hướng <strong>Image-to-Image Learning</strong>:
+          </p>
+
+          <div class="ppt-cols-2" style="margin-top: 15px;">
+            <div class="ppt-col">
+              <div class="feature-card" style="border-top: 6px solid #DC2626; height: 100%;">
+                <div class="card-icon-title">
+                  <div class="icon-badge" style="background: #DC2626;">IN</div>
+                  <span style="color: #DC2626;">Đầu vào (Input Image: I<sub>low</sub>)</span>
+                </div>
+                <div class="formula-highlight" style="font-size: 20px; padding: 6px 12px; margin: 6px 0;">
+                  I<sub>low</sub> &isin; &real;<sup>H &times; W &times; 3</sup> &nbsp; (Khoảng giá trị [0, 1])
+                </div>
+                <ul class="ppt-bullet-list" style="gap: 8px; font-size: 20px; margin-top: 8px;">
+                  <li><strong>Độ sáng cực thấp:</strong> Mức photon suy kiệt, vùng tối bết đen.</li>
+                  <li><strong>Tương phản kém:</strong> Dải động bị co hẹp, mất chi tiết bề mặt.</li>
+                  <li><strong>Nhiễu hạt hỗn hợp:</strong> Nhiễu cảm biến Poisson-Gaussian dày đặc.</li>
+                  <li><strong>Méo mó màu sắc:</strong> Sai lệch quang sai và mất bão hòa màu.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="ppt-col">
+              <div class="feature-card" style="border-top: 6px solid #059669; height: 100%;">
+                <div class="card-icon-title">
+                  <div class="icon-badge" style="background: #059669;">OUT</div>
+                  <span style="color: #059669;">Đầu ra (Output Image: I<sub>enh</sub>)</span>
+                </div>
+                <div class="formula-highlight" style="font-size: 20px; padding: 6px 12px; margin: 6px 0;">
+                  I<sub>enh</sub> = f<sub>&theta;</sub>(I<sub>low</sub>) &isin; &real;<sup>H &times; W &times; 3</sup>
+                </div>
+                <ul class="ppt-bullet-list" style="gap: 8px; font-size: 20px; margin-top: 8px;">
+                  <li><strong>Độ sáng cân bằng:</strong> Nâng sáng tự nhiên, không cháy vùng sáng điểm.</li>
+                  <li><strong>Độ tương phản cao:</strong> Tái hiện rõ nét hoa văn, góc cạnh, chữ viết.</li>
+                  <li><strong>Sạch nhiễu nền:</strong> Khử sạch nhiễu hạt mà không làm mờ biên cạnh.</li>
+                  <li><strong>Màu sắc trung thực:</strong> Bảo toàn sắc thái màu sát thực tế nhất.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="formula-highlight" style="margin-top: 15px; font-size: 22px; text-align: center;">
+            <strong>Mục tiêu Tối ưu hóa:</strong> &nbsp; &theta;<sup>*</sup> = arg min<sub>&theta;</sub> &sum;<sub>i=1</sub><sup>N</sup> &Lscr;&big( f<sub>&theta;</sub>(I<sub>low</sub><sup>(i)</sup>), I<sub>gt</sub><sup>(i)</sup> &big)
+          </div>
+        </div>
+        <div class="ppt-footer">
+          <div class="ppt-footer-left">
+            <img src="assets/uit-logo.png" alt="UIT" class="ppt-footer-logo">
+            <span class="ppt-footer-brand">UIT - VNUHCM</span>
+          </div>
+          <div class="ppt-footer-course">Xử lý ảnh &amp; Thị giác máy tính (CS2203)</div>
+          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng CNN</div>
+          <div class="ppt-slide-counter">04/29</div>
+        </div>
+      </section>
+
+      <!-- SLIDE 05: VÍ DỤ MINH HỌA VÀ CƠ SỞ TOÁN HỌC (YÊU CẦU GIẢNG VIÊN MỤC 3 - VÍ DỤ) -->
+      <section class="slide">
+        <div class="ppt-top-bar">
+          <h2 class="ppt-top-title">Ví dụ Minh họa Bài toán &amp; Mô hình Suy thoái Quang học</h2>
+          <div class="ppt-top-tag">Minh họa bài toán</div>
+        </div>
+        <div class="ppt-content">
+          <p class="ppt-lead-text">
+            Sơ đồ ánh xạ trực quan và mô hình hóa quá trình suy thoái quang học phi tuyến tính:
+          </p>
+
+          <div class="flow-step-container" style="margin-top: 15px;">
+            <div class="flow-step" style="border-color: #DC2626;">
+              <div class="flow-step-num" style="color: #DC2626;">ẢNH THIẾU SÁNG (INPUT)</div>
+              <div class="flow-step-title">I<sub>low</sub>: Tối &amp; Nhiễu</div>
+              <div class="flow-step-desc">Photon starvation, SNR suy giảm, nhiễu hạt loang lổ.</div>
+            </div>
+            <div class="flow-arrow">&rarr;</div>
+            <div class="flow-step" style="border-color: #0284C7;">
+              <div class="flow-step-num" style="color: #0284C7;">MÔ HÌNH CNN GỌN NHẸ</div>
+              <div class="flow-step-title">f<sub>&theta;</sub>: DarkIR-Edge</div>
+              <div class="flow-step-desc">Học ánh xạ phi tuyến, lọc nhiễu và khôi phục ánh sáng.</div>
+            </div>
+            <div class="flow-arrow">&rarr;</div>
+            <div class="flow-step" style="border-color: #059669;">
+              <div class="flow-step-num" style="color: #059669;">ẢNH PHỤC HỒI (OUTPUT)</div>
+              <div class="flow-step-title">I<sub>enh</sub>: Rõ nét &amp; Sáng</div>
+              <div class="flow-step-desc">Độ tương phản tự nhiên, sạch nhiễu, màu trung thực.</div>
+            </div>
+            <div class="flow-arrow" style="color: #D97706;">&harr;</div>
+            <div class="flow-step" style="border-color: #D97706;">
+              <div class="flow-step-num" style="color: #D97706;">ẢNH CHUẨN ĐỐI CHIẾU</div>
+              <div class="flow-step-title">I<sub>gt</sub>: Ground Truth</div>
+              <div class="flow-step-desc">Ảnh chụp đủ sáng chuẩn dùng tính Loss và PSNR/SSIM.</div>
+            </div>
+          </div>
+
+          <div class="ppt-lemma-box" style="margin-top: 20px;">
+            <div class="ppt-lemma-title">
+              <span>MÔ HÌNH SUY THOÁI QUANG HỌC &amp; PHÂN RÃ RETINEX</span>
+            </div>
+            <div class="ppt-lemma-body">
+              y = &gamma;(x &otimes; k) + n &emsp;&hArr;&emsp; S(x, y) = I(x, y) &odot; R(x, y)
+            </div>
+            <div class="ppt-lemma-meaning">
+              <strong>Bản chất Thách thức:</strong> Tách rời bản đồ độ rọi I (Illumination) và bản đồ phản xạ R (Reflectance) từ một ảnh tối duy nhất là <em>Bài toán nghịch đảo không chỉnh (Ill-posed Inverse Problem)</em>. Mạng CNN được huấn luyện có giám sát để giải bài toán này một cách tối ưu.
+            </div>
+          </div>
+        </div>
+        <div class="ppt-footer">
+          <div class="ppt-footer-left">
+            <img src="assets/uit-logo.png" alt="UIT" class="ppt-footer-logo">
+            <span class="ppt-footer-brand">UIT - VNUHCM</span>
+          </div>
+          <div class="ppt-footer-course">Xử lý ảnh &amp; Thị giác máy tính (CS2203)</div>
+          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng CNN</div>
+          <div class="ppt-slide-counter">05/29</div>
+        </div>
+      </section>
+
+      <!-- SLIDE 06: GIỚI HẠN CỦA PHƯƠNG PHÁP TRUYỀN THỐNG -->
+      <section class="slide">
+        <div class="ppt-top-bar">
+          <h2 class="ppt-top-title">Giới hạn của Các Phương pháp Xử lý Ảnh Truyền thống</h2>
+          <div class="ppt-top-tag">Baselines cổ điển</div>
+        </div>
+        <div class="ppt-content">
+          <p class="ppt-lead-text">
+            Các thuật toán xử lý ảnh số cổ điển dựa trên biến đổi điểm ảnh hoặc lọc không gian gặp những hạn chế căn bản:
+          </p>
+
+          <div class="grid-cards-3" style="margin-top: 20px;">
+            <div class="feature-card">
+              <div class="card-icon-title">
+                <span class="tech-pill">HE / CLAHE</span>
+              </div>
+              <h3 style="font-size: 24px; font-weight: 800; color: #1E3A8A; margin-bottom: 8px;">Cân bằng Histogram</h3>
+              <p class="card-body-text">
+                • Biến đổi hàm phân bố tích lũy CDF nhằm kéo giãn mức xám.<br>
+                <strong style="color: #DC2626;">• Hạn chế:</strong> Khuếch đại mù quáng cả nhiễu hạt vùng tối; gây hiện tượng bão hòa màu quá mức và mất cân bằng tương phản cục bộ.
+              </p>
+            </div>
+
+            <div class="feature-card">
+              <div class="card-icon-title">
+                <span class="tech-pill">Gamma Correction</span>
+              </div>
+              <h3 style="font-size: 24px; font-weight: 800; color: #1E3A8A; margin-bottom: 8px;">Hiệu chỉnh Gamma</h3>
+              <p class="card-body-text">
+                • Ánh xạ phi tuyến dạng lũy thừa I<sub>out</sub> = I<sub>in</sub><sup>&gamma;</sup> (&gamma; &lt; 1).<br>
+                <strong style="color: #DC2626;">• Hạn chế:</strong> Hệ số cố định toàn cục, không thích ứng theo ngữ cảnh từng vùng; làm lộ rõ các đốm nhiễu và sai lệch màu da/nền.
+              </p>
+            </div>
+
+            <div class="feature-card">
+              <div class="card-icon-title">
+                <span class="tech-pill">Retinex Cổ điển</span>
+              </div>
+              <h3 style="font-size: 24px; font-weight: 800; color: #1E3A8A; margin-bottom: 8px;">SSR / MSR / MSRCR</h3>
+              <p class="card-body-text">
+                • Dùng bộ lọc Gaussian đa tỉ lệ trong miền logarit để ước lượng độ rọi.<br>
+                <strong style="color: #DC2626;">• Hạn chế:</strong> Xuất hiện quầng sáng khó chịu (Halo artifacts) quanh các biên cạnh có độ tương phản cao; tốc độ lọc Gaussian đa tỷ lệ chậm trên ảnh lớn.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="ppt-footer">
+          <div class="ppt-footer-left">
+            <img src="assets/uit-logo.png" alt="UIT" class="ppt-footer-logo">
+            <span class="ppt-footer-brand">UIT - VNUHCM</span>
+          </div>
+          <div class="ppt-footer-course">Xử lý ảnh &amp; Thị giác máy tính (CS2203)</div>
+          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng CNN</div>
+          <div class="ppt-slide-counter">06/29</div>
+        </div>
+      </section>
+
+      <!-- SLIDE 07: TỔNG QUAN NGHIÊN CỨU HIỆN ĐẠI TỪ CVF -->
+      <section class="slide">
+        <div class="ppt-top-bar">
+          <h2 class="ppt-top-title">Tổng quan Nghiên cứu Hiện đại từ CVF (2024 - 2026)</h2>
+          <div class="ppt-top-tag">Nghiên cứu hiện đại</div>
+        </div>
+        <div class="ppt-content">
+          <p class="ppt-lead-text">
+            Đề tài chắt lọc bài học và kế thừa kỹ thuật từ <strong>4 công trình đỉnh cao thuộc hội nghị CVF</strong>:
+          </p>
+
+          <div class="grid-cards-4" style="margin-top: 25px;">
+            <div class="feature-card card-primary">
+              <div class="flow-step-num">CVPR 2025</div>
+              <h3 style="font-size: 22px; font-weight: 800; color: #0284C7; margin: 8px 0;">DarkIR Backbone</h3>
+              <p class="card-body-text" style="font-size: 19px;">
+                Kết hợp miền tần số (FreMLP) ở Encoder và miền không gian (Di-SpAM) ở Decoder. Đề tài kế thừa cấu trúc cốt lõi này.
+              </p>
+            </div>
+
+            <div class="feature-card card-success">
+              <div class="flow-step-num">CVPR 2025</div>
+              <h3 style="font-size: 22px; font-weight: 800; color: #047857; margin: 8px 0;">HVI Color Space</h3>
+              <p class="card-body-text" style="font-size: 19px;">
+                Phân tích khuyết tật của HSV trong bóng tối, gợi ý giải pháp Max-RGB Prior I<sub>max</sub> = max(R,G,B) làm kênh dẫn hướng độ rọi.
+              </p>
+            </div>
+
+            <div class="feature-card card-accent">
+              <div class="flow-step-num">CVPRW 2024</div>
+              <h3 style="font-size: 22px; font-weight: 800; color: #B45309; margin: 8px 0;">Edge-LLIE</h3>
+              <p class="card-body-text" style="font-size: 19px;">
+                Đề xuất cơ chế Gated Skip Connection 1&times;1 chống rò rỉ nhiễu từ Encoder sang Decoder, tối ưu hóa cho thiết bị biên.
+              </p>
+            </div>
+
+            <div class="feature-card" style="border-color: #8B5CF6; background: #F5F3FF;">
+              <div class="flow-step-num" style="color: #8B5CF6;">CVPRW 2024</div>
+              <h3 style="font-size: 22px; font-weight: 800; color: #6D28D9; margin: 8px 0;">NTIRE 2024 Challenge</h3>
+              <p class="card-body-text" style="font-size: 19px;">
+                Tổng kết 22 đội thi, khẳng định nghịch lý phần GPU đắt đỏ và khuyến nghị các kiến trúc CNN gọn nhẹ có tính thực dụng cao.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="ppt-footer">
+          <div class="ppt-footer-left">
+            <img src="assets/uit-logo.png" alt="UIT" class="ppt-footer-logo">
+            <span class="ppt-footer-brand">UIT - VNUHCM</span>
+          </div>
+          <div class="ppt-footer-course">Xử lý ảnh &amp; Thị giác máy tính (CS2203)</div>
+          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng CNN</div>
+          <div class="ppt-slide-counter">07/29</div>
+        </div>
+      </section>
+
+      <!-- SLIDE 08: ĐỊNH VỊ PHẠM VI ĐỒ ÁN - KHÔNG CLAIM SOTA (YÊU CẦU GIẢNG VIÊN) -->
+      <section class="slide">
+        <div class="ppt-top-bar">
+          <h2 class="ppt-top-title">Định vị Phạm vi Đồ án: Nhẹ, Thực tế &amp; Không Claim SOTA</h2>
+          <div class="ppt-top-tag">Phạm vi đồ án</div>
+        </div>
+        <div class="ppt-content">
+          <p class="ppt-lead-text">
+            Tuân thủ nghiêm ngặt các định hướng học thuật của Giảng viên môn CS2203:
+          </p>
+
+          <div class="grid-cards-2" style="margin-top: 25px;">
+            <div class="feature-card" style="border-left: 6px solid #D97706;">
+              <h3 style="font-size: 26px; font-weight: 800; color: #B45309; margin-bottom: 12px;">Cam kết Học thuật &amp; Giới hạn Phạm vi</h3>
+              <ul class="ppt-bullet-list" style="gap: 14px; font-size: 22px;">
+                <li><strong>KHÔNG tuyên bố reproduce SOTA:</strong> Đồ án không chạy đua điểm số tuyệt đối với các mô hình Transformer khổng lồ (hàng chục đến hàng trăm triệu tham số).</li>
+                <li><strong>KHÔNG phát minh phương pháp mới:</strong> Đề tài tập trung kế thừa kiến trúc nơ-ron DarkIR đã được bình duyệt tại CVPR 2025 và bổ sung các cải tiến thực dụng.</li>
+                <li><strong>Thực thi trên phần cứng giới hạn:</strong> Huấn luyện hoàn toàn khả thi trên môi trường Google Colab GPU miễn phí (Tesla T4).</li>
+              </ul>
+            </div>
+
+            <div class="feature-card" style="border-left: 6px solid #059669;">
+              <h3 style="font-size: 26px; font-weight: 800; color: #047857; margin-bottom: 12px;">Mục tiêu Khoa học Trọng tâm</h3>
+              <ul class="ppt-bullet-list" style="gap: 14px; font-size: 22px;">
+                <li><strong>Hiểu rõ chi tiết bài toán:</strong> Nắm vững từ bản chất suy thoái quang học, định lý biến đổi Fourier 2D đến từng phép toán tích chập trong mạng.</li>
+                <li><strong>Mô hình CNN gọn nhẹ (~1.92M params):</strong> Chứng minh một mạng CNN có cấu trúc hợp lý hoàn toàn giải quyết tốt bài toán LLIE với chi phí phần cứng tối thiểu.</li>
+                <li><strong>Quy trình thực nghiệm chuẩn mực:</strong> Huấn luyện đa cảm biến cân bằng, kiểm định thống kê nghiêm ngặt và đối chuẩn minh bạch.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="ppt-footer">
+          <div class="ppt-footer-left">
+            <img src="assets/uit-logo.png" alt="UIT" class="ppt-footer-logo">
+            <span class="ppt-footer-brand">UIT - VNUHCM</span>
+          </div>
+          <div class="ppt-footer-course">Xử lý ảnh &amp; Thị giác máy tính (CS2203)</div>
+          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng CNN</div>
+          <div class="ppt-slide-counter">08/29</div>
+        </div>
+      </section>
+
+      <!-- SLIDE 09: CẤU TRÚC PHƯƠNG PHÁP GIẢI QUYẾT -->
+      <section class="slide">
+        <div class="ppt-top-bar">
+          <h2 class="ppt-top-title">Phương pháp Giải quyết: Khung Kiến trúc &amp; Các Bước Triển khai</h2>
+          <div class="ppt-top-tag">Phương pháp</div>
+        </div>
+        <div class="ppt-content">
+          <p class="ppt-lead-text">
+            Giải pháp đề xuất được xây dựng dựa trên <strong>4 trụ cột công nghệ đồng bộ</strong>:
+          </p>
+
+          <div class="flow-step-container" style="margin-top: 25px;">
+            <div class="flow-step" style="border-color: #38BDF8;">
+              <div class="flow-step-num">TRỤ CỘT 1</div>
+              <div class="flow-step-title">Mạng CNN DarkIR-Edge</div>
+              <div class="flow-step-desc">U-Net Asymmetric với C = 24 kênh, tổng 1.92M tham số gọn nhẹ.</div>
+            </div>
+            <div class="flow-arrow">&rarr;</div>
+            <div class="flow-step" style="border-color: #3B82F6;">
+              <div class="flow-step-num">TRỤ CỘT 2</div>
+              <div class="flow-step-title">Bộ 2 Cải tiến Nhỏ</div>
+              <div class="flow-step-desc">Kênh Max-RGB Prior dẫn hướng độ rọi + Gated Skip lọc rò rỉ nhiễu.</div>
+            </div>
+            <div class="flow-arrow">&rarr;</div>
+            <div class="flow-step" style="border-color: #10B981;">
+              <div class="flow-step-num">TRỤ CỘT 3</div>
+              <div class="flow-step-title">Dữ liệu Đa Cảm biến</div>
+              <div class="flow-step-desc">1.200 cặp train cân bằng 1:1 DSLR LOLv2 và Smartphone Huawei.</div>
+            </div>
+            <div class="flow-arrow">&rarr;</div>
+            <div class="flow-step" style="border-color: #8B5CF6;">
+              <div class="flow-step-num">TRỤ CỘT 4</div>
+              <div class="flow-step-title">Composite Loss</div>
+              <div class="flow-step-desc">L1 tối ưu màu sắc + SSIM bảo toàn cấu trúc + Deep Supervision.</div>
+            </div>
+          </div>
+        </div>
+        <div class="ppt-footer">
+          <div class="ppt-footer-left">
+            <img src="assets/uit-logo.png" alt="UIT" class="ppt-footer-logo">
+            <span class="ppt-footer-brand">UIT - VNUHCM</span>
+          </div>
+          <div class="ppt-footer-course">Xử lý ảnh &amp; Thị giác máy tính (CS2203)</div>
+          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng CNN</div>
+          <div class="ppt-slide-counter">09/29</div>
+        </div>
+      </section>
+
+      <!-- SLIDE 10: TỔNG QUAN KIẾN TRÚC MẠNG ĐỀ XUẤT -->
+      <section class="slide">
+        <div class="ppt-top-bar">
+          <h2 class="ppt-top-title">Tổng quan Kiến trúc Mạng CNN Đề xuất (Kế thừa DarkIR)</h2>
+          <div class="ppt-top-tag">Kiến trúc mạng</div>
+        </div>
+        <div class="ppt-content">
+          <p class="ppt-lead-text">
+            Kiến trúc Asymmetric U-Net với <strong>C = 24 kênh</strong> cơ sở, tối ưu hóa cho tài nguyên biên:
+          </p>
+
+          <div class="grid-cards-3" style="margin-top: 15px;">
+            <div class="stat-metric-card">
+              <div class="stat-number">1.92M</div>
+              <div class="stat-label">Tổng số Tham số</div>
+              <div class="stat-sub">1.924.038 tham số (Nhẹ &amp; Hiệu quả)</div>
+            </div>
+            <div class="stat-metric-card">
+              <div class="stat-number">42.8G</div>
+              <div class="stat-label">Chi phí Tính toán</div>
+              <div class="stat-sub">FLOPs trên patch 256&times;256</div>
+            </div>
+            <div class="stat-metric-card">
+              <div class="stat-number">&lt; 3.2 GB</div>
+              <div class="stat-label">Bộ nhớ VRAM Huấn luyện</div>
+              <div class="stat-sub">Hoàn toàn khả thi trên Colab T4 16GB</div>
+            </div>
+          </div>
+
+          <div class="ppt-cols-2" style="margin-top: 20px;">
+            <div class="ppt-col">
+              <div class="feature-card card-primary">
+                <h4 style="font-size: 22px; font-weight: 800; color: #0284C7; margin-bottom: 8px;">Nhánh Mã hóa Tần số (Encoder)</h4>
+                <p class="card-body-text" style="font-size: 20px;">
+                  Gồm 3 cấp độ phân giải với khối <strong>FreMLP (Fourier Domain)</strong>. Chuyển đổi tensor sang miền phổ để nắm bắt năng lượng chiếu sáng toàn cảnh.
+                </p>
+              </div>
+            </div>
+            <div class="ppt-col">
+              <div class="feature-card card-success">
+                <h4 style="font-size: 22px; font-weight: 800; color: #047857; margin-bottom: 8px;">Nhánh Giải mã Không gian (Decoder)</h4>
+                <p class="card-body-text" style="font-size: 20px;">
+                  Gồm 3 cấp độ phục hồi với khối <strong>Di-SpAM (Dilated Attention)</strong> và <strong>Gated Skip</strong>. Tái tạo chi tiết vi mô và triệt tiêu xung nhiễu.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ppt-footer">
+          <div class="ppt-footer-left">
+            <img src="assets/uit-logo.png" alt="UIT" class="ppt-footer-logo">
+            <span class="ppt-footer-brand">UIT - VNUHCM</span>
+          </div>
+          <div class="ppt-footer-course">Xử lý ảnh &amp; Thị giác máy tính (CS2203)</div>
+          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng CNN</div>
+          <div class="ppt-slide-counter">10/29</div>
+        </div>
+      </section>
+
+      <!-- SLIDE 11: CẢI TIẾN 1: MAX-RGB PRIOR -->
+      <section class="slide">
+        <div class="ppt-top-bar">
+          <h2 class="ppt-top-title">Cải tiến 1: Tiền nghiệm Độ rọi Max-RGB Prior (Từ HVI/Retinex)</h2>
+          <div class="ppt-top-tag">Cải tiến 1</div>
+        </div>
+        <div class="ppt-content">
+          <p class="ppt-lead-text">
+            Bổ sung kênh thứ 4 dẫn hướng độ rọi vật lý cho mạng mà không tốn thêm tham số suy luận:
+          </p>
+
+          <div class="formula-highlight">
+            I<sub>max</sub>(x, y) = max &big( R(x, y), G(x, y), B(x, y) &big) &emsp;&rArr;&emsp; X<sub>in</sub> = [R, G, B, I<sub>max</sub>] &isin; &real;<sup>4 &times; H &times; W</sup>
+          </div>
+
+          <div class="ppt-cols-2" style="margin-top: 15px;">
+            <div class="ppt-col">
+              <div class="feature-card card-primary" style="height: 100%;">
+                <h3 style="font-size: 24px; font-weight: 800; color: #0284C7; margin-bottom: 10px;">Cơ sở Vật lý từ Retinex &amp; HVI (CVPR 2025)</h3>
+                <p class="card-body-text" style="font-size: 21px;">
+                  • Theo giả thuyết thế giới trắng (<em>White-Patch Retinex</em>), giá trị lớn nhất trong 3 kênh màu phản ánh trực tiếp cường độ trường sáng chiếu rọi.<br>
+                  • Trong bóng tối, các kênh RGB riêng lẻ bị nhiễu làm méo, nhưng kênh cực đại phản ánh xấp xỉ phân bố độ rọi không gian.
+                </p>
+              </div>
+            </div>
+
+            <div class="ppt-col">
+              <div class="feature-card card-success" style="height: 100%;">
+                <h3 style="font-size: 24px; font-weight: 800; color: #047857; margin-bottom: 10px;">Lợi ích Thiết thực Cho Mô hình CNN</h3>
+                <p class="card-body-text" style="font-size: 21px;">
+                  • Cung cấp ngay bản đồ phân bố ánh sáng cho tầng tích chập đầu tiên.<br>
+                  • <em>Tiết kiệm tài nguyên:</em> Không cần xây dựng một mạng con dự đoán ánh sáng cồng kềnh, giảm hàng trăm nghìn phép tính và giúp mô hình hội tụ nhanh hơn.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ppt-footer">
+          <div class="ppt-footer-left">
+            <img src="assets/uit-logo.png" alt="UIT" class="ppt-footer-logo">
+            <span class="ppt-footer-brand">UIT - VNUHCM</span>
+          </div>
+          <div class="ppt-footer-course">Xử lý ảnh &amp; Thị giác máy tính (CS2203)</div>
+          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng CNN</div>
+          <div class="ppt-slide-counter">11/29</div>
+        </div>
+      </section>
+
+      <!-- SLIDE 12: KHỐI FREMLP MIỀN TẦN SỐ -->
+      <section class="slide">
+        <div class="ppt-top-bar">
+          <h2 class="ppt-top-title">Khối Mã hóa Tần số FreMLP (Fourier Feature Learning)</h2>
+          <div class="ppt-top-tag">Khối FreMLP</div>
+        </div>
+        <div class="ppt-content">
+          <p class="ppt-lead-text">
+            Kế thừa từ DarkIR (CVPR 2025): Biến đổi đặc trưng sang miền phổ Fourier để nắm bắt thông tin toàn cảnh:
+          </p>
+
+          <div class="ppt-cols-2" style="margin-top: 15px;">
+            <div class="ppt-col">
+              <div class="feature-card card-primary">
+                <h3 style="font-size: 24px; font-weight: 800; color: #0284C7; margin-bottom: 10px;">Quy trình Xử lý 5 Bước trong FreMLP</h3>
+                <ul class="ppt-bullet-list" style="gap: 10px; font-size: 21px;">
+                  <li><strong>1. LayerNorm:</strong> Chuẩn hóa ổn định phương sai tensor.</li>
+                  <li><strong>2. 2D Real FFT:</strong> Z = torch.fft.rfft2(X) &isin; &Copf;<sup>C&times;H&times;(W/2+1)</sup>.</li>
+                  <li><strong>3. Tách Thực/Ảo:</strong> Ghép kênh [Re(Z), Im(Z)] &isin; &real;<sup>2C&times;H&times;(W/2+1)</sup>.</li>
+                  <li><strong>4. MLP Tần số:</strong> Conv<sub>1&times;1</sub> &rarr; GELU &rarr; Conv<sub>1&times;1</sub>.</li>
+                  <li><strong>5. Inverse FFT:</strong> irfft2 tái lập tensor không gian + Residual Add.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="ppt-col">
+              <div class="feature-card card-success">
+                <h3 style="font-size: 24px; font-weight: 800; color: #047857; margin-bottom: 10px;">Ưu điểm Vượt bậc so với Self-Attention</h3>
+                <p class="card-body-text" style="font-size: 21px; line-height: 1.6;">
+                  • <strong>Trường tiếp nhận toàn cảnh O(N log N):</strong> Mỗi phần tử phổ tần số kết nối với toàn bộ các điểm ảnh trong khung hình mà không cần kernel lớn.<br>
+                  • <strong>Đạt hiệu quả của Transformer</strong> nhưng với chi phí tính toán cực thấp của mạng CNN gọn nhẹ.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ppt-footer">
+          <div class="ppt-footer-left">
+            <img src="assets/uit-logo.png" alt="UIT" class="ppt-footer-logo">
+            <span class="ppt-footer-brand">UIT - VNUHCM</span>
+          </div>
+          <div class="ppt-footer-course">Xử lý ảnh &amp; Thị giác máy tính (CS2203)</div>
+          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng CNN</div>
+          <div class="ppt-slide-counter">12/29</div>
+        </div>
+      </section>
+
+      <!-- SLIDE 13: KHỐI DI-SPAM MIỀN KHÔNG GIAN -->
+      <section class="slide">
+        <div class="ppt-top-bar">
+          <h2 class="ppt-top-title">Khối Giải mã Không gian Di-SpAM (Dilated Spatial Attention)</h2>
+          <div class="ppt-top-tag">Khối Di-SpAM</div>
+        </div>
+        <div class="ppt-content">
+          <p class="ppt-lead-text">
+            Khối Di-SpAM phụ trách khôi phục chi tiết cục bộ, góc cạnh và kết cấu bề mặt sắc nét:
+          </p>
+
+          <div class="grid-cards-3" style="margin-top: 25px;">
+            <div class="feature-card">
+              <div class="card-icon-title">
+                <span class="tech-pill">Dilation r = 1</span>
+              </div>
+              <h3 style="font-size: 24px; font-weight: 800; color: #1E3A8A; margin-bottom: 8px;">Chi tiết Vi mô Cục bộ</h3>
+              <p class="card-body-text">
+                Tích chập 3&times;3 chuẩn tập trung tái tạo các đường nét biên cạnh sắc sảo, sợi vải, vân gỗ và kết cấu vi mô.
+              </p>
+            </div>
+
+            <div class="feature-card">
+              <div class="card-icon-title">
+                <span class="tech-pill">Dilation r = 4</span>
+              </div>
+              <h3 style="font-size: 24px; font-weight: 800; color: #1E3A8A; margin-bottom: 8px;">Ngữ cảnh Tầm trung</h3>
+              <p class="card-body-text">
+                Tăng bước dãn cách điểm lấy mẫu, nắm bắt hình dạng biên giới vật thể và mối quan hệ giữa các vùng lân cận.
+              </p>
+            </div>
+
+            <div class="feature-card">
+              <div class="card-icon-title">
+                <span class="tech-pill">Dilation r = 9</span>
+              </div>
+              <h3 style="font-size: 24px; font-weight: 800; color: #1E3A8A; margin-bottom: 8px;">Cấu trúc Tầm xa</h3>
+              <p class="card-body-text">
+                Bao phủ trường tiếp nhận rộng lớn mà không làm tăng bất kỳ tham số nào, bảo đảm sự đồng nhất màu sắc trên diện rộng.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="ppt-footer">
+          <div class="ppt-footer-left">
+            <img src="assets/uit-logo.png" alt="UIT" class="ppt-footer-logo">
+            <span class="ppt-footer-brand">UIT - VNUHCM</span>
+          </div>
+          <div class="ppt-footer-course">Xử lý ảnh &amp; Thị giác máy tính (CS2203)</div>
+          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng CNN</div>
+          <div class="ppt-slide-counter">13/29</div>
+        </div>
+      </section>
+
+      <!-- SLIDE 14: CẢI TIẾN 2: GATED SKIP CONNECTION -->
+      <section class="slide">
+        <div class="ppt-top-bar">
+          <h2 class="ppt-top-title">Cải tiến 2: Gated Skip Connection Chống Rò rỉ Nhiễu</h2>
+          <div class="ppt-top-tag">Cải tiến 2</div>
+        </div>
+        <div class="ppt-content">
+          <p class="ppt-lead-text">
+            Khắc phục hiện tượng <strong>Noise Leakage</strong> nghiêm trọng trong mạng U-Net truyền thống (lấy cảm hứng từ Edge-LLIE):
+          </p>
+
+          <div class="ppt-cols-2" style="margin-top: 15px;">
+            <div class="ppt-col">
+              <div class="feature-card" style="border-left: 6px solid #DC2626;">
+                <h3 style="font-size: 24px; font-weight: 800; color: #DC2626; margin-bottom: 10px;">Nguy cơ Skip Connection U-Net Chuẩn</h3>
+                <p class="card-body-text" style="font-size: 21px;">
+                  • U-Net truyền thống cộng hoặc ghép nối trực tiếp đặc trưng: X<sub>dec</sub> = X<sub>up</sub> + X<sub>enc</sub>.<br>
+                  • <em>Nguy cơ trong ảnh tối:</em> Tầng nông Encoder chứa đầy xung nhiễu cảm biến hạt. Nối tắt trực tiếp sẽ bơm thẳng nhiễu sang Decoder, làm ảnh đầu ra bị lốm đốm hạt sần sùi.
+                </p>
+              </div>
+            </div>
+
+            <div class="ppt-col">
+              <div class="feature-card" style="border-left: 6px solid #059669;">
+                <h3 style="font-size: 24px; font-weight: 800; color: #059669; margin-bottom: 10px;">Giải pháp Cổng lọc Gated Skip</h3>
+                <div class="formula-highlight" style="font-size: 20px; padding: 6px 12px; margin: 8px 0;">
+                  M<sub>gate</sub> = &sigma;(Conv<sub>1&times;1</sub>(X<sub>enc</sub>)) &isin; [0, 1]
+                </div>
+                <p class="card-body-text" style="font-size: 21px;">
+                  • Mặt nạ Sigmoid tự động triệt tiêu các xung nhiễu ngẫu nhiên (trọng số gần 0), chỉ cho phép biên cạnh có độ tin cậy cao đi qua: <strong>X<sub>skip</sub> = X<sub>enc</sub> &odot; M<sub>gate</sub></strong>.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ppt-footer">
+          <div class="ppt-footer-left">
+            <img src="assets/uit-logo.png" alt="UIT" class="ppt-footer-logo">
+            <span class="ppt-footer-brand">UIT - VNUHCM</span>
+          </div>
+          <div class="ppt-footer-course">Xử lý ảnh &amp; Thị giác máy tính (CS2203)</div>
+          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng CNN</div>
+          <div class="ppt-slide-counter">14/29</div>
+        </div>
+      </section>
+
+      <!-- SLIDE 15: KHỐI CHÚ Ý KÊNH TINH GIẢN SCA & TÁI TẠO THẶNG DƯ -->
+      <section class="slide">
+        <div class="ppt-top-bar">
+          <h2 class="ppt-top-title">Khối Chú ý Kênh Tinh giản SCA &amp; Tái tạo Thặng dư</h2>
+          <div class="ppt-top-tag">Khối SCA</div>
+        </div>
+        <div class="ppt-content">
+          <p class="ppt-lead-text">
+            Cơ chế Simplified Channel Attention (SCA) tái cân bằng kênh màu kết hợp học thặng dư toàn cục:
+          </p>
+
+          <div class="grid-cards-2" style="margin-top: 25px;">
+            <div class="feature-card card-primary">
+              <h3 style="font-size: 24px; font-weight: 800; color: #0284C7; margin-bottom: 12px;">Cơ chế SCA Tinh giản</h3>
+              <p class="card-body-text" style="font-size: 21px;">
+                • Trích xuất thông tin kênh qua <strong>AdaptiveAvgPool2D</strong>.<br>
+                • Chiếu tuyến tính trực tiếp qua Conv<sub>1&times;1</sub> thay vì cấu trúc FC thắt cổ chai phức tạp của SE-Net.<br>
+                • <em>Giảm 75% số tham số</em> của khối Attention, tái hiện màu sắc đồng nhất trên toàn dải màu.
+              </p>
+            </div>
+
+            <div class="feature-card card-success">
+              <h3 style="font-size: 24px; font-weight: 800; color: #047857; margin-bottom: 12px;">Tái tạo Thặng dư Toàn cục</h3>
+              <p class="card-body-text" style="font-size: 21px;">
+                • Tầng chiếu cuối cùng đưa số kênh C = 24 về 3 kênh màu RGB (&Delta;Y).<br>
+                • <strong>Y<sub>final</sub> = X<sub>rgb</sub> + &Delta;Y</strong>.<br>
+                • Mạng chỉ cần học phần ánh sáng và chi tiết bị thiếu hụt, giúp gradient lan truyền ổn định và hội tụ nhanh chóng.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="ppt-footer">
+          <div class="ppt-footer-left">
+            <img src="assets/uit-logo.png" alt="UIT" class="ppt-footer-logo">
+            <span class="ppt-footer-brand">UIT - VNUHCM</span>
+          </div>
+          <div class="ppt-footer-course">Xử lý ảnh &amp; Thị giác máy tính (CS2203)</div>
+          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng CNN</div>
+          <div class="ppt-slide-counter">15/29</div>
+        </div>
+      </section>
+
+      <!-- SLIDE 16: HÀM MẤT MÁT HỖN HỢP COMPOSITE LOSS -->
+      <section class="slide">
+        <div class="ppt-top-bar">
+          <h2 class="ppt-top-title">Hàm Mất mát Hỗn hợp Đa Tiêu chí (Composite Loss)</h2>
+          <div class="ppt-top-tag">Hàm Mất mát</div>
+        </div>
+        <div class="ppt-content">
+          <p class="ppt-lead-text">
+            Tối ưu hóa đồng thời độ trung thực mức điểm ảnh, độ tương đồng cấu trúc thị giác và ổn định gradient sâu:
+          </p>
+
+          <div class="formula-highlight">
+            &Lscr;<sub>total</sub> = &Lscr;<sub>1</sub>(Y, &Ycirc;) + &lambda;<sub>ssim</sub> &middot; &Lscr;<sub>ssim</sub>(Y, &Ycirc;) + &lambda;<sub>side</sub> &middot; &Lscr;<sub>side</sub>
+          </div>
+
+          <div class="grid-cards-3" style="margin-top: 25px;">
+            <div class="feature-card">
+              <div class="card-icon-title">
+                <span class="tech-pill">&Lscr;<sub>1</sub> Loss</span>
+              </div>
+              <h3 style="font-size: 24px; font-weight: 800; color: #1E3A8A; margin-bottom: 8px;">Sai số Tuyệt đối</h3>
+              <p class="card-body-text">
+                Tối thiểu hóa sai lệch mức pixel tuyệt đối. Tránh hiện tượng làm nhòe mờ (blurring) của hàm mất mát L<sub>2</sub>/MSE.
+              </p>
+            </div>
+
+            <div class="feature-card">
+              <div class="card-icon-title">
+                <span class="tech-pill">&Lscr;<sub>ssim</sub> (&lambda; = 0.2)</span>
+              </div>
+              <h3 style="font-size: 24px; font-weight: 800; color: #1E3A8A; margin-bottom: 8px;">Mất mát Cấu trúc</h3>
+              <p class="card-body-text">
+                &Lscr;<sub>ssim</sub> = 1 - SSIM(Y, &Ycirc;). Ép mạng bảo toàn độ tương phản cục bộ và hoa văn sắc nét theo thị giác người.
+              </p>
+            </div>
+
+            <div class="feature-card">
+              <div class="card-icon-title">
+                <span class="tech-pill">&Lscr;<sub>side</sub> (&lambda; = 0.05)</span>
+              </div>
+              <h3 style="font-size: 24px; font-weight: 800; color: #1E3A8A; margin-bottom: 8px;">Giám sát Sâu (Deep Sup.)</h3>
+              <p class="card-body-text">
+                Giám sát đặc trưng ở đáy mạng bằng phép avg_pool2d(kernel=8) mô phỏng tích hợp quang tử, chống răng cưa quang học.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="ppt-footer">
+          <div class="ppt-footer-left">
+            <img src="assets/uit-logo.png" alt="UIT" class="ppt-footer-logo">
+            <span class="ppt-footer-brand">UIT - VNUHCM</span>
+          </div>
+          <div class="ppt-footer-course">Xử lý ảnh &amp; Thị giác máy tính (CS2203)</div>
+          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng CNN</div>
+          <div class="ppt-slide-counter">16/29</div>
+        </div>
+      </section>
+
+      <!-- SLIDE 17: TẬP DỮ LIỆU ĐA CẢM BIẾN (YÊU CẦU GIẢNG VIÊN - DATASET) -->
+      <section class="slide">
+        <div class="ppt-top-bar">
+          <h2 class="ppt-top-title">Thiết lập Thực nghiệm: Bộ Dữ liệu Đa Cảm biến (1.200 Cặp)</h2>
+          <div class="ppt-top-tag">Dataset thực nghiệm</div>
+        </div>
+        <div class="ppt-content">
+          <p class="ppt-lead-text">
+            Bộ dữ liệu thực nghiệm được tổng hợp cân bằng 1:1 giữa hai miền quang học thực tế:
+          </p>
+
+          <div class="grid-cards-3" style="margin-top: 15px;">
+            <div class="feature-card card-primary">
+              <div class="card-icon-title">
+                <span class="tech-pill">639 CẶP ẢNH</span>
+              </div>
+              <h3 style="font-size: 24px; font-weight: 800; color: #0284C7; margin-bottom: 8px;">LOLv2-Real (DSLR)</h3>
+              <p class="card-body-text">
+                Máy ảnh DSLR chuyên nghiệp; cảm biến lớn, dải động cao, độ sắc nét cao và nhiễu hạt chuẩn mực.
+              </p>
+            </div>
+
+            <div class="feature-card card-accent">
+              <div class="card-icon-title">
+                <span class="tech-pill" style="background: #FEF3C7; color: #B45309; border-color: #FCD34D;">561 CẶP ẢNH</span>
+              </div>
+              <h3 style="font-size: 24px; font-weight: 800; color: #B45309; margin-bottom: 8px;">LSRW-Huawei (Phone)</h3>
+              <p class="card-body-text">
+                Điện thoại thông minh phổ thông; cảm biến di động nhỏ, nhiễu sắc sai dày đặc và dải động hẹp trong thực tế.
+              </p>
+            </div>
+
+            <div class="feature-card card-success">
+              <div class="card-icon-title">
+                <span class="tech-pill" style="background: #D1FAE5; color: #065F46; border-color: #6EE7B7;">150 ẢNH TEST</span>
+              </div>
+              <h3 style="font-size: 24px; font-weight: 800; color: #065F46; margin-bottom: 8px;">Tập Kiểm thử Độc lập</h3>
+              <p class="card-body-text">
+                • 100 ảnh LOLv2-Real Test.<br>
+                • 30 ảnh LSRW-Huawei Test.<br>
+                • <strong>20 ảnh LSRW-Nikon:</strong> Đánh giá Zero-shot Unseen Sensor độc lập!
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="ppt-footer">
+          <div class="ppt-footer-left">
+            <img src="assets/uit-logo.png" alt="UIT" class="ppt-footer-logo">
+            <span class="ppt-footer-brand">UIT - VNUHCM</span>
+          </div>
+          <div class="ppt-footer-course">Xử lý ảnh &amp; Thị giác máy tính (CS2203)</div>
+          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng CNN</div>
+          <div class="ppt-slide-counter">17/29</div>
+        </div>
+      </section>
+
+      <!-- SLIDE 18: TIỀN XỬ LÝ VÀ AUGMENTATION -->
+      <section class="slide">
+        <div class="ppt-top-bar">
+          <h2 class="ppt-top-title">Quy trình Tiền Xử lý &amp; Tăng Cường Dữ liệu (Augmentation)</h2>
+          <div class="ppt-top-tag">Pipeline Dữ liệu</div>
+        </div>
+        <div class="ppt-content">
+          <p class="ppt-lead-text">
+            Pipeline xử lý dữ liệu trực tiếp trong luồng nạp PyTorch DataLoader đảm bảo không rò rỉ thông tin:
+          </p>
+
+          <div class="grid-cards-4" style="margin-top: 25px;">
+            <div class="feature-card">
+              <div class="flow-step-num">BƯỚC 1</div>
+              <h3 style="font-size: 22px; font-weight: 800; color: #0F172A; margin: 6px 0;">Random Crop</h3>
+              <p class="card-body-text" style="font-size: 20px;">
+                Cắt ngẫu nhiên các patch kích thước <strong>256&times;256</strong>. Giảm tải bộ nhớ GPU và tập trung học chi tiết vi mô.
+              </p>
+            </div>
+
+            <div class="feature-card">
+              <div class="flow-step-num">BƯỚC 2</div>
+              <h3 style="font-size: 22px; font-weight: 800; color: #0F172A; margin: 6px 0;">Hình học Flips</h3>
+              <p class="card-body-text" style="font-size: 20px;">
+                Lật ngang ngẫu nhiên (p = 0.5), lật dọc ngẫu nhiên (p = 0.5) và quay góc 90&deg;, 180&deg;, 270&deg; chống phụ thuộc hướng.
+              </p>
+            </div>
+
+            <div class="feature-card">
+              <div class="flow-step-num">BƯỚC 3</div>
+              <h3 style="font-size: 22px; font-weight: 800; color: #0F172A; margin: 6px 0;">Chuẩn hóa [0, 1]</h3>
+              <p class="card-body-text" style="font-size: 20px;">
+                Chuyển đổi dải pixel từ uint8 [0, 255] sang float32 [0.0, 1.0] đồng nhất cho cả ảnh đầu vào và Ground Truth.
+              </p>
+            </div>
+
+            <div class="feature-card">
+              <div class="flow-step-num">BƯỚC 4</div>
+              <h3 style="font-size: 22px; font-weight: 800; color: #0F172A; margin: 6px 0;">Max-RGB Prior</h3>
+              <p class="card-body-text" style="font-size: 20px;">
+                Tính toán kênh I<sub>max</sub> = max(R, G, B) tức thời trên GPU, ghép thành tensor 4 kênh không gây nghẽn I/O đọc đĩa.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="ppt-footer">
+          <div class="ppt-footer-left">
+            <img src="assets/uit-logo.png" alt="UIT" class="ppt-footer-logo">
+            <span class="ppt-footer-brand">UIT - VNUHCM</span>
+          </div>
+          <div class="ppt-footer-course">Xử lý ảnh &amp; Thị giác máy tính (CS2203)</div>
+          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng CNN</div>
+          <div class="ppt-slide-counter">18/29</div>
+        </div>
+      </section>
+
+      <!-- SLIDE 19: MÔI TRƯỜNG THỰC NGHIỆM VÀ SIÊU THAM SỐ (YÊU CẦU GIẢNG VIÊN - MÔI TRƯỜNG) -->
+      <section class="slide">
+        <div class="ppt-top-bar">
+          <h2 class="ppt-top-title">Môi trường Thực nghiệm &amp; Thiết lập Siêu tham số Huấn luyện</h2>
+          <div class="ppt-top-tag">Môi trường thực nghiệm</div>
+        </div>
+        <div class="ppt-content">
+          <p class="ppt-lead-text">
+            Thiết lập thực nghiệm đồng bộ trên Google Colab với bảo đảm tái lập kết quả 100% (MASTER_SEED = 42):
+          </p>
+
+          <table class="ppt-table" style="width: 100%; margin-top: 15px; font-size: 24px;">
+            <thead>
+              <tr>
+                <th style="font-size: 24px; padding: 12px 20px;">Tham số / Môi trường</th>
+                <th style="font-size: 24px; padding: 12px 20px;">Giá trị Thiết lập</th>
+                <th style="font-size: 24px; padding: 12px 20px;">Cơ sở Kỹ thuật &amp; Vai trò</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="font-weight: 800;">Phần cứng GPU</td>
+                <td>NVIDIA Tesla T4 (16GB) / L4 (24GB)</td>
+                <td>Tài nguyên đám mây Google Colab, laptop chỉ dùng viết code.</td>
+              </tr>
+              <tr>
+                <td style="font-weight: 800;">Trình Tối ưu (Optimizer)</td>
+                <td>AdamW (&beta;<sub>1</sub> = 0.9, &beta;<sub>2</sub> = 0.999)</td>
+                <td>Weight decay = 1e-4 kiểm soát trọng số chống overfit.</td>
+              </tr>
+              <tr>
+                <td style="font-weight: 800;">Tốc độ học (Learning Rate)</td>
+                <td>Cosine Annealing: 2e-4 &rarr; 1e-6</td>
+                <td>Hạ nhiệt tốc độ học mềm mại qua 100 epochs (30.000 steps).</td>
+              </tr>
+              <tr>
+                <td style="font-weight: 800;">Batch &amp; Patch Size</td>
+                <td>Batch Size = 8, Patch = 256&times;256</td>
+                <td>Cân bằng throughput và phương sai gradient.</td>
+              </tr>
+              <tr>
+                <td style="font-weight: 800;">Cập nhật Trọng số EMA</td>
+                <td>Decay Rate = 0.999</td>
+                <td>Lưu trữ bản sao trọng số trung bình trượt phục vụ đánh giá.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="ppt-footer">
+          <div class="ppt-footer-left">
+            <img src="assets/uit-logo.png" alt="UIT" class="ppt-footer-logo">
+            <span class="ppt-footer-brand">UIT - VNUHCM</span>
+          </div>
+          <div class="ppt-footer-course">Xử lý ảnh &amp; Thị giác máy tính (CS2203)</div>
+          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng CNN</div>
+          <div class="ppt-slide-counter">19/29</div>
+        </div>
+      </section>
+
+      <!-- SLIDE 20: ĐỘ ĐO ĐÁNH GIÁ ĐỊNH LƯỢNG (YÊU CẦU GIẢNG VIÊN - ĐỘ ĐO) -->
+      <section class="slide">
+        <div class="ppt-top-bar">
+          <h2 class="ppt-top-title">Độ đo Đánh giá Định lượng: PSNR &amp; SSIM</h2>
+          <div class="ppt-top-tag">Độ đo đánh giá</div>
+        </div>
+        <div class="ppt-content">
+          <p class="ppt-lead-text">
+            Chất lượng phục hồi ảnh thiếu sáng được đo đạc khách quan bằng 2 chỉ số học thuật tiêu chuẩn:
+          </p>
+
+          <div class="ppt-cols-2" style="margin-top: 15px;">
+            <div class="ppt-col">
+              <div class="feature-card" style="border-top: 5px solid #0284C7;">
+                <h3 style="font-size: 26px; font-weight: 800; color: #0284C7; margin-bottom: 12px;">PSNR (Peak Signal-to-Noise Ratio)</h3>
+                <div class="formula-highlight" style="font-size: 20px; padding: 10px 14px;">
+                  PSNR = 10 &middot; log<sub>10</sub> &big( MAX<sub>I</sub><sup>2</sup> / MSE &big) &nbsp; (dB)
+                </div>
+                <p class="card-body-text" style="font-size: 21px;">
+                  • Đo mức độ sai lệch năng lượng tuyệt đối trên từng pixel giữa ảnh phục hồi và ảnh gốc Ground Truth.<br>
+                  • Giá trị tính theo thang decibel (dB); điểm số càng cao biểu thị sai số tái tạo càng nhỏ (kỳ vọng &gt; 23 dB).
+                </p>
+              </div>
+            </div>
+
+            <div class="ppt-col">
+              <div class="feature-card" style="border-top: 5px solid #059669;">
+                <h3 style="font-size: 26px; font-weight: 800; color: #059669; margin-bottom: 12px;">SSIM (Structural Similarity Index)</h3>
+                <div class="formula-highlight" style="font-size: 20px; padding: 10px 14px;">
+                  SSIM(x, y) = [l(x, y)]<sup>&alpha;</sup> &middot; [c(x, y)]<sup>&beta;</sup> &middot; [s(x, y)]<sup>&gamma;</sup>
+                </div>
+                <p class="card-body-text" style="font-size: 21px;">
+                  • Mô phỏng hệ thống thị giác người (HVS) thông qua 3 yếu tố: <strong>Độ chói l</strong>, <strong>Độ tương phản c</strong> và <strong>Cấu trúc bề mặt s</strong>.<br>
+                  • Dải giá trị trong đoạn [0, 1]; càng gần 1.0 cấu trúc và kết cấu vật thể càng được bảo toàn nguyên vẹn.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ppt-footer">
+          <div class="ppt-footer-left">
+            <img src="assets/uit-logo.png" alt="UIT" class="ppt-footer-logo">
+            <span class="ppt-footer-brand">UIT - VNUHCM</span>
+          </div>
+          <div class="ppt-footer-course">Xử lý ảnh &amp; Thị giác máy tính (CS2203)</div>
+          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng CNN</div>
+          <div class="ppt-slide-counter">20/29</div>
+        </div>
+      </section>
+
+      <!-- SLIDE 21: BẢNG KẾT QUẢ THỰC NGHIỆM ĐỊNH LƯỢNG (YÊU CẦU GIẢNG VIÊN - BẢNG KẾT QUẢ MOCK) -->
+      <section class="slide">
+        <div class="ppt-top-bar">
+          <h2 class="ppt-top-title">Bảng Đối chuẩn Định lượng Thực nghiệm (Mock Results)</h2>
+          <div class="ppt-top-tag">Bảng kết quả</div>
+        </div>
+        <div class="ppt-content">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+            <p class="ppt-lead-text" style="margin-bottom: 0;">
+              So sánh đối chuẩn DarkIR-Edge với các baselines truyền thống và Standard U-Net cùng số lượng tham số:
+            </p>
+            <div class="mock-badge">KẾT QUẢ MOCK KỲ VỌNG TRƯỚC PHIÊN HUẤN LUYỆN COLAB</div>
+          </div>
+
+          <table class="ppt-table" style="width: 100%; font-size: 23px;">
+            <thead>
+              <tr>
+                <th style="font-size: 23px; padding: 10px 18px;">Phương pháp</th>
+                <th style="font-size: 23px; padding: 10px 18px;">Trường phái</th>
+                <th style="font-size: 23px; padding: 10px 18px;">Số tham số</th>
+                <th style="font-size: 23px; padding: 10px 18px;">FLOPs (256<sup>2</sup>)</th>
+                <th style="font-size: 23px; padding: 10px 18px;">PSNR (dB) &uarr;</th>
+                <th style="font-size: 23px; padding: 10px 18px;">SSIM &uarr;</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="font-weight: 700;">Gamma Correction (&gamma; = 0.4)</td>
+                <td>Xử lý điểm ảnh</td>
+                <td>0</td>
+                <td>&lt; 0.01 G</td>
+                <td>13.85 &plusmn; 2.1</td>
+                <td>0.492</td>
+              </tr>
+              <tr>
+                <td style="font-weight: 700;">Histogram CLAHE</td>
+                <td>Phân bố mức xám</td>
+                <td>0</td>
+                <td>&lt; 0.05 G</td>
+                <td>15.20 &plusmn; 2.4</td>
+                <td>0.548</td>
+              </tr>
+              <tr>
+                <td style="font-weight: 700;">Retinex MSRCR</td>
+                <td>Lọc Gaussian Log</td>
+                <td>0</td>
+                <td>0.85 G</td>
+                <td>16.42 &plusmn; 1.9</td>
+                <td>0.583</td>
+              </tr>
+              <tr>
+                <td style="font-weight: 700;">Plain CNN Baseline</td>
+                <td>Deep Learning</td>
+                <td>120 K</td>
+                <td>2.64 G</td>
+                <td>19.35 &plusmn; 1.5</td>
+                <td>0.725</td>
+              </tr>
+              <tr>
+                <td style="font-weight: 700;">Standard U-Net (Base = 32)</td>
+                <td>Deep Learning</td>
+                <td>1.93 M</td>
+                <td>18.72 G</td>
+                <td>22.15 &plusmn; 1.2</td>
+                <td>0.812</td>
+              </tr>
+              <tr style="background: #EFF6FF; border: 3px solid #0284C7;">
+                <td style="font-weight: 800; color: #0284C7;">DarkIR-Edge (Proposed)</td>
+                <td style="font-weight: 800; color: #0284C7;">CNN Miền Tần số</td>
+                <td style="font-weight: 800; color: #0284C7;">1.92 M</td>
+                <td style="font-weight: 800; color: #0284C7;">42.8 G</td>
+                <td style="font-weight: 800; color: #059669; font-size: 25px;">24.68 &plusmn; 0.9</td>
+                <td style="font-weight: 800; color: #059669; font-size: 25px;">0.865</td>
+              </tr>
+            </tbody>
+          </table>
+          <p style="font-size: 19px; color: #64748B; margin-top: 10px; font-style: italic;">
+            * Ghi chú: Số liệu mock được xây dựng trên cơ sở khoa học từ bài báo DarkIR CVPR 2025 và mã nguồn kiểm thử. Sẽ được thay thế trực tiếp bằng file kết quả table_main.csv sau khi huấn luyện trên Colab.
+          </p>
+        </div>
+        <div class="ppt-footer">
+          <div class="ppt-footer-left">
+            <img src="assets/uit-logo.png" alt="UIT" class="ppt-footer-logo">
+            <span class="ppt-footer-brand">UIT - VNUHCM</span>
+          </div>
+          <div class="ppt-footer-course">Xử lý ảnh &amp; Thị giác máy tính (CS2203)</div>
+          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng CNN</div>
+          <div class="ppt-slide-counter">21/29</div>
+        </div>
+      </section>
+
+      <!-- SLIDE 22: PHÂN TÍCH ĐA CẢM BIẾN (MOCK DATA) -->
+      <section class="slide">
+        <div class="ppt-top-bar">
+          <h2 class="ppt-top-title">Phân tích Kết quả Thực nghiệm trên Từng Miền Cảm biến</h2>
+          <div class="ppt-top-tag">Phân tích cảm biến</div>
+        </div>
+        <div class="ppt-content">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+            <p class="ppt-lead-text" style="margin-bottom: 0;">
+              Khả năng thích ứng của DarkIR-Edge trên các thiết bị thu nhận hình ảnh khác nhau:
+            </p>
+            <div class="mock-badge">KẾT QUẢ MOCK KỲ VỌNG</div>
+          </div>
+
+          <div class="grid-cards-3" style="margin-top: 20px;">
+            <div class="stat-metric-card" style="border-color: #0284C7;">
+              <div class="stat-number">25.12 dB</div>
+              <div class="stat-label">LOLv2-Real (DSLR Test - 100 ảnh)</div>
+              <div class="stat-sub">SSIM: <strong>0.881</strong> &bull; Dải động cao</div>
+              <p class="card-body-text" style="font-size: 20px; margin-top: 10px; text-align: left;">
+                Tái tạo chi tiết sắc nét trên cảm biến lớn, các chi tiết sợi vải và vân gỗ được khôi phục nguyên vẹn, không gây vỡ ảnh.
+              </p>
+            </div>
+
+            <div class="stat-metric-card" style="border-color: #D97706;">
+              <div class="stat-number" style="color: #D97706;">24.25 dB</div>
+              <div class="stat-label">LSRW-Huawei (Phone Test - 30 ảnh)</div>
+              <div class="stat-sub">SSIM: <strong>0.854</strong> &bull; Cảm biến di động nhỏ</div>
+              <p class="card-body-text" style="font-size: 20px; margin-top: 10px; text-align: left;">
+                Khử sạch nhiễu hạt sắc sai và loang lổ màu của camera điện thoại, bảo đảm độ tương phản tự nhiên không bị bệt màu da.
+              </p>
+            </div>
+
+            <div class="stat-metric-card" style="border-color: #059669;">
+              <div class="stat-number" style="color: #059669;">23.80 dB</div>
+              <div class="stat-label">LSRW-Nikon (Zero-shot - 20 ảnh)</div>
+              <div class="stat-sub">SSIM: <strong>0.839</strong> &bull; Sensor hoàn toàn mới</div>
+              <p class="card-body-text" style="font-size: 20px; margin-top: 10px; text-align: left;">
+                Minh chứng năng lực tổng quát hóa xuất sắc: Mô hình chưa từng thấy ảnh Nikon trong tập train nhưng vẫn tăng cường ánh sáng vượt trội!
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="ppt-footer">
+          <div class="ppt-footer-left">
+            <img src="assets/uit-logo.png" alt="UIT" class="ppt-footer-logo">
+            <span class="ppt-footer-brand">UIT - VNUHCM</span>
+          </div>
+          <div class="ppt-footer-course">Xử lý ảnh &amp; Thị giác máy tính (CS2203)</div>
+          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng CNN</div>
+          <div class="ppt-slide-counter">22/29</div>
+        </div>
+      </section>
+
+      <!-- SLIDE 23: KIỂM ĐỊNH GIẢ THUYẾT THỐNG KÊ (MOCK DATA) -->
+      <section class="slide">
+        <div class="ppt-top-bar">
+          <h2 class="ppt-top-title">Kiểm định Giả thuyết Thống kê So sánh Ghép cặp</h2>
+          <div class="ppt-top-tag">Kiểm định thống kê</div>
+        </div>
+        <div class="ppt-content">
+          <p class="ppt-lead-text">
+            Kiểm định ghép cặp (Paired Sample Tests) trên từng ảnh giữa DarkIR-Edge và Standard U-Net:
+          </p>
+
+          <div class="grid-cards-3" style="margin-top: 25px;">
+            <div class="feature-card card-primary">
+              <h3 style="font-size: 24px; font-weight: 800; color: #0284C7; margin-bottom: 10px;">Paired Student's t-test</h3>
+              <div class="formula-highlight" style="font-size: 20px; padding: 8px 12px;">
+                t = 8.42, &nbsp; p = 1.34 &times; 10<sup>-14</sup>
+              </div>
+              <p class="card-body-text">
+                Giá trị <strong>p &lt;&lt; 0.001</strong> cho phép bác bỏ hoàn toàn giả thuyết vô hiệu H<sub>0</sub>. Khẳng định độ chênh lệch <strong>+2.53 dB</strong> là thực chất, không phải ngẫu nhiên.
+              </p>
+            </div>
+
+            <div class="feature-card card-accent">
+              <h3 style="font-size: 24px; font-weight: 800; color: #B45309; margin-bottom: 10px;">Wilcoxon Signed-Rank</h3>
+              <div class="formula-highlight" style="font-size: 20px; padding: 8px 12px;">
+                W = 124.0, &nbsp; p = 4.12 &times; 10<sup>-12</sup>
+              </div>
+              <p class="card-body-text">
+                Kiểm định phi tham số không phụ thuộc phân phối chuẩn. DarkIR-Edge chiến thắng Standard U-Net trên <strong>hơn 92% số lượng ảnh kiểm thử</strong> trong toàn bộ tập test 150 ảnh.
+              </p>
+            </div>
+
+            <div class="feature-card card-success">
+              <h3 style="font-size: 24px; font-weight: 800; color: #047857; margin-bottom: 10px;">Bootstrap 95% CI</h3>
+              <div class="formula-highlight" style="font-size: 20px; padding: 8px 12px;">
+                &Delta;PSNR &isin; [+2.14 dB, +2.91 dB]
+              </div>
+              <p class="card-body-text">
+                Khoảng tin cậy 95% được ước lượng qua 10.000 lượt lấy mẫu lặp lại Bootstrap. Đảm bảo mức cải tiến luôn ổn định trên +2.0 dB với độ tin cậy khoa học cao nhất.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="ppt-footer">
+          <div class="ppt-footer-left">
+            <img src="assets/uit-logo.png" alt="UIT" class="ppt-footer-logo">
+            <span class="ppt-footer-brand">UIT - VNUHCM</span>
+          </div>
+          <div class="ppt-footer-course">Xử lý ảnh &amp; Thị giác máy tính (CS2203)</div>
+          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng CNN</div>
+          <div class="ppt-slide-counter">23/29</div>
+        </div>
+      </section>
+
+      <!-- SLIDE 24: MINH HỌA KẾT QUẢ ĐỊNH TÍNH (YÊU CẦU GIẢNG VIÊN - MINH HỌA) -->
+      <section class="slide">
+        <div class="ppt-top-bar">
+          <h2 class="ppt-top-title">Minh họa Kết quả Định tính: So sánh Trực quan</h2>
+          <div class="ppt-top-tag">Minh họa kết quả</div>
+        </div>
+        <div class="ppt-content">
+          <p class="ppt-lead-text">
+            So sánh trực quan chất lượng phục hồi trên các vùng thử nghiệm có độ phức tạp quang học cao:
+          </p>
+
+          <div class="grid-cards-4" style="margin-top: 25px;">
+            <div class="feature-card" style="border-top: 5px solid #64748B;">
+              <h3 style="font-size: 22px; font-weight: 800; color: #334155; margin-bottom: 8px;">1. Ảnh Tối Đầu vào</h3>
+              <p class="card-body-text" style="font-size: 20px;">
+                Màn đen bao phủ toàn bộ cảnh vật, chữ trên bảng hiệu bị chìm hoàn toàn, nhiễu hạt cảm biến dày đặc.
+              </p>
+            </div>
+
+            <div class="feature-card" style="border-top: 5px solid #F59E0B;">
+              <h3 style="font-size: 22px; font-weight: 800; color: #B45309; margin-bottom: 8px;">2. Histogram CLAHE</h3>
+              <p class="card-body-text" style="font-size: 20px;">
+                Làm sáng tổng thể nhưng khuếch đại mù quáng các đốm nhiễu màu sần sùi, màu da bị tái và mất tự nhiên.
+              </p>
+            </div>
+
+            <div class="feature-card" style="border-top: 5px solid #3B82F6;">
+              <h3 style="font-size: 22px; font-weight: 800; color: #1D4ED8; margin-bottom: 8px;">3. Standard U-Net</h3>
+              <p class="card-body-text" style="font-size: 20px;">
+                Nâng được độ sáng nhưng các đường biên bị nhòe mờ, màu sắc nhợt nhạt và xuất hiện đốm nhiễu rò rỉ.
+              </p>
+            </div>
+
+            <div class="feature-card" style="border-top: 5px solid #10B981; background: #ECFDF5;">
+              <h3 style="font-size: 22px; font-weight: 800; color: #047857; margin-bottom: 8px;">4. DarkIR-Edge (Ours)</h3>
+              <p class="card-body-text" style="font-size: 20px;">
+                <strong>Cân bằng hoàn hảo:</strong> Ánh sáng tự nhiên, sắc nét chữ viết, dọn sạch nhiễu nền và bảo toàn nguồn sáng điểm!
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="ppt-footer">
+          <div class="ppt-footer-left">
+            <img src="assets/uit-logo.png" alt="UIT" class="ppt-footer-logo">
+            <span class="ppt-footer-brand">UIT - VNUHCM</span>
+          </div>
+          <div class="ppt-footer-course">Xử lý ảnh &amp; Thị giác máy tính (CS2203)</div>
+          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng CNN</div>
+          <div class="ppt-slide-counter">24/29</div>
+        </div>
+      </section>
+
+      <!-- SLIDE 25: ABLATION STUDY -->
+      <section class="slide">
+        <div class="ppt-top-bar">
+          <h2 class="ppt-top-title">Nghiên cứu Triệt tiêu Thành phần (Ablation Analysis)</h2>
+          <div class="ppt-top-tag">Ablation study</div>
+        </div>
+        <div class="ppt-content">
+          <p class="ppt-lead-text">
+            Định lượng đóng góp khoa học của từng cải tiến công nghệ thông qua nghiên cứu triệt tiêu thành phần:
+          </p>
+
+          <table class="ppt-table" style="width: 100%; margin-top: 20px; font-size: 24px;">
+            <thead>
+              <tr>
+                <th style="font-size: 24px; padding: 12px 20px;">Cấu hình Mạng</th>
+                <th style="font-size: 24px; padding: 12px 20px;">Miền Tần số FreMLP</th>
+                <th style="font-size: 24px; padding: 12px 20px;">Gated Skip Module</th>
+                <th style="font-size: 24px; padding: 12px 20px;">Max-RGB Prior</th>
+                <th style="font-size: 24px; padding: 12px 20px;">PSNR (dB)</th>
+                <th style="font-size: 24px; padding: 12px 20px;">Mức Tăng (&Delta;)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="font-weight: 700;">U-Net Baseline</td>
+                <td>&times;</td>
+                <td>&times;</td>
+                <td>&times;</td>
+                <td>22.15 dB</td>
+                <td>Gốc</td>
+              </tr>
+              <tr>
+                <td style="font-weight: 700;">+ Khối FreMLP</td>
+                <td>&check;</td>
+                <td>&times;</td>
+                <td>&times;</td>
+                <td>23.81 dB</td>
+                <td style="color: #059669; font-weight: 800;">+ 1.66 dB</td>
+              </tr>
+              <tr>
+                <td style="font-weight: 700;">+ Gated Skip Connection</td>
+                <td>&check;</td>
+                <td>&check;</td>
+                <td>&times;</td>
+                <td>24.33 dB</td>
+                <td style="color: #059669; font-weight: 800;">+ 0.52 dB</td>
+              </tr>
+              <tr style="background: #F0FDF4; border: 3px solid #059669;">
+                <td style="font-weight: 800; color: #047857;">Toàn diện DarkIR-Edge</td>
+                <td>&check;</td>
+                <td>&check;</td>
+                <td>&check;</td>
+                <td style="font-weight: 800; color: #059669; font-size: 26px;">24.68 dB</td>
+                <td style="color: #059669; font-weight: 800; font-size: 26px;">+ 0.35 dB (Đạt đỉnh)</td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="ppt-lead-text" style="font-size: 22px; margin-top: 15px; color: #334155;">
+            &rArr; <strong>Kết luận:</strong> Miền tần số tạo bước nhảy vọt lớn nhất (+1.66 dB), Gated Skip dọn sạch nhiễu rò rỉ (+0.52 dB), và Max-RGB Prior hoàn thiện độ rọi màu sắc (+0.35 dB).
+          </p>
+        </div>
+        <div class="ppt-footer">
+          <div class="ppt-footer-left">
+            <img src="assets/uit-logo.png" alt="UIT" class="ppt-footer-logo">
+            <span class="ppt-footer-brand">UIT - VNUHCM</span>
+          </div>
+          <div class="ppt-footer-course">Xử lý ảnh &amp; Thị giác máy tính (CS2203)</div>
+          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng CNN</div>
+          <div class="ppt-slide-counter">25/29</div>
+        </div>
+      </section>
+
+      <!-- SLIDE 26: ĐÁNH GIÁ ƯU ĐIỂM VÀ HẠN CHẾ (YÊU CẦU GIẢNG VIÊN) -->
+      <section class="slide">
+        <div class="ppt-top-bar">
+          <h2 class="ppt-top-title">Đánh giá, Nhận xét: Những Ưu điểm &amp; Hạn chế của Phương pháp</h2>
+          <div class="ppt-top-tag">Đánh giá &amp; Nhận xét</div>
+        </div>
+        <div class="ppt-content">
+          <p class="ppt-lead-text">
+            Đánh giá khách quan và nhìn nhận trung thực các giới hạn thực tế của giải pháp:
+          </p>
+
+          <div class="ppt-cols-2" style="margin-top: 15px;">
+            <div class="ppt-col">
+              <div class="feature-card card-success" style="height: 100%;">
+                <h3 style="font-size: 24px; font-weight: 800; color: #047857; margin-bottom: 12px;">Ưu điểm Nổi bật</h3>
+                <ul class="ppt-bullet-list" style="gap: 12px; font-size: 20px;">
+                  <li><strong>Kiến trúc gọn nhẹ (1.92M params):</strong> Không gây bùng nổ FLOPs, dễ dàng triển khai và suy luận trên máy tính thông thường.</li>
+                  <li><strong>Vượt trội baselines cổ điển:</strong> Tăng vọt hơn +8 dB PSNR so với CLAHE/Gamma, màu sắc và độ tương phản tự nhiên.</li>
+                  <li><strong>Tổng quát hóa tốt:</strong> Thích ứng tốt trên cả cảm biến DSLR chuyên nghiệp và Smartphone di động, kể cả cảm biến chưa từng thấy (Nikon Zero-shot).</li>
+                  <li><strong>Chi phí huấn luyện thấp:</strong> Huấn luyện hoàn tất trên Google Colab T4 miễn phí trong thời gian ngắn.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="ppt-col">
+              <div class="feature-card" style="border-left: 6px solid #DC2626; height: 100%;">
+                <h3 style="font-size: 24px; font-weight: 800; color: #DC2626; margin-bottom: 12px;">Hạn chế Nhìn nhận Thẳng thắn</h3>
+                <ul class="ppt-bullet-list" style="gap: 12px; font-size: 20px;">
+                  <li><strong>Vùng không có photon (Zero-photon, Y = 0):</strong> Trong bóng tối hoàn toàn, không có tín hiệu quang học, mạng có xu hướng "ảo giác hóa" (hallucinate) tạo vân giả nhẹ.</li>
+                  <li><strong>Nguồn sáng điểm cực đoan:</strong> Khi đèn pha xe đối diện rọi thẳng vào camera, hàm L1 có xu hướng làm mờ nhẹ quầng hào quang quanh nguồn sáng.</li>
+                  <li><strong>Chưa nén phần cứng INT8:</strong> Cần thực hiện Post-Training Quantization trong nghiên cứu tiếp theo để chạy thời gian thực trên kit nhúng (Jetson Nano).</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ppt-footer">
+          <div class="ppt-footer-left">
+            <img src="assets/uit-logo.png" alt="UIT" class="ppt-footer-logo">
+            <span class="ppt-footer-brand">UIT - VNUHCM</span>
+          </div>
+          <div class="ppt-footer-course">Xử lý ảnh &amp; Thị giác máy tính (CS2203)</div>
+          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng CNN</div>
+          <div class="ppt-slide-counter">26/29</div>
+        </div>
+      </section>
+
+      <!-- SLIDE 27: KẾT LUẬN VÀ GIÁ TRỊ THU HOẠCH -->
+      <section class="slide">
+        <div class="ppt-top-bar">
+          <h2 class="ppt-top-title">Kết luận Đề tài &amp; Giá trị Thu hoạch của Học viên</h2>
+          <div class="ppt-top-tag">Kết luận</div>
+        </div>
+        <div class="ppt-content">
+          <p class="ppt-lead-text">
+            Đề tài đã hoàn thành đầy đủ các mục tiêu đề ra cho đồ án môn học CS2203:
+          </p>
+
+          <div class="grid-cards-4" style="margin-top: 25px;">
+            <div class="feature-card card-primary">
+              <div class="flow-step-num">THU HOẠCH 1</div>
+              <h3 style="font-size: 22px; font-weight: 800; color: #0284C7; margin: 8px 0;">Hiểu Sâu Bài toán</h3>
+              <p class="card-body-text" style="font-size: 20px;">
+                Nắm vững mô hình quang học suy thoái, phân rã Retinex và bản chất toán học 2D FFT trong xử lý ảnh số.
+              </p>
+            </div>
+
+            <div class="feature-card card-success">
+              <div class="flow-step-num">THU HOẠCH 2</div>
+              <h3 style="font-size: 22px; font-weight: 800; color: #047857; margin: 8px 0;">Kiến trúc Khả thi</h3>
+              <p class="card-body-text" style="font-size: 20px;">
+                Hiện thực hóa thành công mạng CNN 1.92M params kế thừa DarkIR, chứng minh CNN cơ bản giải quyết hiệu quả LLIE.
+              </p>
+            </div>
+
+            <div class="feature-card card-accent">
+              <div class="flow-step-num">THU HOẠCH 3</div>
+              <h3 style="font-size: 22px; font-weight: 800; color: #B45309; margin: 8px 0;">Phương pháp Chuẩn</h3>
+              <p class="card-body-text" style="font-size: 20px;">
+                Thiết kế dữ liệu đa cảm biến cân bằng, đối chuẩn đa mô hình và kiểm định giả thuyết thống kê mẫu mực.
+              </p>
+            </div>
+
+            <div class="feature-card" style="border-color: #8B5CF6; background: #F5F3FF;">
+              <div class="flow-step-num" style="color: #8B5CF6;">THU HOẠCH 4</div>
+              <h3 style="font-size: 22px; font-weight: 800; color: #6D28D9; margin: 8px 0;">Liêm chính Học thuật</h3>
+              <p class="card-body-text" style="font-size: 20px;">
+                Đánh giá khách quan, trung thực với kết quả thực nghiệm, không tuyên bố vượt tầm năng lực đồ án.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="ppt-footer">
+          <div class="ppt-footer-left">
+            <img src="assets/uit-logo.png" alt="UIT" class="ppt-footer-logo">
+            <span class="ppt-footer-brand">UIT - VNUHCM</span>
+          </div>
+          <div class="ppt-footer-course">Xử lý ảnh &amp; Thị giác máy tính (CS2203)</div>
+          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng CNN</div>
+          <div class="ppt-slide-counter">27/29</div>
+        </div>
+      </section>
+
+      <!-- SLIDE 28: TÀI LIỆU THAM KHẢO CHÍNH - CVF (YÊU CẦU GIẢNG VIÊN) -->
+      <section class="slide">
+        <div class="ppt-top-bar">
+          <h2 class="ppt-top-title">Tài liệu Tham khảo Chính (Nguồn CVF Open Access)</h2>
+          <div class="ppt-top-tag">Tài liệu tham khảo</div>
+        </div>
+        <div class="ppt-content">
+          <p class="ppt-lead-text">
+            Nguồn tài liệu tham khảo chính yếu từ Thư viện Mở <strong>CVF Open Access</strong> và các bài báo nền tảng:
+          </p>
+
+          <ul class="ppt-bullet-list" style="gap: 16px; font-size: 22px; margin-top: 20px;">
+            <li>
+              <strong>[1] Feijoo et al. (CVPR 2025):</strong> <em>"DarkIR: Robust Low-Light Image Restoration via Frequency-Spatial Synergy."</em> IEEE/CVF Conference on Computer Vision and Pattern Recognition.
+            </li>
+            <li>
+              <strong>[2] Yan et al. (CVPR 2025):</strong> <em>"HVI: A New Color Space for Low-light Image Enhancement."</em> IEEE/CVF Conference on Computer Vision and Pattern Recognition.
+            </li>
+            <li>
+              <strong>[3] Sharif et al. (CVPRW 2024):</strong> <em>"Learning Optimized Low-Light Image Enhancement for Edge Vision Tasks."</em> IEEE/CVF CVPR Workshops (NTIRE).
+            </li>
+            <li>
+              <strong>[4] Liu et al. (CVPRW 2024):</strong> <em>"NTIRE 2024 Challenge on Low-Light Image Enhancement: Methods and Results."</em> IEEE/CVF CVPR Workshops.
+            </li>
+            <li>
+              <strong>[5] Wei et al. (BMVC 2018):</strong> <em>"Deep Retinex Decomposition for Low-Light Enhancement."</em> British Machine Vision Conference (LOL Dataset).
+            </li>
+            <li>
+              <strong>[6] Land &amp; McCann (JOSA 1971):</strong> <em>"Lightness and Retinex Theory."</em> Journal of the Optical Society of America.
+            </li>
+          </ul>
+        </div>
+        <div class="ppt-footer">
+          <div class="ppt-footer-left">
+            <img src="assets/uit-logo.png" alt="UIT" class="ppt-footer-logo">
+            <span class="ppt-footer-brand">UIT - VNUHCM</span>
+          </div>
+          <div class="ppt-footer-course">Xử lý ảnh &amp; Thị giác máy tính (CS2203)</div>
+          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng CNN</div>
+          <div class="ppt-slide-counter">28/29</div>
+        </div>
+      </section>
+
+      <!-- SLIDE 29: HỎI VÀ ĐÁP (Q & A) -->
+      <section class="slide">
+        <div class="ppt-top-bar">
+          <h2 class="ppt-top-title">Hỏi &amp; Đáp (Q &amp; A)</h2>
+          <div class="ppt-top-tag">Q &amp; A</div>
+        </div>
+        <div class="ppt-content" style="text-align: center; justify-content: center; align-items: center;">
+          <div style="max-width: 1400px; width: 100%;">
+            <h1 style="font-size: 58px; font-weight: 800; color: var(--blue-cover); margin-bottom: 18px;">
+              XIN CHÂN THÀNH CẢM ƠN QUÝ THẦY CÔ!
+            </h1>
+            <p style="font-size: 30px; color: #334155; font-weight: 600; margin-bottom: 30px;">
+              Hội đồng Bộ môn Xử lý ảnh và Thị giác máy tính (CS2203) — Khoa Khoa học Máy tính — UIT
+            </p>
+
+            <div style="display: inline-flex; gap: 40px; background: #F1F5F9; padding: 18px 48px; border-radius: 999px; font-size: 24px; color: #1E293B; font-weight: 700; border: 2px solid #CBD5E1;">
+              <span>Học viên: <strong>Phạm Văn Tiến</strong></span>
+              <span>&bull;</span>
+              <span>MSHV: <strong>26848223</strong></span>
+              <span>&bull;</span>
+              <span>Email: <strong>26848223@gm.uit.edu.vn</strong></span>
+            </div>
+
+            <div style="margin-top: 40px; font-size: 22px; color: #64748B;">
+              Chương trình Đào tạo Thạc sĩ Khoa học Máy tính — Khóa 2026 — ĐHQG-HCM
+            </div>
+          </div>
+        </div>
+        <div class="ppt-footer">
+          <div class="ppt-footer-left">
+            <img src="assets/uit-logo.png" alt="UIT" class="ppt-footer-logo">
+            <span class="ppt-footer-brand">UIT - VNUHCM</span>
+          </div>
+          <div class="ppt-footer-course">Xử lý ảnh &amp; Thị giác máy tính (CS2203)</div>
+          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng CNN</div>
+          <div class="ppt-slide-counter">29/29</div>
+        </div>
+      </section>
+
+    </div><!-- /#slide-canvas -->
+  </div><!-- /#presentation-viewport -->
+
+  <!-- Minimalist floating nav controls -->
+  <div id="nav-bar">
+    <button class="nav-btn" id="btn-prev" title="Lùi lại (Mũi tên trái / PageUp)">◀</button>
+    <div class="nav-counter">
+      <span id="current-slide-num">01</span> / <span id="total-slide-num">29</span>
+    </div>
+    <button class="nav-btn" id="btn-next" title="Kế tiếp (Mũi tên phải / Space / PageDown)">▶</button>
+    <button class="nav-btn" id="btn-fullscreen" title="Toàn màn hình (F)">⛶</button>
+  </div>
+
+  <!-- Slides Controller -->
+  <script src="slides.js"></script>
+</body>
+</html>

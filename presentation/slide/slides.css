@@ -1,0 +1,972 @@
+/* ==========================================================================
+   SLIDES.CSS — Authentic CS2207 Academic Presentation Styling
+   Template: Custom 16:9 Modern Academic Design (UIT - VNUHCM)
+   Canvas: 1920x1080 Widescreen (16:9), Pure CSS Layout, Zero BG Images
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=JetBrains+Mono:wght@500;600;700&display=swap');
+
+:root {
+  --slide-width: 1920px;
+  --slide-height: 1080px;
+
+  /* Colors sampled directly from presentation/view/1.png and 2.png */
+  --blue-cover: #126CD5;         /* Cover slide upper solid blue (1.png) */
+  --blue-header: #318EFC;        /* Content slide top header banner (2.png) */
+  --blue-footer: #126CD5;        /* Footer brand & topic links (1.png & 2.png) */
+  --blue-course: #158DFF;        /* Course name bright blue (1.png) */
+  --blue-subtitle: #5BAFF5;      /* Subtitle soft sky blue (1.png) */
+  --navy-author: #093B70;        /* Student authors & IDs deep navy (1.png) */
+  --amber-cover: #FFA726;        /* University name accent amber/gold (1.png) */
+  --cyan-cover: #4FD1FD;         /* University name accent light cyan (1.png) */
+  
+  --border-footer: #C1CEE0;      /* Thin footer divider line (2.png) */
+  --bg-slide: #FFFFFF;           /* Pure white canvas */
+  --bg-canvas: #0F172A;          /* Outer viewport background (letterbox) */
+  
+  /* Text and Accents */
+  --text-primary: #111827;       /* Dark slate primary body text */
+  --text-secondary: #374151;
+  --text-muted: #64748B;
+  --text-highlight: #DC2626;     /* Accent red for critical emphasis */
+  --accent-green: #059669;       /* Accent green for advantages */
+  
+  /* Tables & Diagrams */
+  --table-header-bg: #38BDF8;
+  --table-border: #0284C7;
+  --table-alt-bg: #F8FAFC;
+  
+  /* High-legibility Vietnamese Academic Typography */
+  --font-slide: 'Plus Jakarta Sans', 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Consolas', 'Courier New', monospace;
+}
+
+/* Global Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--bg-canvas);
+  font-family: var(--font-slide);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ==========================================================================
+   VIEWPORT & 16:9 DYNAMIC SCALING ENGINE
+   ========================================================================== */
+#presentation-viewport {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+#slide-canvas {
+  position: relative;
+  width: var(--slide-width);
+  height: var(--slide-height);
+  background-color: var(--bg-slide);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.45);
+  transform-origin: center center;
+  overflow: hidden;
+  user-select: none;
+}
+
+/* Slide Base Container (1920 x 1080) */
+.slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--bg-slide);
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.slide.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  z-index: 10;
+}
+
+/* ==========================================================================
+   SLIDE 01: COVER SLIDE TEMPLATE (Recreated 100% from presentation/view/1.png)
+   ========================================================================== */
+.slide-cover {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background-color: #FFFFFF;
+}
+
+/* Upper Solid Blue Section: y = 0 to 680 (height = 680px) */
+.cover-top-section {
+  width: 100%;
+  height: 680px;
+  background-color: var(--blue-cover);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 85px 120px 0 205px;
+  flex-shrink: 0;
+}
+
+.cover-institution {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 75px;
+  letter-spacing: 0.02em;
+  width: fit-content;
+}
+
+.cover-institution-line1 {
+  font-size: 30px;
+  font-weight: 700;
+  text-transform: uppercase;
+  background: linear-gradient(90deg, #F8911C 0%, #F56B27 25%, #E15B3D 45%, #60A5FA 75%, #38BDF8 95%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+.cover-institution-line2 {
+  font-size: 32px;
+  font-weight: 800;
+  text-transform: uppercase;
+  background: linear-gradient(90deg, #F8911C 0%, #F56B27 25%, #E15B3D 45%, #60A5FA 75%, #38BDF8 95%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+.text-amber {
+  color: var(--amber-cover);
+}
+
+.text-cyan {
+  color: var(--cyan-cover);
+}
+
+.cover-main-title {
+  font-size: 56px;
+  font-weight: 800;
+  color: #FFFFFF;
+  line-height: 1.25;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  margin-bottom: 18px;
+}
+
+.cover-subtitle {
+  font-size: 36px;
+  font-weight: 600;
+  color: var(--blue-subtitle);
+  letter-spacing: 0.01em;
+}
+
+/* Lower White Section: y = 680 to 1024 (height = 344px) */
+.cover-bottom-section {
+  width: 100%;
+  height: 344px;
+  background-color: #FFFFFF;
+  padding: 35px 120px 0 205px;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+
+.cover-course-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--blue-course);
+  margin-bottom: 22px;
+}
+
+.cover-authors-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cover-author-row {
+  display: flex;
+  width: 880px;
+  justify-content: space-between;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--navy-author);
+  line-height: 1.45;
+}
+
+.cover-author-name {
+  font-weight: 700;
+}
+
+.cover-author-id {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+/* ==========================================================================
+   SLIDE 02+: CONTENT SLIDE TEMPLATE (Recreated 100% from presentation/view/2.png)
+   ========================================================================== */
+
+/* Top Header Banner: y = 0 to 108 (height = 108px) */
+.ppt-top-bar {
+  width: 100%;
+  height: 108px;
+  background-color: var(--blue-header);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 80px;
+  flex-shrink: 0;
+}
+
+.ppt-top-title {
+  font-size: 38px;
+  font-weight: 700;
+  color: #FFFFFF;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 1380px;
+}
+
+.ppt-top-tag {
+  font-size: 20px;
+  font-weight: 600;
+  color: #FFFFFF;
+  background: rgba(255, 255, 255, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  padding: 6px 18px;
+  border-radius: 6px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+/* Middle Content Canvas: y = 108 to 1024 (height = 916px) */
+.ppt-content {
+  width: 100%;
+  height: 916px;
+  padding: 35px 80px 25px 80px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background-color: #FFFFFF;
+  overflow: hidden;
+  flex: 1;
+}
+
+/* ==========================================================================
+   FOOTER BAR (Matches Both 1.png & 2.png Exactly)
+   y = 1024 to 1080 (height = 56px), border-top: 1px solid #C1CEE0
+   ========================================================================== */
+.ppt-footer {
+  width: 100%;
+  height: 56px;
+  background-color: #FFFFFF;
+  border-top: 1px solid var(--border-footer);
+  display: grid;
+  grid-template-columns: 380px 510px 1fr auto;
+  align-items: center;
+  padding: 0 80px;
+  font-size: 21px;
+  color: var(--blue-footer);
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+.ppt-footer-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ppt-footer-logo {
+  height: 34px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+}
+
+.ppt-footer-brand {
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--blue-footer);
+}
+
+.ppt-footer-course {
+  font-weight: 500;
+  color: var(--blue-footer);
+}
+
+.ppt-footer-topic {
+  font-weight: 500;
+  color: var(--blue-footer);
+}
+
+.ppt-slide-counter {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 22px;
+  color: var(--text-primary);
+  justify-self: end;
+  letter-spacing: 0.02em;
+}
+
+/* ==========================================================================
+   SECTION INTRO SLIDES (Slide 5, 21, 34)
+   ========================================================================== */
+.ppt-section-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 60px 120px;
+  background: #F8FAFC;
+  border-radius: 12px;
+  border: 2px dashed #CBD5E1;
+  margin: 30px 0;
+}
+
+.ppt-section-tag {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--blue-cover);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 24px;
+}
+
+.ppt-section-title {
+  font-size: 56px;
+  font-weight: 800;
+  color: #0F172A;
+  line-height: 1.25;
+  margin-bottom: 25px;
+}
+
+.ppt-section-subtitle {
+  font-size: 32px;
+  color: var(--text-secondary);
+  max-width: 1250px;
+  line-height: 1.6;
+}
+
+/* ==========================================================================
+   ACADEMIC TYPOGRAPHY & LISTS
+   ========================================================================== */
+.ppt-lead-text {
+  font-size: 36px;
+  line-height: 1.55;
+  color: var(--text-primary);
+}
+
+.ppt-lead-text strong {
+  font-weight: 800;
+}
+
+.ppt-bullet-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  margin-top: 18px;
+}
+
+.ppt-bullet-list li {
+  font-size: 34px;
+  line-height: 1.45;
+  color: var(--text-primary);
+  position: relative;
+  padding-left: 45px;
+}
+
+.ppt-bullet-list li::before {
+  content: "•";
+  position: absolute;
+  left: 10px;
+  color: var(--blue-cover);
+  font-size: 42px;
+  line-height: 1;
+  top: -3px;
+}
+
+.ppt-numbered-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  margin-top: 18px;
+}
+
+.ppt-numbered-list li {
+  font-size: 36px;
+  line-height: 1.4;
+  color: var(--text-primary);
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+}
+
+.ppt-num-badge {
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+/* Academic Lemma / Theorem Box */
+.ppt-lemma-box {
+  border: 2px solid var(--blue-cover);
+  background: #F0F7FF;
+  padding: 22px 30px;
+  margin-top: 24px;
+  border-radius: 8px;
+}
+
+.ppt-lemma-title {
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--navy-author);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ppt-lemma-body {
+  font-size: 28px;
+  line-height: 1.5;
+  color: #1E293B;
+}
+
+.ppt-lemma-meaning {
+  font-size: 25px;
+  line-height: 1.5;
+  color: #0369A1;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px dashed #7DD3FC;
+  font-style: italic;
+}
+
+/* Two-column layout */
+.ppt-cols-2 {
+  display: flex;
+  gap: 60px;
+  margin-top: 20px;
+  align-items: flex-start;
+}
+
+.ppt-col {
+  flex: 1;
+}
+
+/* Memory Node Layout */
+.node-memory-box {
+  border: 3px solid var(--blue-cover);
+  background: #FFFFFF;
+  width: 100%;
+}
+
+.node-memory-header {
+  background: var(--blue-cover);
+  color: #FFFFFF;
+  padding: 12px 20px;
+  font-size: 28px;
+  font-weight: 800;
+  text-align: center;
+  letter-spacing: 0.04em;
+}
+
+.node-field-row {
+  display: flex;
+  border-bottom: 2px solid #93C5FD;
+  font-size: 26px;
+}
+
+.node-field-row:last-child {
+  border-bottom: none;
+}
+
+.node-field-name {
+  width: 200px;
+  padding: 12px 18px;
+  background: #EFF6FF;
+  font-weight: 800;
+  color: #1E3A8A;
+  border-right: 2px solid #93C5FD;
+  font-family: var(--font-mono);
+}
+
+.node-field-desc {
+  flex: 1;
+  padding: 12px 18px;
+  color: #1E293B;
+}
+
+/* ==========================================================================
+   TABLES & MINING LAYOUT (HUIT Style)
+   ========================================================================== */
+table.ppt-table {
+  border-collapse: collapse;
+  background: #FFFFFF;
+  font-size: 32px;
+  text-align: center;
+  border: 2px solid #0284C7;
+}
+
+table.ppt-table th {
+  background-color: var(--table-header-bg);
+  color: #000000;
+  font-weight: 800;
+  padding: 16px 28px;
+  border: 2px solid #0284C7;
+  font-size: 34px;
+}
+
+table.ppt-table td {
+  padding: 14px 28px;
+  border: 2px solid #0284C7;
+  color: #000000;
+  font-weight: 600;
+}
+
+table.ppt-table tr.highlight-red-row td {
+  border: 4px solid #DC2626 !important;
+  color: #DC2626;
+  font-weight: 800;
+}
+
+.table-row-highlight {
+  box-shadow: inset 0 0 0 3px #DC2626;
+  font-weight: 800;
+}
+
+/* HUIT Mining 3-Column Layout */
+.mining-layout {
+  display: flex;
+  gap: 40px;
+  height: 800px;
+  align-items: flex-start;
+}
+
+.mining-col-table {
+  width: 320px;
+  flex-shrink: 0;
+}
+
+.mining-col-tree {
+  flex: 1;
+  height: 780px;
+}
+
+.mining-col-calc {
+  width: 580px;
+  flex-shrink: 0;
+  border: 2px solid #0284C7;
+  background: #FFFFFF;
+}
+
+.calc-row {
+  padding: 16px 24px;
+  border-bottom: 2px solid #0284C7;
+  font-size: 30px;
+  font-weight: 700;
+  color: #000000;
+  line-height: 1.4;
+}
+
+.calc-row:last-child {
+  border-bottom: none;
+}
+
+.calc-title {
+  font-size: 32px;
+  font-weight: 800;
+  color: #000000;
+  margin-bottom: 8px;
+}
+
+.calc-patterns {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 32px;
+  font-weight: 800;
+  color: #111827;
+}
+
+/* ==========================================================================
+   SVG TREE STYLING
+   ========================================================================== */
+.tree-svg-huit {
+  width: 100%;
+  height: 100%;
+}
+
+.tree-node-oval {
+  fill: #FFFFFF;
+  stroke: #0284C7;
+  stroke-width: 3.5;
+}
+
+.tree-node-oval.active-node {
+  stroke: #DC2626 !important;
+  stroke-width: 5 !important;
+}
+
+.tree-node-text {
+  font-family: var(--font-slide);
+  font-size: 26px;
+  font-weight: 800;
+  text-anchor: middle;
+  dominant-baseline: central;
+  fill: #000000;
+}
+
+.tree-node-text.active-text {
+  fill: #DC2626 !important;
+}
+
+.tree-edge {
+  stroke: #0284C7;
+  stroke-width: 3;
+}
+
+/* ==========================================================================
+   MINIMAL FLOATING CONTROLS
+   ========================================================================== */
+#nav-bar {
+  position: fixed;
+  bottom: 70px;
+  right: 25px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(15, 23, 42, 0.85);
+  padding: 6px 14px;
+  border-radius: 24px;
+  z-index: 1000;
+  opacity: 0.15;
+  transition: opacity 0.2s ease;
+}
+
+#nav-bar:hover {
+  opacity: 1;
+}
+
+.nav-btn {
+  background: transparent;
+  border: none;
+  color: #FFFFFF;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.nav-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.nav-counter {
+  color: #FFFFFF;
+  font-family: var(--font-mono);
+  font-size: 15px;
+  font-weight: 700;
+  padding: 0 8px;
+}
+
+/* ==========================================================================
+   PRINT / PDF EXPORT STYLES
+   ========================================================================== */
+@page {
+  size: 1920px 1080px;
+  margin: 0;
+}
+
+@media print {
+  html, body {
+    width: 1920px !important;
+    height: auto !important;
+    min-height: auto !important;
+    overflow: visible !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #ffffff !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  #presentation-viewport {
+    position: static !important;
+    width: 1920px !important;
+    height: auto !important;
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+  }
+  #slide-canvas {
+    position: static !important;
+    transform: none !important;
+    box-shadow: none !important;
+    width: 1920px !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    display: block !important;
+  }
+  .slide {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    width: 1920px !important;
+    height: 1080px !important;
+    min-height: 1080px !important;
+    max-height: 1080px !important;
+    page-break-after: always !important;
+    break-after: page !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: flex !important;
+    overflow: hidden !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+  }
+  #nav-bar {
+    display: none !important;
+  }
+}
+
+/* ==========================================================================
+   EXTENSION STYLES: LLIE-CNN ACADEMIC SLIDES ENHANCEMENTS
+   ========================================================================== */
+.mock-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #FEF3C7;
+  color: #B45309;
+  border: 1.5px solid #F59E0B;
+  padding: 4px 14px;
+  border-radius: 999px;
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.grid-cards-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  margin-top: 25px;
+}
+
+.grid-cards-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 36px;
+  margin-top: 25px;
+}
+
+.grid-cards-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  margin-top: 25px;
+}
+
+.feature-card {
+  background: #F8FAFC;
+  border: 2px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 26px 28px;
+  display: flex;
+  flex-direction: column;
+  transition: border-color 0.2s ease;
+}
+
+.feature-card.card-primary {
+  border-color: #38BDF8;
+  background: #F0F9FF;
+}
+
+.feature-card.card-success {
+  border-color: #34D399;
+  background: #ECFDF5;
+}
+
+.feature-card.card-accent {
+  border-color: #FBBF24;
+  background: #FFFBEB;
+}
+
+.card-icon-title {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 28px;
+  font-weight: 800;
+  color: #0F172A;
+  margin-bottom: 12px;
+}
+
+.card-icon-title .icon-badge {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  font-weight: 800;
+  color: #FFFFFF;
+  background: var(--blue-cover);
+  flex-shrink: 0;
+}
+
+.card-body-text {
+  font-size: 23px;
+  line-height: 1.5;
+  color: #334155;
+}
+
+.stat-metric-card {
+  background: #FFFFFF;
+  border: 2px solid #0284C7;
+  border-radius: 12px;
+  padding: 24px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(2, 132, 199, 0.08);
+}
+
+.stat-number {
+  font-size: 48px;
+  font-weight: 800;
+  color: var(--blue-cover);
+  font-family: var(--font-mono);
+  line-height: 1.1;
+  margin-bottom: 8px;
+}
+
+.stat-label {
+  font-size: 22px;
+  font-weight: 700;
+  color: #1E293B;
+  margin-bottom: 4px;
+}
+
+.stat-sub {
+  font-size: 18px;
+  color: #64748B;
+  font-weight: 500;
+}
+
+.tech-pill {
+  display: inline-block;
+  background: #EFF6FF;
+  color: #1D4ED8;
+  border: 1px solid #BFDBFE;
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-size: 19px;
+  font-weight: 700;
+  font-family: var(--font-mono);
+}
+
+.formula-highlight {
+  background: #F1F5F9;
+  border-left: 5px solid #0284C7;
+  padding: 14px 22px;
+  font-size: 26px;
+  font-family: var(--font-mono);
+  color: #0F172A;
+  border-radius: 0 8px 8px 0;
+  margin: 14px 0;
+}
+
+.flow-step-container {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 25px;
+}
+
+.flow-step {
+  flex: 1;
+  background: #FFFFFF;
+  border: 2px solid #0284C7;
+  border-radius: 10px;
+  padding: 20px 22px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.flow-step-num {
+  font-size: 18px;
+  font-weight: 800;
+  color: #0284C7;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.flow-step-title {
+  font-size: 24px;
+  font-weight: 800;
+  color: #0F172A;
+  margin-bottom: 8px;
+}
+
+.flow-step-desc {
+  font-size: 20px;
+  color: #475569;
+  line-height: 1.45;
+}
+
+.flow-arrow {
+  font-size: 36px;
+  font-weight: 800;
+  color: #0284C7;
+  user-select: none;
+}
+

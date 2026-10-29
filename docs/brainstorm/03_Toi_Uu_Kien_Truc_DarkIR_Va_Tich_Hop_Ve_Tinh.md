@@ -283,8 +283,8 @@ Toàn bộ các siêu tham số được đồng bộ hóa tuyệt đối với 
 | **Bộ lập lịch LR (LR Scheduler)** | **CosineAnnealingLR** | Suy giảm mượt theo hình cosin |
 | **Kích thước mảng cắt (Patch Size)** | **$256 \times 256$** | Cắt ngẫu nhiên cùng tọa độ trên Low và Normal |
 | **Kích thước lô (Batch Size)** | **8** | Tối ưu hóa việc nạp đầy nhân Tensor Cores GPU T4/L4 |
-| **Cơ chế Early Stopping** | **Tạm thời vô hiệu hóa (Commented)** | Chạy trọn vẹn số epoch cố định để Cosine Annealing suy giảm mượt |
-| **Số Epochs huấn luyện** | **100 epochs cố định** | Đạt 30.000 steps cập nhật gradient, đảm bảo hội tụ hoàn hảo |
+| **Cơ chế Early Stopping** | **BẬT (v2): theo dõi val PSNR macro, kiểm tra mỗi 5 epochs, patience = 3 lần (15 epochs), `min_delta` = 0.05 dB, chỉ được dừng sau epoch 30** | Kết quả v1 cho thấy val PSNR đạt đỉnh rất sớm rồi suy giảm nhẹ (xem tài liệu 02, Phần III.2) |
+| **Số Epochs huấn luyện** | **Tối đa 60 epochs (Cosine T_max = 60), có thể dừng sớm** | Rút ngắn từ 100 epochs vì v1 hội tụ trước epoch 20; chu kỳ cosine đủ ngắn để LR kịp suy giảm |
 | **Độ chính xác tính toán** | **AMP FP16 (`autocast`)** | Giảm 50% VRAM, tăng tốc độ tính toán gấp đôi |
 
 ## 3. Kỹ Thuật Số Học Chống Bùng Nổ Gradient & Hỗ Trợ Kích Thước Ảnh Tùy Ý Khi Dùng AMP FP16
