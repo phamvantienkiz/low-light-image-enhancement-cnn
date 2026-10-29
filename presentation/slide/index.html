@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Báo cáo Đồ án: Tăng cường chất lượng ảnh trong điều kiện thiếu sáng bằng mạng nơ-ron tích chập (CNN) | CS2203 - UIT</title>
+  <title>Báo cáo Đồ án: Tăng cường chất lượng ảnh trong điều kiện thiếu sáng bằng mạng nơ-ron tích chập | CS2203 - UIT</title>
   
   <!-- Custom Stylesheet matching PowerPoint / Academic slide design -->
   <link rel="stylesheet" href="slides.css">
@@ -25,9 +25,10 @@
                 TRƯỜNG ĐẠI HỌC CÔNG NGHỆ THÔNG TIN
               </div>
             </div>
+            <div class="cover-topic-label">Đề tài</div>
             <h1 class="cover-main-title">
               TĂNG CƯỜNG CHẤT LƯỢNG ẢNH TRONG ĐIỀU KIỆN THIẾU SÁNG<br>
-              BẰNG MẠNG NƠ-RON TÍCH CHẬP (CNN)
+              BẰNG MẠNG NƠ-RON TÍCH CHẬP
             </h1>
             <p class="cover-subtitle">Kế thừa kiến trúc DarkIR kết hợp cải tiến Max-RGB Prior và Gated Skip Connection</p>
           </div>
@@ -46,65 +47,219 @@
               <span class="ppt-footer-brand">UIT - VNUHCM</span>
             </div>
             <div class="ppt-footer-course">Xử lý ảnh &amp; Thị giác máy tính (CS2203)</div>
-            <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng CNN</div>
-            <div class="ppt-slide-counter">01/29</div>
+            <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng mạng nơ-ron tích chập</div>
+            <div class="ppt-slide-counter">01/31</div>
           </div>
         </div>
       </section>
 
-      <!-- SLIDE 02: THÔNG TIN HỌC VIÊN & ĐÁNH GIÁ HOÀN THÀNH (YÊU CẦU GIẢNG VIÊN MỤC 1) -->
+      <!-- SLIDE 02: BỐI CẢNH THỰC TẾ & HIỆN TƯỢNG SUY THOÁI ẢNH THIẾU SÁNG -->
       <section class="slide">
         <div class="ppt-top-bar">
-          <h2 class="ppt-top-title">Thông tin Học viên &amp; Đánh giá Mức độ Hoàn thành Đồ án</h2>
-          <div class="ppt-top-tag">Thông tin thành viên</div>
+          <h2 class="ppt-top-title">Bối Cảnh Thực Tế &amp; Hiện Tượng Suy Thoái Ảnh Thiếu Sáng</h2>
+          <div class="ppt-top-tag">Bối cảnh đề tài</div>
         </div>
         <div class="ppt-content">
-          <p class="ppt-lead-text">
-            Báo cáo tiến độ và mức độ hoàn thành các hạng mục công việc theo yêu cầu của Giảng viên:
+          <p class="ppt-lead-standard">
+            Thu nhận hình ảnh trong điều kiện ban đêm hoặc thiếu sáng gặp phải sự suy thoái vật lý nghiêm trọng do lượng photon giới hạn và đặc tính phần cứng thu nhận:
           </p>
 
-          <div class="ppt-cols-2" style="margin-top: 15px;">
-            <div class="ppt-col">
-              <table class="ppt-table" style="width: 100%; font-size: 24px; text-align: left;">
-                <tbody>
-                  <tr>
-                    <td style="font-weight: 800; width: 240px; background: #F8FAFC;">Họ và tên</td>
-                    <td style="font-weight: 800; color: #0284C7;">Phạm Văn Tiến</td>
-                  </tr>
-                  <tr>
-                    <td style="font-weight: 800; background: #F8FAFC;">Mã số học viên</td>
-                    <td style="font-weight: 800; font-family: var(--font-mono);">26848223</td>
-                  </tr>
-                  <tr>
-                    <td style="font-weight: 800; background: #F8FAFC;">Chương trình</td>
-                    <td>Thạc sĩ Khoa học Máy tính (Khóa 2026)</td>
-                  </tr>
-                  <tr>
-                    <td style="font-weight: 800; background: #F8FAFC;">Hình thức thực hiện</td>
-                    <td>Đồ án cá nhân (1 thành viên)</td>
-                  </tr>
-                  <tr>
-                    <td style="font-weight: 800; background: #F8FAFC;">Tỷ lệ đóng góp</td>
-                    <td style="font-weight: 800; color: #059669;">100% Khối lượng Đồ án</td>
-                  </tr>
-                  <tr>
-                    <td style="font-weight: 800; background: #F8FAFC;">Đánh giá hoàn thành</td>
-                    <td style="font-weight: 800; color: #059669; font-size: 26px;">100% Đạt yêu cầu môn học</td>
-                  </tr>
-                </tbody>
-              </table>
+          <div class="intro-grid-3">
+            <div class="intro-card card-blue">
+              <div class="intro-card-header">
+                <span class="intro-badge badge-blue">Hiện tượng 1</span>
+                <h3 class="intro-card-title">Môi Trường Thiếu Photon</h3>
+              </div>
+              <ul class="intro-bullets">
+                <li>Môi trường ban đêm khiến mật độ photon đi vào cảm biến bị suy giảm cực đoan.</li>
+                <li>Tỷ lệ tín hiệu trên nhiễu (SNR) sụt giảm trầm trọng, làm biến dạng dữ liệu gốc.</li>
+                <li>Hình ảnh bị mất hoàn toàn độ tương phản và xuất hiện nhiễu hạt ngẫu nhiên (Poisson-Gaussian Noise).</li>
+              </ul>
+              <div class="intro-formula-box">
+                Photon &darr; &implies; SNR &darr; &implies; Nhiễu hạt bùng phát
+              </div>
             </div>
 
-            <div class="ppt-col">
-              <div class="feature-card card-primary" style="height: 100%;">
-                <h3 style="font-size: 26px; font-weight: 800; color: #0369A1; margin-bottom: 12px;">Các Hạng mục Công việc Đã Hoàn tất</h3>
-                <ul class="ppt-bullet-list" style="gap: 12px; font-size: 21px;">
-                  <li><strong>1. Nghiên cứu tài liệu CVF:</strong> Phân tích sâu 4 bài báo đỉnh cao (DarkIR CVPR 2025, HVI CVPR 2025, Edge-LLIE CVPRW 2024, NTIRE 2024).</li>
-                  <li><strong>2. Phát biểu bài toán:</strong> Mô hình hóa toán học quang học suy thoái và phân rã Retinex.</li>
-                  <li><strong>3. Xây dựng mã nguồn:</strong> Cài đặt hoàn chỉnh mô hình CNN gọn nhẹ (~1.92M params), baselines truyền thống, loss và metrics.</li>
-                  <li><strong>4. Dữ liệu thực nghiệm:</strong> Chuẩn hóa 1.200 cặp train đa cảm biến (LOLv2 + Huawei) và test zero-shot (Nikon).</li>
-                  <li><strong>5. Thử nghiệm Colab:</strong> Hoàn thiện notebook huấn luyện tự động với MASTER_SEED = 42.</li>
+            <div class="intro-card card-amber">
+              <div class="intro-card-header">
+                <span class="intro-badge badge-amber">Hiện tượng 2</span>
+                <h3 class="intro-card-title">Giới Hạn Cảm Biến Di Động</h3>
+              </div>
+              <ul class="intro-bullets">
+                <li>Thiết bị di động và camera giám sát có diện tích cảm biến và khẩu độ vật lý rất nhỏ.</li>
+                <li>Khả năng tích lũy quang thông kém hơn đáng kể so với các hệ thống máy ảnh chuyên dụng (DSLR).</li>
+                <li>Dải động (Dynamic Range) hẹp dẫn đến bết màu, mất chi tiết vùng tối và sai lệch màu sắc nặng nề.</li>
+              </ul>
+              <div class="intro-formula-box">
+                Sensor Size &ll; DSLR &implies; Bết màu &amp; Mất dải động
+              </div>
+            </div>
+
+            <div class="intro-card card-rose">
+              <div class="intro-card-header">
+                <span class="intro-badge badge-rose">Hiện tượng 3</span>
+                <h3 class="intro-card-title">Rung Tay &amp; Nhòe Mờ Chuyển Động</h3>
+              </div>
+              <ul class="intro-bullets">
+                <li>Để bù sáng, cơ chế phơi sáng tự động buộc phải kéo dài thời gian mở màn trập (Exposure Time).</li>
+                <li>Rung lắc tay cầm tự nhiên hoặc chuyển động của vật thể gây ra hiện tượng nhòe mờ (Motion Blur).</li>
+                <li>Hệ quả: Hình ảnh suy thoái phức hợp đa chiều, vừa bị tối đen vừa bị nhòe mất nét hoàn toàn biên cạnh.</li>
+              </ul>
+              <div class="intro-formula-box">
+                Exposure &uarr; + Shake &implies; Suy thoái kép: Tối &amp; Mờ
+              </div>
+            </div>
+          </div>
+
+          <div class="banner-summary-wide banner-warning">
+            <span style="font-size: 26px;">⚠️</span>
+            <div><strong>Thực tế thu nhận:</strong> Ảnh ban đêm trên thiết bị phổ thông không đơn thuần là ảnh thiếu sáng, mà là <strong>tổng hòa của 3 dạng suy thoái đồng thời</strong>: Mất photon, Nhiễu hạt cảm biến và Nhòe mờ do rung động.</div>
+          </div>
+        </div>
+        <div class="ppt-footer">
+          <div class="ppt-footer-left">
+            <img src="assets/uit-logo.png" alt="UIT" class="ppt-footer-logo">
+            <span class="ppt-footer-brand">UIT - VNUHCM</span>
+          </div>
+          <div class="ppt-footer-course">Xử lý ảnh &amp; Thị giác máy tính (CS2203)</div>
+          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng mạng nơ-ron tích chập</div>
+          <div class="ppt-slide-counter">02/31</div>
+        </div>
+      </section>
+
+      <!-- SLIDE 03: MINH HỌA DỮ LIỆU THỰC TẾ: TỪ ẢNH TỐI / NHÒE SANG ẢNH ĐỦ SÁNG -->
+      <section class="slide">
+        <div class="ppt-top-bar">
+          <h2 class="ppt-top-title">Minh Họa Dữ Liệu Thực Tế: Từ Ảnh Tối Đến Ảnh Đủ Sáng</h2>
+          <div class="ppt-top-tag">Dữ liệu thực nghiệm</div>
+        </div>
+        <div class="ppt-content">
+          <p class="ppt-lead-standard">
+            Đối chiếu trực quan trên các tập dữ liệu thực tế (Benchmark Datasets) giữa ảnh thu nhận thực nghiệm và ảnh chuẩn tham chiếu:
+          </p>
+
+          <div class="compare-grid-2">
+            <!-- Panel 1: LOL-v2 Real -->
+            <div class="compare-panel">
+              <div class="compare-panel-header">
+                <span class="intro-badge badge-blue">Tập Dữ Liệu 1: LOL-v2 Real</span>
+                <span style="font-size: 18px; font-weight: 700; color: #64748B;">Môi trường ánh sáng cực yếu</span>
+              </div>
+              <div class="compare-img-pair">
+                <div class="compare-img-box">
+                  <div class="compare-img-tag tag-input-dark">Ảnh Thu Nhận (Input Low)</div>
+                  <img src="assets/sample_lolv2_low.png" alt="Ảnh thiếu sáng LOLv2" class="compare-img">
+                  <span class="compare-caption">Tối đen, mất tương phản, nhiễu ẩn</span>
+                </div>
+                <div class="compare-img-box">
+                  <div class="compare-img-tag tag-gt-normal">Ảnh Tham Chiếu (Ground Truth)</div>
+                  <img src="assets/sample_lolv2_normal.png" alt="Ảnh chuẩn bình thường LOLv2" class="compare-img">
+                  <span class="compare-caption">Đủ sáng, cân bằng trắng, giàu chi tiết</span>
+                </div>
+              </div>
+              <div class="compare-note-box">
+                <strong>Đặc tính LOL-v2 Real:</strong> Ảnh chụp từ cảm biến thực tế trong buồng tối. Ở ảnh đầu vào, toàn bộ thông tin kết cấu nội thất bị chìm trong bóng tối; ảnh chuẩn thể hiện màu sắc tự nhiên và biên cạnh rõ nét.
+              </div>
+            </div>
+
+            <!-- Panel 2: LOLBlur -->
+            <div class="compare-panel">
+              <div class="compare-panel-header">
+                <span class="intro-badge badge-rose">Tập Dữ Liệu 2: LOLBlur Benchmark</span>
+                <span style="font-size: 18px; font-weight: 700; color: #64748B;">Thiếu sáng kết hợp nhòe mờ</span>
+              </div>
+              <div class="compare-img-pair">
+                <div class="compare-img-box">
+                  <div class="compare-img-tag tag-input-dark">Ảnh Thu Nhận (Low &amp; Blur)</div>
+                  <img src="assets/sample_lolblur_low.png" alt="Ảnh tối và nhòe LOLBlur" class="compare-img">
+                  <span class="compare-caption">Vừa tối vừa nhòe vệt chuyển động</span>
+                </div>
+                <div class="compare-img-box">
+                  <div class="compare-img-tag tag-gt-normal">Ảnh Phục Hồi Chuẩn (Sharp GT)</div>
+                  <img src="assets/sample_lolblur_enhanced.png" alt="Ảnh phục hồi sắc nét" class="compare-img">
+                  <span class="compare-caption">Đủ sáng, biên cạnh sắc nét, sạch mờ</span>
+                </div>
+              </div>
+              <div class="compare-note-box">
+                <strong>Đặc tính LOLBlur:</strong> Mô phỏng chính xác kịch bản chụp ảnh thực tế khi cầm tay ban đêm. Hiện tượng rung mờ khiến các chi tiết mịn bị nhòe vệt, đòi hỏi mô hình phải phục hồi đồng thời cả độ sáng lẫn độ nét.
+              </div>
+            </div>
+          </div>
+
+          <div class="banner-summary-wide banner-primary">
+            <span style="font-size: 26px;">🎯</span>
+            <div><strong>Mục tiêu cốt lõi:</strong> Thiết kế kiến trúc có khả năng ánh xạ chính xác từ không gian ảnh suy thoái phức hợp (tối, nhiễu, nhòe) sang không gian ảnh rõ nét và tự nhiên như ảnh tham chiếu chuẩn.</div>
+          </div>
+        </div>
+        <div class="ppt-footer">
+          <div class="ppt-footer-left">
+            <img src="assets/uit-logo.png" alt="UIT" class="ppt-footer-logo">
+            <span class="ppt-footer-brand">UIT - VNUHCM</span>
+          </div>
+          <div class="ppt-footer-course">Xử lý ảnh &amp; Thị giác máy tính (CS2203)</div>
+          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng mạng nơ-ron tích chập</div>
+          <div class="ppt-slide-counter">03/31</div>
+        </div>
+      </section>
+
+      <!-- SLIDE 04: THÁCH THỨC NGHIÊN CỨU HIỆN TẠI & ĐỊNH HƯỚNG CỦA ĐỀ TÀI -->
+      <section class="slide">
+        <div class="ppt-top-bar">
+          <h2 class="ppt-top-title">Thách Thức Nghiên Cứu Hiện Tại &amp; Định Hướng Của Đề Tài</h2>
+          <div class="ppt-top-tag">Định hướng nghiên cứu</div>
+        </div>
+        <div class="ppt-content">
+          <p class="ppt-lead-standard">
+            Phân tích khoảng cách giữa các nghiên cứu tiền nhiệm và định hướng giải pháp tích hợp của đề tài:
+          </p>
+
+          <div class="triptych-grid-3">
+            <!-- Cột 1 -->
+            <div class="triptych-col col-problem">
+              <div>
+                <span class="intro-badge badge-rose">Khoảng Cách Nghiên Cứu</span>
+                <h3 class="triptych-title">Các Phương Pháp Đơn Tác Vụ</h3>
+                <ul class="triptych-bullets">
+                  <li><strong>Chỉ kéo sáng (LLIE):</strong> Tăng cường biên độ ánh sáng nhưng khuếch đại nhiễu cảm biến và làm lộ rõ các vệt mờ nhòe vốn bị bóng tối che khuất.</li>
+                  <li><strong>Chỉ khử mờ (Deblurring):</strong> Giả định dữ liệu đầu vào có độ sáng bình thường; mất ổn định hoàn toàn trong vùng tối có SNR cực thấp.</li>
+                  <li><strong>Tách rời hai giai đoạn:</strong> Nối tiếp hai mô hình độc lập (kéo sáng rồi khử mờ hoặc ngược lại) gây tích lũy sai số và xuất hiện tạo tác giả (artifacts).</li>
                 </ul>
+              </div>
+              <div class="triptych-box-bottom">
+                Hạn chế: Thiếu cơ chế phục hồi liên kết đồng thời giữa độ sáng và độ nét biên cạnh.
+              </div>
+            </div>
+
+            <!-- Cột 2 -->
+            <div class="triptych-col col-solution">
+              <div>
+                <span class="intro-badge badge-blue">Đột Phá Nền Tảng</span>
+                <h3 class="triptych-title">Kiến Trúc DarkIR (CVPR 2025)</h3>
+                <ul class="triptych-bullets">
+                  <li><strong>Mô hình hóa hợp nhất:</strong> Tiên phong xử lý đồng thời hai bài toán tăng sáng (Illumination) và khử nhòe mờ (Deblurring) trong một mô hình duy nhất.</li>
+                  <li><strong>Phục hồi miền tần số (FreMLP):</strong> Khai thác biến đổi Fourier 2D để tái lập phân bố ánh sáng toàn cục và cân bằng phổ màu sắc.</li>
+                  <li><strong>Phục hồi miền không gian (Di-SpAM):</strong> Sử dụng tích chập Dilated kết hợp Attention để khôi phục cấu trúc biên cạnh và khử sạch vệt mờ.</li>
+                </ul>
+              </div>
+              <div class="triptych-box-bottom">
+                Ưu điểm: Thiết lập chuẩn mực phục hồi đa miền đồng thời cho bài toán ảnh tối mờ.
+              </div>
+            </div>
+
+            <!-- Cột 3 -->
+            <div class="triptych-col col-proposal">
+              <div>
+                <span class="intro-badge badge-emerald">Định Hướng Đề Tài</span>
+                <h3 class="triptych-title">Kế Thừa DarkIR &amp; Các Cải Tiến</h3>
+                <ul class="triptych-bullets">
+                  <li><strong>Kế thừa cốt lõi:</strong> Tiếp thu nguyên lý xử lý kết hợp hai tác vụ từ DarkIR làm nền tảng khoa học trung tâm của đồ án.</li>
+                  <li><strong>Kiến trúc CNN tinh gọn:</strong> Tối ưu hóa cấu trúc U-Net gọn nhẹ (~1.92M tham số) nhằm đảm bảo khả năng triển khai trên thiết bị di động.</li>
+                  <li><strong>Cải tiến 1 - Max-RGB Prior:</strong> Bổ sung kênh thông tin cực đại màu sắc nhằm định hướng cân bằng trắng và khử ám màu.</li>
+                  <li><strong>Cải tiến 2 - Gated Skip:</strong> Tích hợp cổng lọc nhiễu giữa Encoder và Decoder để ngăn truyền dẫn nhiễu hạt sang tầng tái tạo.</li>
+                </ul>
+              </div>
+              <div class="triptych-box-bottom">
+                Đóng góp: Mô hình CNN gọn nhẹ, cân bằng tối ưu giữa hiệu năng phục hồi và chi phí tính toán.
               </div>
             </div>
           </div>
@@ -115,12 +270,12 @@
             <span class="ppt-footer-brand">UIT - VNUHCM</span>
           </div>
           <div class="ppt-footer-course">Xử lý ảnh &amp; Thị giác máy tính (CS2203)</div>
-          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng CNN</div>
-          <div class="ppt-slide-counter">02/29</div>
+          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng mạng nơ-ron tích chập</div>
+          <div class="ppt-slide-counter">04/31</div>
         </div>
       </section>
 
-      <!-- SLIDE 03: TẦM QUAN TRỌNG VÀ Ý NGHĨA THỰC TẾ (YÊU CẦU GIẢNG VIÊN MỤC 2) -->
+      <!-- SLIDE 05: TẦM QUAN TRỌNG VÀ Ý NGHĨA THỰC TẾ (YÊU CẦU GIẢNG VIÊN MỤC 2) -->
       <section class="slide">
         <div class="ppt-top-bar">
           <h2 class="ppt-top-title">Lý do &amp; Tầm quan trọng của Bài toán trong Thực tế</h2>
@@ -171,12 +326,12 @@
             <span class="ppt-footer-brand">UIT - VNUHCM</span>
           </div>
           <div class="ppt-footer-course">Xử lý ảnh &amp; Thị giác máy tính (CS2203)</div>
-          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng CNN</div>
-          <div class="ppt-slide-counter">03/29</div>
+          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng mạng nơ-ron tích chập</div>
+          <div class="ppt-slide-counter">05/31</div>
         </div>
       </section>
 
-      <!-- SLIDE 04: PHÁT BIỂU BÀI TOÁN - INPUT, OUTPUT & MỤC TIÊU (YÊU CẦU GIẢNG VIÊN MỤC 3) -->
+      <!-- SLIDE 06: PHÁT BIỂU BÀI TOÁN - INPUT, OUTPUT & MỤC TIÊU (YÊU CẦU GIẢNG VIÊN MỤC 3) -->
       <section class="slide">
         <div class="ppt-top-bar">
           <h2 class="ppt-top-title">Phát biểu Bài toán: Đầu vào (Input), Đầu ra (Output) &amp; Mục tiêu</h2>
@@ -235,12 +390,12 @@
             <span class="ppt-footer-brand">UIT - VNUHCM</span>
           </div>
           <div class="ppt-footer-course">Xử lý ảnh &amp; Thị giác máy tính (CS2203)</div>
-          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng CNN</div>
-          <div class="ppt-slide-counter">04/29</div>
+          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng mạng nơ-ron tích chập</div>
+          <div class="ppt-slide-counter">06/31</div>
         </div>
       </section>
 
-      <!-- SLIDE 05: VÍ DỤ MINH HỌA VÀ CƠ SỞ TOÁN HỌC (YÊU CẦU GIẢNG VIÊN MỤC 3 - VÍ DỤ) -->
+      <!-- SLIDE 07: VÍ DỤ MINH HỌA VÀ CƠ SỞ TOÁN HỌC (YÊU CẦU GIẢNG VIÊN MỤC 3 - VÍ DỤ) -->
       <section class="slide">
         <div class="ppt-top-bar">
           <h2 class="ppt-top-title">Ví dụ Minh họa Bài toán &amp; Mô hình Suy thoái Quang học</h2>
@@ -295,12 +450,12 @@
             <span class="ppt-footer-brand">UIT - VNUHCM</span>
           </div>
           <div class="ppt-footer-course">Xử lý ảnh &amp; Thị giác máy tính (CS2203)</div>
-          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng CNN</div>
-          <div class="ppt-slide-counter">05/29</div>
+          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng mạng nơ-ron tích chập</div>
+          <div class="ppt-slide-counter">07/31</div>
         </div>
       </section>
 
-      <!-- SLIDE 06: GIỚI HẠN CỦA PHƯƠNG PHÁP TRUYỀN THỐNG -->
+      <!-- SLIDE 08: GIỚI HẠN CỦA PHƯƠNG PHÁP TRUYỀN THỐNG -->
       <section class="slide">
         <div class="ppt-top-bar">
           <h2 class="ppt-top-title">Giới hạn của Các Phương pháp Xử lý Ảnh Truyền thống</h2>
@@ -352,12 +507,12 @@
             <span class="ppt-footer-brand">UIT - VNUHCM</span>
           </div>
           <div class="ppt-footer-course">Xử lý ảnh &amp; Thị giác máy tính (CS2203)</div>
-          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng CNN</div>
-          <div class="ppt-slide-counter">06/29</div>
+          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng mạng nơ-ron tích chập</div>
+          <div class="ppt-slide-counter">08/31</div>
         </div>
       </section>
 
-      <!-- SLIDE 07: TỔNG QUAN NGHIÊN CỨU HIỆN ĐẠI TỪ CVF -->
+      <!-- SLIDE 09: TỔNG QUAN NGHIÊN CỨU HIỆN ĐẠI TỪ CVF -->
       <section class="slide">
         <div class="ppt-top-bar">
           <h2 class="ppt-top-title">Tổng quan Nghiên cứu Hiện đại từ CVF (2024 - 2026)</h2>
@@ -408,12 +563,12 @@
             <span class="ppt-footer-brand">UIT - VNUHCM</span>
           </div>
           <div class="ppt-footer-course">Xử lý ảnh &amp; Thị giác máy tính (CS2203)</div>
-          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng CNN</div>
-          <div class="ppt-slide-counter">07/29</div>
+          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng mạng nơ-ron tích chập</div>
+          <div class="ppt-slide-counter">09/31</div>
         </div>
       </section>
 
-      <!-- SLIDE 08: ĐỊNH VỊ PHẠM VI ĐỒ ÁN - KHÔNG CLAIM SOTA (YÊU CẦU GIẢNG VIÊN) -->
+      <!-- SLIDE 10: ĐỊNH VỊ PHẠM VI ĐỒ ÁN - KHÔNG CLAIM SOTA (YÊU CẦU GIẢNG VIÊN) -->
       <section class="slide">
         <div class="ppt-top-bar">
           <h2 class="ppt-top-title">Định vị Phạm vi Đồ án: Nhẹ, Thực tế &amp; Không Claim SOTA</h2>
@@ -450,12 +605,12 @@
             <span class="ppt-footer-brand">UIT - VNUHCM</span>
           </div>
           <div class="ppt-footer-course">Xử lý ảnh &amp; Thị giác máy tính (CS2203)</div>
-          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng CNN</div>
-          <div class="ppt-slide-counter">08/29</div>
+          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng mạng nơ-ron tích chập</div>
+          <div class="ppt-slide-counter">10/31</div>
         </div>
       </section>
 
-      <!-- SLIDE 09: CẤU TRÚC PHƯƠNG PHÁP GIẢI QUYẾT -->
+      <!-- SLIDE 11: CẤU TRÚC PHƯƠNG PHÁP GIẢI QUYẾT -->
       <section class="slide">
         <div class="ppt-top-bar">
           <h2 class="ppt-top-title">Phương pháp Giải quyết: Khung Kiến trúc &amp; Các Bước Triển khai</h2>
@@ -498,12 +653,12 @@
             <span class="ppt-footer-brand">UIT - VNUHCM</span>
           </div>
           <div class="ppt-footer-course">Xử lý ảnh &amp; Thị giác máy tính (CS2203)</div>
-          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng CNN</div>
-          <div class="ppt-slide-counter">09/29</div>
+          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng mạng nơ-ron tích chập</div>
+          <div class="ppt-slide-counter">11/31</div>
         </div>
       </section>
 
-      <!-- SLIDE 10: TỔNG QUAN KIẾN TRÚC MẠNG ĐỀ XUẤT -->
+      <!-- SLIDE 12: TỔNG QUAN KIẾN TRÚC MẠNG ĐỀ XUẤT -->
       <section class="slide">
         <div class="ppt-top-bar">
           <h2 class="ppt-top-title">Tổng quan Kiến trúc Mạng CNN Đề xuất (Kế thừa DarkIR)</h2>
@@ -557,12 +712,12 @@
             <span class="ppt-footer-brand">UIT - VNUHCM</span>
           </div>
           <div class="ppt-footer-course">Xử lý ảnh &amp; Thị giác máy tính (CS2203)</div>
-          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng CNN</div>
-          <div class="ppt-slide-counter">10/29</div>
+          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng mạng nơ-ron tích chập</div>
+          <div class="ppt-slide-counter">12/31</div>
         </div>
       </section>
 
-      <!-- SLIDE 11: CẢI TIẾN 1: MAX-RGB PRIOR -->
+      <!-- SLIDE 13: CẢI TIẾN 1: MAX-RGB PRIOR -->
       <section class="slide">
         <div class="ppt-top-bar">
           <h2 class="ppt-top-title">Cải tiến 1: Tiền nghiệm Độ rọi Max-RGB Prior (Từ HVI/Retinex)</h2>
@@ -605,12 +760,12 @@
             <span class="ppt-footer-brand">UIT - VNUHCM</span>
           </div>
           <div class="ppt-footer-course">Xử lý ảnh &amp; Thị giác máy tính (CS2203)</div>
-          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng CNN</div>
-          <div class="ppt-slide-counter">11/29</div>
+          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng mạng nơ-ron tích chập</div>
+          <div class="ppt-slide-counter">13/31</div>
         </div>
       </section>
 
-      <!-- SLIDE 12: KHỐI FREMLP MIỀN TẦN SỐ -->
+      <!-- SLIDE 14: KHỐI FREMLP MIỀN TẦN SỐ -->
       <section class="slide">
         <div class="ppt-top-bar">
           <h2 class="ppt-top-title">Khối Mã hóa Tần số FreMLP (Fourier Feature Learning)</h2>
@@ -652,12 +807,12 @@
             <span class="ppt-footer-brand">UIT - VNUHCM</span>
           </div>
           <div class="ppt-footer-course">Xử lý ảnh &amp; Thị giác máy tính (CS2203)</div>
-          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng CNN</div>
-          <div class="ppt-slide-counter">12/29</div>
+          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng mạng nơ-ron tích chập</div>
+          <div class="ppt-slide-counter">14/31</div>
         </div>
       </section>
 
-      <!-- SLIDE 13: KHỐI DI-SPAM MIỀN KHÔNG GIAN -->
+      <!-- SLIDE 15: KHỐI DI-SPAM MIỀN KHÔNG GIAN -->
       <section class="slide">
         <div class="ppt-top-bar">
           <h2 class="ppt-top-title">Khối Giải mã Không gian Di-SpAM (Dilated Spatial Attention)</h2>
@@ -706,12 +861,12 @@
             <span class="ppt-footer-brand">UIT - VNUHCM</span>
           </div>
           <div class="ppt-footer-course">Xử lý ảnh &amp; Thị giác máy tính (CS2203)</div>
-          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng CNN</div>
-          <div class="ppt-slide-counter">13/29</div>
+          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng mạng nơ-ron tích chập</div>
+          <div class="ppt-slide-counter">15/31</div>
         </div>
       </section>
 
-      <!-- SLIDE 14: CẢI TIẾN 2: GATED SKIP CONNECTION -->
+      <!-- SLIDE 16: CẢI TIẾN 2: GATED SKIP CONNECTION -->
       <section class="slide">
         <div class="ppt-top-bar">
           <h2 class="ppt-top-title">Cải tiến 2: Gated Skip Connection Chống Rò rỉ Nhiễu</h2>
@@ -752,12 +907,12 @@
             <span class="ppt-footer-brand">UIT - VNUHCM</span>
           </div>
           <div class="ppt-footer-course">Xử lý ảnh &amp; Thị giác máy tính (CS2203)</div>
-          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng CNN</div>
-          <div class="ppt-slide-counter">14/29</div>
+          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng mạng nơ-ron tích chập</div>
+          <div class="ppt-slide-counter">16/31</div>
         </div>
       </section>
 
-      <!-- SLIDE 15: KHỐI CHÚ Ý KÊNH TINH GIẢN SCA & TÁI TẠO THẶNG DƯ -->
+      <!-- SLIDE 17: KHỐI CHÚ Ý KÊNH TINH GIẢN SCA & TÁI TẠO THẶNG DƯ -->
       <section class="slide">
         <div class="ppt-top-bar">
           <h2 class="ppt-top-title">Khối Chú ý Kênh Tinh giản SCA &amp; Tái tạo Thặng dư</h2>
@@ -794,12 +949,12 @@
             <span class="ppt-footer-brand">UIT - VNUHCM</span>
           </div>
           <div class="ppt-footer-course">Xử lý ảnh &amp; Thị giác máy tính (CS2203)</div>
-          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng CNN</div>
-          <div class="ppt-slide-counter">15/29</div>
+          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng mạng nơ-ron tích chập</div>
+          <div class="ppt-slide-counter">17/31</div>
         </div>
       </section>
 
-      <!-- SLIDE 16: HÀM MẤT MÁT HỖN HỢP COMPOSITE LOSS -->
+      <!-- SLIDE 18: HÀM MẤT MÁT HỖN HỢP COMPOSITE LOSS -->
       <section class="slide">
         <div class="ppt-top-bar">
           <h2 class="ppt-top-title">Hàm Mất mát Hỗn hợp Đa Tiêu chí (Composite Loss)</h2>
@@ -852,12 +1007,12 @@
             <span class="ppt-footer-brand">UIT - VNUHCM</span>
           </div>
           <div class="ppt-footer-course">Xử lý ảnh &amp; Thị giác máy tính (CS2203)</div>
-          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng CNN</div>
-          <div class="ppt-slide-counter">16/29</div>
+          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng mạng nơ-ron tích chập</div>
+          <div class="ppt-slide-counter">18/31</div>
         </div>
       </section>
 
-      <!-- SLIDE 17: TẬP DỮ LIỆU ĐA CẢM BIẾN (YÊU CẦU GIẢNG VIÊN - DATASET) -->
+      <!-- SLIDE 19: TẬP DỮ LIỆU ĐA CẢM BIẾN (YÊU CẦU GIẢNG VIÊN - DATASET) -->
       <section class="slide">
         <div class="ppt-top-bar">
           <h2 class="ppt-top-title">Thiết lập Thực nghiệm: Bộ Dữ liệu Đa Cảm biến (1.200 Cặp)</h2>
@@ -908,12 +1063,12 @@
             <span class="ppt-footer-brand">UIT - VNUHCM</span>
           </div>
           <div class="ppt-footer-course">Xử lý ảnh &amp; Thị giác máy tính (CS2203)</div>
-          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng CNN</div>
-          <div class="ppt-slide-counter">17/29</div>
+          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng mạng nơ-ron tích chập</div>
+          <div class="ppt-slide-counter">19/31</div>
         </div>
       </section>
 
-      <!-- SLIDE 18: TIỀN XỬ LÝ VÀ AUGMENTATION -->
+      <!-- SLIDE 20: TIỀN XỬ LÝ VÀ AUGMENTATION -->
       <section class="slide">
         <div class="ppt-top-bar">
           <h2 class="ppt-top-title">Quy trình Tiền Xử lý &amp; Tăng Cường Dữ liệu (Augmentation)</h2>
@@ -964,12 +1119,12 @@
             <span class="ppt-footer-brand">UIT - VNUHCM</span>
           </div>
           <div class="ppt-footer-course">Xử lý ảnh &amp; Thị giác máy tính (CS2203)</div>
-          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng CNN</div>
-          <div class="ppt-slide-counter">18/29</div>
+          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng mạng nơ-ron tích chập</div>
+          <div class="ppt-slide-counter">20/31</div>
         </div>
       </section>
 
-      <!-- SLIDE 19: MÔI TRƯỜNG THỰC NGHIỆM VÀ SIÊU THAM SỐ (YÊU CẦU GIẢNG VIÊN - MÔI TRƯỜNG) -->
+      <!-- SLIDE 21: MÔI TRƯỜNG THỰC NGHIỆM VÀ SIÊU THAM SỐ (YÊU CẦU GIẢNG VIÊN - MÔI TRƯỜNG) -->
       <section class="slide">
         <div class="ppt-top-bar">
           <h2 class="ppt-top-title">Môi trường Thực nghiệm &amp; Thiết lập Siêu tham số Huấn luyện</h2>
@@ -1023,12 +1178,12 @@
             <span class="ppt-footer-brand">UIT - VNUHCM</span>
           </div>
           <div class="ppt-footer-course">Xử lý ảnh &amp; Thị giác máy tính (CS2203)</div>
-          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng CNN</div>
-          <div class="ppt-slide-counter">19/29</div>
+          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng mạng nơ-ron tích chập</div>
+          <div class="ppt-slide-counter">21/31</div>
         </div>
       </section>
 
-      <!-- SLIDE 20: ĐỘ ĐO ĐÁNH GIÁ ĐỊNH LƯỢNG (YÊU CẦU GIẢNG VIÊN - ĐỘ ĐO) -->
+      <!-- SLIDE 22: ĐỘ ĐO ĐÁNH GIÁ ĐỊNH LƯỢNG (YÊU CẦU GIẢNG VIÊN - ĐỘ ĐO) -->
       <section class="slide">
         <div class="ppt-top-bar">
           <h2 class="ppt-top-title">Độ đo Đánh giá Định lượng: PSNR &amp; SSIM</h2>
@@ -1073,12 +1228,12 @@
             <span class="ppt-footer-brand">UIT - VNUHCM</span>
           </div>
           <div class="ppt-footer-course">Xử lý ảnh &amp; Thị giác máy tính (CS2203)</div>
-          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng CNN</div>
-          <div class="ppt-slide-counter">20/29</div>
+          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng mạng nơ-ron tích chập</div>
+          <div class="ppt-slide-counter">22/31</div>
         </div>
       </section>
 
-      <!-- SLIDE 21: BẢNG KẾT QUẢ THỰC NGHIỆM ĐỊNH LƯỢNG (YÊU CẦU GIẢNG VIÊN - BẢNG KẾT QUẢ MOCK) -->
+      <!-- SLIDE 23: BẢNG KẾT QUẢ THỰC NGHIỆM ĐỊNH LƯỢNG (YÊU CẦU GIẢNG VIÊN - BẢNG KẾT QUẢ MOCK) -->
       <section class="slide">
         <div class="ppt-top-bar">
           <h2 class="ppt-top-title">Bảng Đối chuẩn Định lượng Thực nghiệm (Mock Results)</h2>
@@ -1164,12 +1319,12 @@
             <span class="ppt-footer-brand">UIT - VNUHCM</span>
           </div>
           <div class="ppt-footer-course">Xử lý ảnh &amp; Thị giác máy tính (CS2203)</div>
-          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng CNN</div>
-          <div class="ppt-slide-counter">21/29</div>
+          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng mạng nơ-ron tích chập</div>
+          <div class="ppt-slide-counter">23/31</div>
         </div>
       </section>
 
-      <!-- SLIDE 22: PHÂN TÍCH ĐA CẢM BIẾN (MOCK DATA) -->
+      <!-- SLIDE 24: PHÂN TÍCH ĐA CẢM BIẾN (MOCK DATA) -->
       <section class="slide">
         <div class="ppt-top-bar">
           <h2 class="ppt-top-title">Phân tích Kết quả Thực nghiệm trên Từng Miền Cảm biến</h2>
@@ -1218,12 +1373,12 @@
             <span class="ppt-footer-brand">UIT - VNUHCM</span>
           </div>
           <div class="ppt-footer-course">Xử lý ảnh &amp; Thị giác máy tính (CS2203)</div>
-          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng CNN</div>
-          <div class="ppt-slide-counter">22/29</div>
+          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng mạng nơ-ron tích chập</div>
+          <div class="ppt-slide-counter">24/31</div>
         </div>
       </section>
 
-      <!-- SLIDE 23: KIỂM ĐỊNH GIẢ THUYẾT THỐNG KÊ (MOCK DATA) -->
+      <!-- SLIDE 25: KIỂM ĐỊNH GIẢ THUYẾT THỐNG KÊ (MOCK DATA) -->
       <section class="slide">
         <div class="ppt-top-bar">
           <h2 class="ppt-top-title">Kiểm định Giả thuyết Thống kê So sánh Ghép cặp</h2>
@@ -1272,12 +1427,12 @@
             <span class="ppt-footer-brand">UIT - VNUHCM</span>
           </div>
           <div class="ppt-footer-course">Xử lý ảnh &amp; Thị giác máy tính (CS2203)</div>
-          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng CNN</div>
-          <div class="ppt-slide-counter">23/29</div>
+          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng mạng nơ-ron tích chập</div>
+          <div class="ppt-slide-counter">25/31</div>
         </div>
       </section>
 
-      <!-- SLIDE 24: MINH HỌA KẾT QUẢ ĐỊNH TÍNH (YÊU CẦU GIẢNG VIÊN - MINH HỌA) -->
+      <!-- SLIDE 26: MINH HỌA KẾT QUẢ ĐỊNH TÍNH (YÊU CẦU GIẢNG VIÊN - MINH HỌA) -->
       <section class="slide">
         <div class="ppt-top-bar">
           <h2 class="ppt-top-title">Minh họa Kết quả Định tính: So sánh Trực quan</h2>
@@ -1324,12 +1479,12 @@
             <span class="ppt-footer-brand">UIT - VNUHCM</span>
           </div>
           <div class="ppt-footer-course">Xử lý ảnh &amp; Thị giác máy tính (CS2203)</div>
-          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng CNN</div>
-          <div class="ppt-slide-counter">24/29</div>
+          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng mạng nơ-ron tích chập</div>
+          <div class="ppt-slide-counter">26/31</div>
         </div>
       </section>
 
-      <!-- SLIDE 25: ABLATION STUDY -->
+      <!-- SLIDE 27: ABLATION STUDY -->
       <section class="slide">
         <div class="ppt-top-bar">
           <h2 class="ppt-top-title">Nghiên cứu Triệt tiêu Thành phần (Ablation Analysis)</h2>
@@ -1396,12 +1551,12 @@
             <span class="ppt-footer-brand">UIT - VNUHCM</span>
           </div>
           <div class="ppt-footer-course">Xử lý ảnh &amp; Thị giác máy tính (CS2203)</div>
-          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng CNN</div>
-          <div class="ppt-slide-counter">25/29</div>
+          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng mạng nơ-ron tích chập</div>
+          <div class="ppt-slide-counter">27/31</div>
         </div>
       </section>
 
-      <!-- SLIDE 26: ĐÁNH GIÁ ƯU ĐIỂM VÀ HẠN CHẾ (YÊU CẦU GIẢNG VIÊN) -->
+      <!-- SLIDE 28: ĐÁNH GIÁ ƯU ĐIỂM VÀ HẠN CHẾ (YÊU CẦU GIẢNG VIÊN) -->
       <section class="slide">
         <div class="ppt-top-bar">
           <h2 class="ppt-top-title">Đánh giá, Nhận xét: Những Ưu điểm &amp; Hạn chế của Phương pháp</h2>
@@ -1443,12 +1598,12 @@
             <span class="ppt-footer-brand">UIT - VNUHCM</span>
           </div>
           <div class="ppt-footer-course">Xử lý ảnh &amp; Thị giác máy tính (CS2203)</div>
-          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng CNN</div>
-          <div class="ppt-slide-counter">26/29</div>
+          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng mạng nơ-ron tích chập</div>
+          <div class="ppt-slide-counter">28/31</div>
         </div>
       </section>
 
-      <!-- SLIDE 27: KẾT LUẬN VÀ GIÁ TRỊ THU HOẠCH -->
+      <!-- SLIDE 29: KẾT LUẬN VÀ GIÁ TRỊ THU HOẠCH -->
       <section class="slide">
         <div class="ppt-top-bar">
           <h2 class="ppt-top-title">Kết luận Đề tài &amp; Giá trị Thu hoạch của Học viên</h2>
@@ -1499,12 +1654,12 @@
             <span class="ppt-footer-brand">UIT - VNUHCM</span>
           </div>
           <div class="ppt-footer-course">Xử lý ảnh &amp; Thị giác máy tính (CS2203)</div>
-          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng CNN</div>
-          <div class="ppt-slide-counter">27/29</div>
+          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng mạng nơ-ron tích chập</div>
+          <div class="ppt-slide-counter">29/31</div>
         </div>
       </section>
 
-      <!-- SLIDE 28: TÀI LIỆU THAM KHẢO CHÍNH - CVF (YÊU CẦU GIẢNG VIÊN) -->
+      <!-- SLIDE 30: TÀI LIỆU THAM KHẢO CHÍNH - CVF (YÊU CẦU GIẢNG VIÊN) -->
       <section class="slide">
         <div class="ppt-top-bar">
           <h2 class="ppt-top-title">Tài liệu Tham khảo Chính (Nguồn CVF Open Access)</h2>
@@ -1542,12 +1697,12 @@
             <span class="ppt-footer-brand">UIT - VNUHCM</span>
           </div>
           <div class="ppt-footer-course">Xử lý ảnh &amp; Thị giác máy tính (CS2203)</div>
-          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng CNN</div>
-          <div class="ppt-slide-counter">28/29</div>
+          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng mạng nơ-ron tích chập</div>
+          <div class="ppt-slide-counter">30/31</div>
         </div>
       </section>
 
-      <!-- SLIDE 29: HỎI VÀ ĐÁP (Q & A) -->
+      <!-- SLIDE 31: HỎI VÀ ĐÁP (Q & A) -->
       <section class="slide">
         <div class="ppt-top-bar">
           <h2 class="ppt-top-title">Hỏi &amp; Đáp (Q &amp; A)</h2>
@@ -1581,8 +1736,8 @@
             <span class="ppt-footer-brand">UIT - VNUHCM</span>
           </div>
           <div class="ppt-footer-course">Xử lý ảnh &amp; Thị giác máy tính (CS2203)</div>
-          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng CNN</div>
-          <div class="ppt-slide-counter">29/29</div>
+          <div class="ppt-footer-topic">Tăng cường chất lượng ảnh thiếu sáng bằng mạng nơ-ron tích chập</div>
+          <div class="ppt-slide-counter">31/31</div>
         </div>
       </section>
 
@@ -1593,7 +1748,7 @@
   <div id="nav-bar">
     <button class="nav-btn" id="btn-prev" title="Lùi lại (Mũi tên trái / PageUp)">◀</button>
     <div class="nav-counter">
-      <span id="current-slide-num">01</span> / <span id="total-slide-num">29</span>
+      <span id="current-slide-num">01</span> / <span id="total-slide-num">31</span>
     </div>
     <button class="nav-btn" id="btn-next" title="Kế tiếp (Mũi tên phải / Space / PageDown)">▶</button>
     <button class="nav-btn" id="btn-fullscreen" title="Toàn màn hình (F)">⛶</button>

@@ -133,7 +133,7 @@ html, body {
   display: inline-flex;
   flex-direction: column;
   gap: 4px;
-  margin-bottom: 75px;
+  margin-bottom: 50px;
   letter-spacing: 0.02em;
   width: fit-content;
 }
@@ -158,6 +158,22 @@ html, body {
   display: inline-block;
 }
 
+.cover-topic-label {
+  font-family: var(--font-slide);
+  font-size: 15px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: #BAE6FD;
+  background: rgba(255, 255, 255, 0.12);
+  padding: 4px 14px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  display: inline-block;
+  margin-bottom: 12px;
+  width: fit-content;
+}
+
 .text-amber {
   color: var(--amber-cover);
 }
@@ -167,10 +183,10 @@ html, body {
 }
 
 .cover-main-title {
-  font-size: 56px;
+  font-size: 46px;
   font-weight: 800;
   color: #FFFFFF;
-  line-height: 1.25;
+  line-height: 1.3;
   text-transform: uppercase;
   letter-spacing: 0.02em;
   margin-bottom: 18px;
@@ -968,5 +984,392 @@ table.ppt-table tr.highlight-red-row td {
   font-weight: 800;
   color: #0284C7;
   user-select: none;
+}
+
+/* ==========================================================================
+   OPTIMIZED FULL-AREA LAYOUTS (SLIDE 02, 03, 04) - ENSURES >=80% UTILIZATION
+   ========================================================================== */
+
+/* Lead text standardized for high fill */
+.ppt-lead-standard {
+  font-size: 25px;
+  line-height: 1.5;
+  color: #1E293B;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+/* Slide 02: 3-column physical degradation layout */
+.intro-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  height: 580px;
+}
+
+.intro-card {
+  background: #FFFFFF;
+  border: 2px solid #CBD5E1;
+  border-radius: 12px;
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.05);
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.intro-card.card-blue {
+  border-color: #38BDF8;
+  background: linear-gradient(180deg, #F0F9FF 0%, #FFFFFF 22%);
+}
+
+.intro-card.card-amber {
+  border-color: #FBBF24;
+  background: linear-gradient(180deg, #FFFBEB 0%, #FFFFFF 22%);
+}
+
+.intro-card.card-rose {
+  border-color: #FB7185;
+  background: linear-gradient(180deg, #FFF1F2 0%, #FFFFFF 22%);
+}
+
+.intro-card-header {
+  margin-bottom: 14px;
+}
+
+.intro-badge {
+  display: inline-block;
+  font-size: 15px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 4px 12px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+
+.badge-blue {
+  background: #E0F2FE;
+  color: #0369A1;
+  border: 1px solid #BAE6FD;
+}
+
+.badge-amber {
+  background: #FEF3C7;
+  color: #B45309;
+  border: 1px solid #FDE68A;
+}
+
+.badge-rose {
+  background: #FFE4E6;
+  color: #BE123C;
+  border: 1px solid #FECDD3;
+}
+
+.badge-emerald {
+  background: #D1FAE5;
+  color: #047857;
+  border: 1px solid #A7F3D0;
+}
+
+.intro-card-title {
+  font-size: 26px;
+  font-weight: 800;
+  color: #0F172A;
+  line-height: 1.3;
+}
+
+.intro-bullets {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+  margin: 12px 0;
+}
+
+.intro-bullets li {
+  font-size: 21px;
+  line-height: 1.5;
+  color: #334155;
+  position: relative;
+  padding-left: 26px;
+}
+
+.intro-bullets li::before {
+  content: "■";
+  position: absolute;
+  left: 4px;
+  top: 1px;
+  font-size: 14px;
+  color: #0284C7;
+}
+
+.intro-card.card-amber .intro-bullets li::before {
+  color: #D97706;
+}
+
+.intro-card.card-rose .intro-bullets li::before {
+  color: #E11D48;
+}
+
+.intro-card.card-emerald .intro-bullets li::before {
+  color: #059669;
+}
+
+.intro-formula-box {
+  background: #F8FAFC;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 18px;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  color: #0F172A;
+  text-align: center;
+  line-height: 1.4;
+}
+
+.banner-summary-wide {
+  margin-top: 20px;
+  height: 82px;
+  background: #F8FAFC;
+  border: 2px solid #CBD5E1;
+  border-radius: 10px;
+  padding: 0 28px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  font-size: 21px;
+  font-weight: 600;
+  color: #1E293B;
+}
+
+.banner-summary-wide strong {
+  color: #0284C7;
+  font-weight: 800;
+}
+
+.banner-summary-wide.banner-warning {
+  background: #FEF3C7;
+  border-color: #F59E0B;
+  color: #92400E;
+}
+
+.banner-summary-wide.banner-warning strong {
+  color: #B45309;
+}
+
+.banner-summary-wide.banner-primary {
+  background: #F0F9FF;
+  border-color: #38BDF8;
+  color: #0369A1;
+}
+
+.banner-summary-wide.banner-primary strong {
+  color: #0284C7;
+}
+
+/* Slide 03: Visual dataset comparison layout */
+.compare-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  height: 615px;
+}
+
+.compare-panel {
+  background: #FFFFFF;
+  border: 2px solid #CBD5E1;
+  border-radius: 12px;
+  padding: 22px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.05);
+}
+
+.compare-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.compare-panel-title {
+  font-size: 25px;
+  font-weight: 800;
+  color: #0F172A;
+}
+
+.compare-img-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+
+.compare-img-box {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.compare-img-tag {
+  font-size: 16px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 4px;
+  text-align: center;
+  letter-spacing: 0.02em;
+}
+
+.tag-input-dark {
+  background: #FEE2E2;
+  color: #991B1B;
+  border: 1px solid #FECACA;
+}
+
+.tag-gt-normal {
+  background: #DCFCE7;
+  color: #166534;
+  border: 1px solid #BBF7D0;
+}
+
+.compare-img {
+  width: 100%;
+  height: 270px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 2px solid #E2E8F0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.compare-caption {
+  font-size: 16px;
+  font-weight: 600;
+  color: #64748B;
+  text-align: center;
+}
+
+.compare-note-box {
+  background: #F8FAFC;
+  border-left: 4px solid #0284C7;
+  border-radius: 4px;
+  padding: 10px 16px;
+  font-size: 19px;
+  line-height: 1.5;
+  color: #1E293B;
+}
+
+.compare-note-box strong {
+  color: #0369A1;
+}
+
+/* Slide 04: Research landscape & Project orientation */
+.triptych-grid-3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.15fr;
+  gap: 26px;
+  height: 680px;
+}
+
+.triptych-col {
+  background: #FFFFFF;
+  border: 2px solid #CBD5E1;
+  border-radius: 12px;
+  padding: 26px 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.05);
+}
+
+.triptych-col.col-problem {
+  border-color: #F87171;
+  background: linear-gradient(180deg, #FEF2F2 0%, #FFFFFF 20%);
+}
+
+.triptych-col.col-solution {
+  border-color: #60A5FA;
+  background: linear-gradient(180deg, #EFF6FF 0%, #FFFFFF 20%);
+}
+
+.triptych-col.col-proposal {
+  border-color: #34D399;
+  background: linear-gradient(180deg, #ECFDF5 0%, #FFFFFF 20%);
+}
+
+.triptych-title {
+  font-size: 25px;
+  font-weight: 800;
+  color: #0F172A;
+  margin-top: 4px;
+  line-height: 1.3;
+}
+
+.triptych-bullets {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  flex: 1;
+  margin: 16px 0;
+}
+
+.triptych-bullets li {
+  font-size: 20px;
+  line-height: 1.5;
+  color: #334155;
+  position: relative;
+  padding-left: 24px;
+}
+
+.triptych-bullets li::before {
+  content: "•";
+  position: absolute;
+  left: 2px;
+  top: -2px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.col-problem .triptych-bullets li::before {
+  color: #DC2626;
+}
+
+.col-solution .triptych-bullets li::before {
+  color: #2563EB;
+}
+
+.col-proposal .triptych-bullets li::before {
+  color: #059669;
+}
+
+.triptych-box-bottom {
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-size: 18px;
+  line-height: 1.45;
+  font-weight: 600;
+}
+
+.col-problem .triptych-box-bottom {
+  background: #FEE2E2;
+  border: 1px solid #FECACA;
+  color: #991B1B;
+}
+
+.col-solution .triptych-box-bottom {
+  background: #DBEAFE;
+  border: 1px solid #BFDBFE;
+  color: #1E40AF;
+}
+
+.col-proposal .triptych-box-bottom {
+  background: #D1FAE5;
+  border: 1px solid #A7F3D0;
+  color: #065F46;
 }
 
