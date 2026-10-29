@@ -11,9 +11,9 @@
 
 Thấu suốt các phân tích học thuật và định hướng chiến lược của đồ án, nhóm kiên định chọn **DarkIR (CVPR 2025)** làm nền móng kiến trúc chính. Để bảo toàn tính đúng đắn khoa học và giữ trọn "linh hồn" của DarkIR, nhóm thiết lập các nguyên tắc thiết kế bất biến sau:
 
-## 1. Bảo Toàn Tuyệt Đối Nhánh Biến Đổi Fourier (FreMLP) Trong Mô Hình
+## 1. Giữ Nhánh Biến Đổi Fourier (FreMLP) Như Một Giả Thuyết Cần Kiểm Chứng (Cập Nhật v2)
 
-Trong các thảo luận ban đầu, ý tưởng loại bỏ FFT (`FreMLP`) để chuyển sang mạng thuần không gian (Spatial-only) nhằm đơn giản hóa đã được đặt ra. Tuy nhiên, qua phân tích bản chất vật lý và đối chiếu thực nghiệm từ bài báo gốc DarkIR, **nhóm quyết định giữ nguyên và bảo toàn 100% nhánh FFT (`FreMLP`) bên trong các khối Encoder và Bottleneck của mô hình**.
+Trong các thảo luận ban đầu, ý tưởng loại bỏ FFT (`FreMLP`) để chuyển sang mạng thuần không gian (Spatial-only) đã được đặt ra. Nhóm giữ nguyên nhánh FFT trong các khối Encoder và Bottleneck của mô hình chính `DarkIR-Edge` để bám sát DarkIR gốc, **nhưng coi đây là một giả thuyết chưa được kiểm chứng**: ở v1 không có ablation và chẩn đoán độ sáng toàn cục không ủng hộ (`gap_illumination` của Edge trên LOLv2 = 5.90 dB, cao hơn U-Net 4.93 dB). Ở v2, nhóm huấn luyện thêm biến thể **bỏ FFT/FreMLP** (2 seed) và kết luận theo quy tắc đã khóa trước (tài liệu 02, mục 3 Phần III).
 
 ### Cơ sở khoa học và vật lý của quyết định:
 1. **Bản chất trắc quang của biến đổi Fourier 2D:**  
@@ -26,9 +26,11 @@ Trong các thảo luận ban đầu, ý tưởng loại bỏ FFT (`FreMLP`) đ�
    $$\hat{\mathcal{A}} = \text{Conv}_{1\times1}(\text{LeakyReLU}(\text{Conv}_{1\times1}(\mathcal{A})))$$
    $$\hat{X} = \hat{\mathcal{A}} \cdot e^{j \mathcal{P}} \implies \hat{x} = \mathcal{F}^{-1}\{\hat{X}\}$$
    Nhờ đó, mô hình có thể điều chỉnh độ sáng toàn khung cảnh một cách mượt mà mà **hoàn toàn không làm biến dạng cấu trúc hình học hay sinh ra nhiễu gai nhân tạo**.
-3. **Bảo toàn nguyên vẹn trong kiến trúc đề xuất duy nhất:**  
+3. **Kiểm chứng bằng ablation (v2) thay vì giả định:**  
+   Bài báo gốc DarkIR (Table 6) ghi nhận PSNR giảm khi thay `EBlock` (chứa `FreMLP`) bằng khối thuần không gian, nhưng đó là kết quả trên dữ liệu/quy mô huấn luyện của tác giả, không mặc nhiên đúng với đồ án này (1.350 ảnh, huấn luyện từ đầu). Nhóm so sánh ghép cặp `DarkIR-Edge` với `DarkIR-Edge` bỏ FFT (`use_fft=False`, mọi thành phần khác giữ nguyên) và báo cáo đúng kết quả, kể cả khi FFT không có đóng góp đo được. Lưu ý bản bỏ FFT có ít hơn ~0.43M tham số (1.495M so với 1.924M).
    Trong công trình gốc DarkIR (Table 6), nhóm tác giả ghi nhận khi loại bỏ khối `EBlock` (chứa `FreMLP`) và thay bằng khối thuần không gian, chỉ số PSNR tụt giảm rõ rệt. Nhóm kiên định bảo toàn 100% nhánh FFT (`FreMLP`) bên trong mô hình duy nhất `DarkIR-Edge`, không thử nghiệm cắt gọt hay loại bỏ, nhằm tận dụng tối đa năng lực điều chỉnh độ sáng toàn cục ở miền tần số biên độ.
-4. **Tính khả thi trên phần cứng thực nghiệm:**  
+4. **Chi phí trên phần cứng thực nghiệm (cần đo, không giả định):**  
+   `torch.fft.rfft2`/`irfft2` chạy bằng cuFFT nhưng buộc ở FP32 trong khối `FreMLP` (để tránh tràn số FP16). Ở v1, latency FP16 của `DarkIR-Edge` chậm hơn U-Net ≈2,6 lần trên T4 (78.7 ms so với 29.7 ms ở 600×400) dù FLOPs thấp hơn; nhóm không giả định FFT "chỉ chiếm tỷ trọng rất nhỏ". Bảng hiệu năng v2 đo cả bản có và không có FFT, kèm tên GPU.
    Các hàm `torch.fft.rfft2` và `torch.fft.irfft2` đã được tối ưu hóa ở mức phần cứng trong PyTorch và thư viện cuFFT của NVIDIA. Phép tính này chỉ chiếm tỷ trọng thời gian tính toán rất nhỏ và vận hành mượt mà trên GPU Google Colab (T4/L4).
 
 ## 2. Giữ Vững Cấu Trúc Bất Đối Xứng (Asymmetric Encoder-Decoder)
@@ -231,7 +233,7 @@ Nhằm đảm bảo tính chuẩn xác tuyệt đối và phòng tránh nguy cơ
 
 ### Bảng định cỡ tham số chi tiết của mô hình đề xuất duy nhất DarkIR-Edge:
 
-Nhóm chấn chỉnh dứt khoát: **Chỉ có DUY NHẤT một cấu hình kiến trúc `DarkIR-Edge` được thiết kế, huấn luyện và đánh giá trong toàn bộ đồ án**. Mọi phương án phân mảnh hay cấu hình thay thế (như Cấu hình B $C=32$ Middle 1+1) đều bị bãi bỏ nhằm tập trung tối đa nguồn lực vào việc tối ưu hóa và đánh giá sâu sắc mô hình hoàn chỉnh này.
+Nhóm giữ nguyên nguyên tắc: **chỉ có MỘT cấu hình kiến trúc đề xuất `DarkIR-Edge` được thiết kế, huấn luyện và đánh giá chính trong toàn bộ đồ án** (v2 bổ sung đúng một biến thể ablation bỏ FFT/FreMLP, không có thêm cấu hình nào khác). Mọi phương án phân mảnh hay cấu hình thay thế (như Cấu hình B $C=32$ Middle 1+1) đều bị bãi bỏ nhằm tập trung nguồn lực vào việc đánh giá trung thực mô hình này.
 
 Dưới đây là bảng phân rã chi tiết số lượng tham số thực tế, được tách bạch rõ ràng giữa các khối đặc trưng và tầng chuyển tiếp (Down/Up sampling), không bị cộng lặp:
 
@@ -247,9 +249,9 @@ Dưới đây là bảng phân rã chi tiết số lượng tham số thực t�
 | **Residual Gated Skips (Edge-LLIE)** | **$24.528$ tham số** (~$0.02\text{M}$) | — *(DarkIR dùng cộng trực tiếp)* | Cổng chặn nhiễu 3 tầng skip: Conv $1\times1$ + Sigmoid |
 | **Side Output Supervision (Bottleneck)** | **$5.187$ tham số** (~$0.005\text{M}$) | **$6.915$ tham số** (~$0.007\text{M}$) | Conv $3\times3$ tại đáy $8C \to 3$ cho $\mathcal{L}_{\text{side}}$ |
 | **TỔNG SỐ THAM SỐ (Total Params)** | **$1.924.038$ tham số ($\approx \mathbf{1.92M}$)** | **$3.321.638$ tham số ($\approx \mathbf{3.32M}$)** | **Khớp 100% số đo từ mã nguồn `DarkIR/archs/DarkIR.py`** |
-| **Đánh giá quy mô tài nguyên** | **Gọn nhẹ hoàn hảo (< 2.0M)** | Mô hình lớn gốc của tác giả ($3.32\text{M}$) | Nằm trọn vẹn trong ngân sách 1.0M – 3.0M |
+| **Đánh giá quy mô tài nguyên** | **Gọn về số tham số (< 2.0M)** | Mô hình lớn gốc của tác giả ($3.32\text{M}$) | Nằm trọn vẹn trong ngân sách 1.0M – 3.0M |
 
-👉 **Điểm nhấn thiết kế:** Mô hình đề xuất duy nhất `DarkIR-Edge` ($C=24$) bảo toàn nguyên vẹn 100% tỷ lệ khối và cấu trúc 2 EBlock + 2 DBlock ở đáy mạng của DarkIR mà tổng tham số chỉ dừng ở mức **~1.93M tham số**, hoàn toàn thỏa mãn giới hạn dưới 3.0M và tối ưu hoàn hảo cho suy luận thời gian thực trên di động.
+👉 **Điểm nhấn thiết kế:** Mô hình đề xuất `DarkIR-Edge` ($C=24$) bảo toàn tỷ lệ khối và cấu trúc 2 EBlock + 2 DBlock ở đáy mạng của DarkIR, tổng tham số **~1.92M**, thỏa giới hạn dưới 3.0M. Về tốc độ, v1 cho thấy FLOPs thấp hơn U-Net nhưng latency FP16 trên GPU lại chậm hơn; do đó nhóm chỉ khẳng định "ít tham số/FLOPs", **không** khẳng định "tối ưu cho suy luận thời gian thực trên di động".
 
 ---
 
@@ -283,8 +285,8 @@ Toàn bộ các siêu tham số được đồng bộ hóa tuyệt đối với 
 | **Bộ lập lịch LR (LR Scheduler)** | **CosineAnnealingLR** | Suy giảm mượt theo hình cosin |
 | **Kích thước mảng cắt (Patch Size)** | **$256 \times 256$** | Cắt ngẫu nhiên cùng tọa độ trên Low và Normal |
 | **Kích thước lô (Batch Size)** | **8** | Tối ưu hóa việc nạp đầy nhân Tensor Cores GPU T4/L4 |
-| **Cơ chế Early Stopping** | **BẬT (v2): theo dõi val PSNR macro, kiểm tra mỗi 5 epochs, patience = 3 lần (15 epochs), `min_delta` = 0.05 dB, chỉ được dừng sau epoch 30** | Kết quả v1 cho thấy val PSNR đạt đỉnh rất sớm rồi suy giảm nhẹ (xem tài liệu 02, Phần III.2) |
-| **Số Epochs huấn luyện** | **Tối đa 60 epochs (Cosine T_max = 60), có thể dừng sớm** | Rút ngắn từ 100 epochs vì v1 hội tụ trước epoch 20; chu kỳ cosine đủ ngắn để LR kịp suy giảm |
+| **Cơ chế Early Stopping** | **BẬT (v2): theo dõi val PSNR macro, kiểm tra mỗi 5 epochs, chỉ bắt đầu đếm patience = 3 lần (15 epochs) sau epoch 40 (`min_epochs = 40`), `min_delta` = 0.05 dB (sớm nhất dừng ở epoch 55)** | Kết quả v1 cho thấy val PSNR đạt đỉnh rất sớm rồi suy giảm nhẹ (xem tài liệu 02, Phần III.2) |
+| **Số Epochs huấn luyện** | **Tối đa 100 epochs (Cosine T_max = 100), có thể dừng sớm từ epoch 40** | Giữ 100 như v1; Early Stopping chỉ cắt ngắn khi val PSNR macro không cải thiện; nếu dừng sớm thì LR chưa giảm hết (hệ quả chấp nhận, áp dụng giống nhau cho mọi mô hình) |
 | **Độ chính xác tính toán** | **AMP FP16 (`autocast`)** | Giảm 50% VRAM, tăng tốc độ tính toán gấp đôi |
 
 ## 3. Kỹ Thuật Số Học Chống Bùng Nổ Gradient & Hỗ Trợ Kích Thước Ảnh Tùy Ý Khi Dùng AMP FP16
@@ -314,11 +316,11 @@ Khi kích hoạt tính toán dấu phẩy động hỗn hợp (**Automatic Mixed
 
 # PHẦN V: THIẾT KẾ THỰC NGHIỆM ĐỐI CHUẨN ĐỒNG NHẤT DUY NHẤT (UNIFIED BENCHMARK PROTOCOL)
 
-Nhằm tối ưu hóa triệt để thời gian thực hiện đồ án và tuân thủ định hướng chiến lược dứt khoát của User: **Loại bỏ toàn bộ các bảng ma trận thử nghiệm phân mảnh (ablation study rườm rà), tập trung toàn lực vào MỘT cấu hình kiến trúc duy nhất, MỘT quy trình thí nghiệm duy nhất, MỘT bộ siêu tham số chuẩn hóa và đánh giá khoa học sâu sắc**.
+Nhằm tối ưu thời gian thực hiện đồ án mà vẫn đủ bằng chứng để kết luận trung thực, v2 giữ **một quy trình thí nghiệm duy nhất, một bộ siêu tham số chuẩn hóa** và chỉ thêm **một ablation có mục tiêu rõ ràng** (bỏ FFT/FreMLP) thay vì ma trận ablation rườm rà.
 
 ## 1. Khung Đối Chuẩn Thực Nghiệm Duy Nhất
 
-Thực nghiệm được thiết kế tập trung so sánh hiệu năng của mô hình đề xuất duy nhất **`DarkIR-Edge`** với các tầng đối chuẩn đại diện trên toàn bộ $N=150$ ảnh test độc lập:
+Thực nghiệm được thiết kế tập trung so sánh hiệu năng của mô hình đề xuất duy nhất **`DarkIR-Edge`** với các tầng đối chuẩn đại diện trên toàn bộ $N=190$ ảnh test độc lập (100 LOLv2 + 30 Huawei + 20 Nikon + 40 LOL-Blur):
 
 | Nhóm Đối Chuẩn | Mô Hình / Phương Pháp | Số Tham Số (Params) | Phân Loại Phương Pháp | Ý Nghĩa Học Thuật Trực Tiếp Trước Hội Đồng |
 | :--- | :--- | :---: | :--- | :--- |
@@ -326,22 +328,24 @@ Thực nghiệm được thiết kế tập trung so sánh hiệu năng của m�
 | | **CLAHE** | 0 | Non-learning (Histogram) | Cân bằng tương phản thích nghi cục bộ |
 | | **Retinex (MSRCR)** | 0 | Non-learning (Vật lý) | Mô hình Retinex phục hồi màu sắc cổ điển |
 | **Deep Learning Baseline**| **Standard U-Net** | **$\sim 1.9\text{M}$** | Learning (Plain Conv2d) | **Đối chuẩn trực tiếp cùng quy mô tham số**; đánh giá hiệu quả thực tế của kiến trúc DarkIR-Edge |
-| **Mô Hình Đề Xuất Duy Nhất**| **`DarkIR-Edge` (Ours)** | **$\approx \mathbf{1.93M}$** | **Learning (FreMLP + Di-SpAM + Gated Skip + Max-RGB)** | **Tâm điểm đồ án**: Đánh giá năng lực phục hồi đa cảm biến ở quy mô tinh gọn |
+| **Mô Hình Đề Xuất Duy Nhất**| **`DarkIR-Edge` (Ours)** | **$\approx \mathbf{1.92M}$** | **Learning (FreMLP + Di-SpAM + Gated Skip + Max-RGB)** | **Tâm điểm đồ án**: Đánh giá năng lực phục hồi đa cảm biến ở quy mô tinh gọn |
+| **Ablation giả thuyết FFT** | **`DarkIR-Edge` bỏ FFT/FreMLP** | **$\approx 1.50\text{M}$** | Learning (Di-SpAM + Gated Skip + Max-RGB, không FreMLP) | Kiểm chứng FFT có đóng góp đo được hay không (2 seed, paired test) |
 | **Mốc Trần Tham Chiếu** | **DarkIR-m (CVPR 2025)** | $\approx 3.32\text{M}$ | Learning SOTA (Bản đầy đủ) | **Mốc trần lý thuyết** tham chiếu từ công trình CVPR 2025 |
 
 ## 2. Quy Trình Huấn Luyện & Đánh Giá Đa Seed Có Kiểm Định Thống Kê
 
-1. **Huấn luyện độc lập 2-3 seeds:** Mô hình đề xuất `DarkIR-Edge` được huấn luyện từ đầu qua 3 lần độc lập (seeds = 42, 123, 999) trên tập train đồng nhất $D_{\text{train}} = 1.200$ cặp ảnh trong 100 epochs cố định.
+1. **Huấn luyện độc lập 2 seeds cho mỗi mô hình học (42, 123):** `DarkIR-Edge`, `Standard U-Net` và `DarkIR-Edge` bỏ FFT được huấn luyện từ đầu, cùng tập train đồng nhất $D_{\text{train}} = 1.350$ cặp ảnh, tối đa 100 epochs với cùng quy tắc Early Stopping (không dừng trước epoch 40) và chọn `best.pt` theo val PSNR macro.
 2. **Báo cáo kết quả kép:**
-   - **Bảng tổng hợp gộp (Primary Pooled Benchmark, $N=150$ ảnh):** Báo cáo giá trị $\text{Mean} \pm \text{Std}$ cho các chỉ số PSNR, SSIM, LPIPS.
-   - **Báo cáo phân rã theo 3 miền cảm biến:**
+   - **Bảng tổng hợp gộp (Primary Pooled Benchmark, $N=190$ ảnh):** Báo cáo giá trị $\text{Mean} \pm \text{Std}$ cho các chỉ số PSNR, SSIM, LPIPS.
+   - **Báo cáo phân rã theo 4 miền:**
      + Miền DSLR trong nhà (LOLv2-Real: 100 ảnh).
      + Miền Smartphone di động thực tế (LSRW-Huawei: 30 ảnh).
-     + Miền Zero-shot Unseen Sensor (LSRW-Nikon: 20 ảnh) để đo lường năng lực khái quát hóa ngoại suy.
+      + Miền Zero-shot Unseen Sensor (LSRW-Nikon: 20 ảnh) để đo lường năng lực khái quát hóa ngoại suy.
+      + Miền Khử mờ trong tối (LOL-Blur: 40 ảnh).
 3. **Kiểm định thống kê ghép cặp (Paired t-test):**  
-   Tính toán sai phân $\Delta_i = \text{PSNR}_{\text{DarkIR-Edge}}(i) - \text{PSNR}_{\text{Standard U-Net}}(i)$ trên từng bức ảnh $i=1 \dots 150$. Xác định giá trị $p$-value (kết hợp độ lệch chuẩn giữa các seeds) để kiểm định xem mức chênh lệch giữa hai mô hình có ý nghĩa thống kê thực chất trên tập ảnh kiểm thử hay không.
+   Tính toán sai phân $\Delta_i = \text{PSNR}_{\text{DarkIR-Edge}}(i) - \text{PSNR}_{\text{Standard U-Net}}(i)$ trên từng bức ảnh $i=1 \dots 190$ (tương tự cho cặp Edge − bỏ FFT). Xác định giá trị $p$-value (kết hợp độ lệch chuẩn giữa các seeds) để kiểm định xem mức chênh lệch giữa hai mô hình có ý nghĩa thống kê thực chất trên tập ảnh kiểm thử hay không.
 4. **Chẩn đoán phân rã lỗi trắc quang (GT-mean Error Decomposition):**  
-   Bóc tách tỷ lệ sai số độ sáng toàn cục so với sai số chi tiết vi mô, giải thích cơ chế nâng sáng mượt mà của nhánh tần số Fourier `FreMLP`.
+   Bóc tách tỷ lệ sai số độ sáng toàn cục so với sai số chi tiết vi mô, làm gợi ý (không phải bằng chứng) về vai trò của nhánh tần số Fourier `FreMLP`; kết luận về FFT chỉ dựa trên ablation.
 
 ---
 

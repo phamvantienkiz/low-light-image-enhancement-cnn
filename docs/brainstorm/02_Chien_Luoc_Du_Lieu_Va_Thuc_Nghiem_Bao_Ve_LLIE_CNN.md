@@ -97,7 +97,7 @@ TỔNG QUY MÔ DỮ LIỆU THỰC NGHIỆM (v2): 1.650 CẶP ẢNH (v1 = 1.450)
 1. **Tuyệt đối KHÔNG dùng ColorJitter hay Cutout:** Tránh làm sai lệch đặc tính trắc quang vật lý của cảm biến.
 2. **Bắt buộc dùng Random Crop $256 \times 256$:** Giữ nguyên tỉ lệ 1:1 của hạt nhiễu cảm biến, ngăn chặn hiện tượng làm mượt giả tạo khi dùng Resize.
 3. **Phép lật ngẫu nhiên (Horizontal & Vertical Flip):** Tăng cường tính bất biến hướng sáng.
-4. **Cơ chế Nhân bản ảo (Virtual Multiplier - Multi-crop):** Với mỗi ảnh gốc trong một epoch, bộ nạp dữ liệu lấy mẫu ngẫu nhiên nhiều patches $256 \times 256$ khác nhau. Mặc định thiết lập `repeat_factor = 2` ($1.200 \times 2 = 2.400$ patches/epoch) cho cấu hình huấn luyện chuẩn, tối ưu hóa mật độ cập nhật gradient mà không tốn thêm bộ nhớ đĩa.
+4. **Cơ chế Nhân bản ảo (Virtual Multiplier - Multi-crop):** Với mỗi ảnh gốc trong một epoch, bộ nạp dữ liệu lấy mẫu ngẫu nhiên nhiều patches $256 \times 256$ khác nhau. Mặc định thiết lập `repeat_factor = 2` ($1.350 \times 2 = 2.700$ patches/epoch) cho cấu hình huấn luyện chuẩn, tối ưu hóa mật độ cập nhật gradient mà không tốn thêm bộ nhớ đĩa.
 
 ---
 
@@ -108,17 +108,18 @@ TỔNG QUY MÔ DỮ LIỆU THỰC NGHIỆM (v2): 1.650 CẶP ẢNH (v1 = 1.450)
 Mô hình mục tiêu đề xuất duy nhất (**DarkIR-Edge (C=24)**, quy mô ~1.93M tham số) kết hợp tập dữ liệu đồng nhất cân bằng $D_{\text{train}}$ (1.350 cặp ảnh) được định lượng tài nguyên chính xác:
 
 - **Số bước cập nhật (Steps) mỗi Epoch:**  
-  $$\text{Steps per Epoch} = \frac{\text{Số ảnh} \times \text{Repeat Factor}}{\text{Batch Size}} = \frac{1.350 \times 2}{8} \approx 338 \text{ steps/epoch}$$
+  $$\text{Steps per Epoch} = \frac{\text{Số ảnh} \times \text{Repeat Factor}}{\text{Batch Size}} = \frac{1.350 \times 2}{8} \approx 337 \text{ steps/epoch}$$
 - **Chiến lược Huấn luyện theo Ngân Sách Cố Định (Fixed-Budget Training):**  
-  - Ngân sách tối đa (v2): **60 epochs** (~20.300 steps) kèm Early Stopping (xem mục 2 bên dưới); v1 dùng 100 epochs cố định (30.000 steps) và đã bộc lộ hiện tượng hội tụ sớm.
-  - Bộ lập lịch Learning Rate: **CosineAnnealingLR** từ $2\times 10^{-4}$ giảm dần về $1\times 10^{-6}$ qua tối đa 60 epochs (`T_max = 60`).
+  - Ngân sách tối đa (v2): **100 epochs** (~33.700 steps) kèm Early Stopping (xem mục 2 bên dưới; không được dừng trước epoch 40). v1 dùng 100 epochs cố định (30.000 steps) và đã bộc lộ hiện tượng hội tụ sớm.
+  - Bộ lập lịch Learning Rate: **CosineAnnealingLR** từ $2\times 10^{-4}$ giảm dần về $1\times 10^{-6}$ qua tối đa 100 epochs (`T_max = 100`, giữ nguyên như v1; nếu Early Stopping dừng sớm thì LR chưa giảm hết — đây là hệ quả đã biết và chấp nhận, áp dụng giống hệt cho mọi mô hình).
   - **Quy tắc chọn Checkpoint (sửa đổi từ v1):** Chọn **checkpoint có val PSNR macro (EMA) cao nhất (`best.pt`)**. Quy tắc "Final Checkpoint" của phiên bản đầu bị rút lại có chủ đích vì dữ liệu v1 cho thấy val PSNR của DarkIR-Edge giảm dần từ ~20.88 dB (epoch 5–35) xuống ~20.59 dB ở epoch 100 trong khi train loss vẫn giảm (0.31 → 0.14) — dấu hiệu quá khớp. Quy tắc mới được áp dụng **giống hệt** cho DarkIR-Edge và Standard U-Net, chỉ dựa trên tập Val, tuyệt đối không nhìn tập Test.
   - **Tần suất Validation:** Tập Validation gồm 110 cặp (50 DSLR : 50 Smartphone : 10 Blur) dùng để theo dõi PSNR và chọn checkpoint; kiểm tra **mỗi 5 epochs (`val_interval = 5`)**.
 
-| Kịch bản Thực Nghiệm | Quy mô dữ liệu | Số Steps / Epoch | Tổng số Steps (tối đa 60 Epochs) | Kế hoạch Seeds | Ước tính thời gian trên Colab GPU L4 |
+| Kịch bản Thực Nghiệm | Quy mô dữ liệu | Số Steps / Epoch | Tổng số Steps (tối đa 100 Epochs) | Kế hoạch Seeds | Ước tính thời gian trên Colab GPU L4 |
 | :--- | :---: | :---: | :---: | :---: | :---: |
-| **DarkIR-Edge (C=24)** | **1.350 cặp ảnh** | **~338 steps** | **≤ ~20.300 steps** | **2 seeds** (3 nếu dư thời gian) | **Đo chính xác bằng `probe_speed` 200 bước đầu trên L4; Early Stopping dự kiến dừng ở ~epoch 30–45** |
-| **Standard U-Net (~1.9M)**| **1.350 cặp ảnh** | **~338 steps** | **≤ ~20.300 steps** | **2 seeds** (nâng từ 1 để so sánh thống kê công bằng) | **Đo bằng `probe_speed` trên L4** |
+| **DarkIR-Edge (C=24)** | **1.350 cặp ảnh** | **337 steps** | **≤ 33.700 steps** | **2 seeds** (42, 123) | **Đo chính xác bằng `probe_speed` 200 bước đầu trên L4; Early Stopping dự kiến dừng quanh epoch 40–60 (do không được dừng trước 40)** |
+| **Standard U-Net (~1.9M)**| **1.350 cặp ảnh** | **337 steps** | **≤ 33.700 steps** | **2 seeds** (42, 123; nâng từ 1 để so sánh công bằng) | **Đo bằng `probe_speed` trên L4** |
+| **DarkIR-Edge bỏ FFT/FreMLP (ablation, ~1.50M)** | **1.350 cặp ảnh** | **337 steps** | **≤ 33.700 steps** | **2 seeds** (42, 123) | **Cùng quy tắc Early Stopping; chỉ để kiểm chứng giả thuyết FFT** |
 
 👉 **Kiểm soát thực tế:** Khi bắt đầu chạy trên Colab, tiến hành đo tốc độ xử lý thực tế (it/s) ở 200 bước đầu tiên để tính toán chính xác tổng thời gian và điều chỉnh số seed cho phù hợp với hạn mức phiên làm việc.
 
@@ -132,8 +133,8 @@ Mô hình mục tiêu đề xuất duy nhất (**DarkIR-Edge (C=24)**, quy mô ~
 **Quy tắc đề xuất (áp dụng giống hệt cho mọi mô hình học):**
 1. Đại lượng theo dõi: **val PSNR macro (EMA)** = trung bình PSNR của 3 domain val (LOLv2, Huawei, Blur) để domain Blur (chỉ 10 ảnh) không bị lấn át bởi 2 domain lớn.
 2. Kiểm tra mỗi 5 epochs; dừng khi **3 lần kiểm tra liên tiếp không vượt đỉnh quá `min_delta = 0.05 dB`** (tức 15 epochs không cải thiện). Nhiễu val giữa các lần đo ~±0.1 dB nên `min_delta` nhỏ hơn mức này sẽ làm kích hoạt dừng/tiếp tục theo ngẫu nhiên.
-3. **Không được dừng trước epoch 30** (`min_epochs = 30`): nhiệm vụ khử mờ học chậm hơn tăng sáng, tránh dừng khi domain Blur chưa kịp cải thiện.
-4. Epochs tối đa = 60 với Cosine `T_max = 60` (thay vì 100) để LR vẫn suy giảm đầy đủ nếu không dừng sớm. Nạp lại `best.pt` (EMA) để đánh giá.
+3. **Không được dừng trước epoch 40 và chỉ bắt đầu đếm patience sau epoch 40** (`min_epochs = 40`): trong 40 epochs đầu chỉ ghi nhận mốc đỉnh `es_ref`, biến đếm `early_stop_wait` luôn bằng 0; chỉ từ sau epoch 40 (mốc 45, 50, 55...) mới bắt đầu cộng dồn 15 epochs không cải thiện (tức sớm nhất dừng ở epoch 55), tránh dừng khi domain Blur chưa kịp hội tụ ở giai đoạn LR giảm.
+4. Epochs tối đa = 100, `T_max = 100` (giữ như v1). Nạp lại `best.pt` (EMA) để đánh giá. Quy tắc này **cố định trước khi chạy** và áp dụng giống hệt cho DarkIR-Edge, U-Net và DarkIR-Edge bỏ FFT.
 5. Ghi lại epoch dừng, val PSNR đỉnh và epoch đạt đỉnh của từng run vào báo cáo.
 
 **Nên ưu tiên Loss hay PSNR?** Dùng **val PSNR**, không dùng train loss: (i) train loss là hàm tổng hợp (L1 + SSIM + side + color) tính trên patch ngẫu nhiên trong tập train nên giảm đều ngay cả khi mô hình đã quá khớp (đúng như v1); (ii) PSNR/SSIM/LPIPS mới là chỉ số được báo cáo. Có thể ghi thêm val SSIM để tham khảo, không dùng làm điều kiện dừng.
@@ -142,7 +143,22 @@ Mô hình mục tiêu đề xuất duy nhất (**DarkIR-Edge (C=24)**, quy mô ~
 
 **Lưu ý GPU L4:** L4 (24 GB VRAM) nhanh hơn T4 nên giữ nguyên batch 8, patch 256, AMP FP16 để không thay đổi điều kiện huấn luyện; nếu muốn thử AMP bf16 phải áp dụng cho cả hai mô hình. Đo lại tốc độ bằng `probe_speed`; riêng bảng Latency/FPS phần cứng ở phần báo cáo cần ghi rõ GPU đo (T4 ở v1, L4 ở v2) — không trộn hai GPU trong cùng một bảng.
 
-## 2. Ba Quy Tắc Sống Còn Để Đạt Hiệu Suất Tối Đa Trên Colab
+## 3. Cam Kết Báo Cáo Trung Thực v2 Và Quy Tắc Kết Luận (Khóa Trước Khi Chạy)
+
+Sau khi review kết quả v1, nhóm thừa nhận các điểm chưa tốt và **khóa sẵn cách kết luận trước khi biết kết quả v2**, để dù kết quả thế nào báo cáo vẫn đúng với những gì xảy ra (đồ án môn học không yêu cầu phải vượt nghiên cứu gốc).
+
+| # | Vấn đề ở v1 | Số liệu v1 | Cách v2 xử lý | Quy tắc kết luận (khóa trước) |
+| :-: | :--- | :--- | :--- | :--- |
+| 1 | Edge **chưa hơn** U-Net về chỉ số | PSNR pooled 20.04 vs 20.50 (Δ=−0.46 dB, p≈0.05); U-Net chỉ 1 seed | U-Net chạy **2 seed** (42, 123) như Edge | Dùng paired test (ΔPSNR, CI 95% bootstrap) trên pooled và từng miền. CI chứa 0 → "không khác biệt có ý nghĩa"; CI < 0 → "U-Net tốt hơn"; chỉ khi CI > 0 trên pooled mới được viết "Edge tốt hơn". **Không viết "Edge > U-Net" khi chưa thỏa.** |
+| 2 | Chưa chứng minh "edge-friendly" | FLOPs 8.75 vs 18.45 G (chưa tính FFT) nhưng latency FP16 78.7 ms vs 29.7 ms (T4, 600×400): Edge chậm ≈2.6× | Đo lại Params/FLOPs/Latency/VRAM, **ghi rõ GPU** (cột `GPU` trong `efficiency.csv`); không trộn số đo T4 (v1) với L4 (v2) | Báo cáo "ít FLOPs hơn nhưng không nhanh hơn trên GPU" nếu số đo vẫn vậy. Không dùng từ "edge-friendly"/"real-time trên di động" vì chưa đo trên thiết bị biên thật. |
+| 3 | Giả thuyết FFT **chưa kiểm chứng** | `gap_illumination` của Edge trên LOLv2 = 5.90 dB, cao hơn U-Net (4.93 dB): FFT không giúp ánh sáng toàn cục theo chẩn đoán này | **Ablation**: `DarkIR-Edge` bỏ FFT/FreMLP (`use_fft=False`, mọi thứ khác giữ nguyên) chạy 2 seed (42, 123) | Paired test Edge − noFFT. CI > 0 → "FFT có đóng góp đo được ở cấu hình này"; CI chứa 0 → "chưa chứng minh được đóng góp của FFT" (có thể bỏ để giảm chi phí); CI < 0 → "FFT không giúp, thậm chí làm giảm". Lưu ý: bản noFFT ít hơn ~0.43M tham số (1.495M vs 1.924M), nên đây là so sánh "bỏ bớt module", không phải so sánh cùng số tham số — phải nêu rõ. |
+| 4 | Chọn checkpoint & dừng sớm | v1 đạt đỉnh val rồi giảm nhẹ ở epoch 100 | Early Stopping v2 (mục 3 Phần III), dùng `best.pt` | Báo cáo epoch dừng và epoch đạt đỉnh của từng run; nêu rõ thay đổi so với v1. |
+| 5 | Miền Blur | v1 không có số liệu blur | Thêm LOL-Blur (150/10/40) | Báo cáo PSNR/SSIM/LPIPS miền Blur như các miền khác; DarkIR-m (đã học toàn bộ LOL-Blur) chỉ là mốc trần tham chiếu. |
+
+> [!NOTE]
+> Mỗi so sánh dùng 2 seed và 190 ảnh test (Huawei 30, Nikon 20, Blur 40 là các miền nhỏ): khoảng tin cậy rộng, kết luận "không khác biệt" nghĩa là *không đủ bằng chứng*, không phải *chứng minh bằng nhau*.
+
+## 4. Ba Quy Tắc Sống Còn Để Đạt Hiệu Suất Tối Đa Trên Colab
 
 1. **Quy tắc 1: Giải nén cục bộ vào ổ SSD ảo `/content/`:**  
    Copy toàn bộ file `llie_dataset.zip` từ Google Drive sang `/content/` và giải nén tại chỗ. Tuyệt đối không đọc ảnh trực tiếp qua đường dẫn `/content/drive/MyDrive/...` (giao thức FUSE mạng làm chậm tốc độ I/O từ 20 đến 50 lần). Thư mục Drive chỉ dùng để lưu file log và trọng số mô hình `best_model.pth`.
@@ -190,9 +206,9 @@ Tập Test độc lập gồm 100 ảnh LOLv2-Real, 30 ảnh LSRW-Huawei, 20 ả
    - Histogram Equalization / CLAHE (Contrast Limited Adaptive Histogram Equalization).
    - Retinex cổ điển (Single-Scale Retinex - SSR, Multi-Scale Retinex - MSR).
 2. **Standard U-Net cùng ngân sách tham số (~1.9M params):**
-   - Xây dựng một mạng U-Net tích chập tiêu chuẩn (Plain Conv2d + LayerNorm + LeakyReLU) có cùng độ sâu 3 tầng và số kênh cơ sở tương đương, không có FFT và không có cơ chế Attention đặc thù.
+   - Xây dựng một mạng U-Net tích chập tiêu chuẩn (Plain Conv2d + GroupNorm + ReLU, đúng như `UNetBaseline` trong notebook) có cùng độ sâu 3 tầng và số kênh cơ sở tương đương, không có FFT và không có cơ chế Attention đặc thù.
    - **Đây là mốc đối chuẩn quan trọng nhất**: Cho phép đánh giá khách quan xem các khối chuyên biệt hóa (`FreMLP`, `Di-SpAM`, `SCA`, `Gated Skip`) có mang lại ưu thế thực tế so với kiến trúc CNN thông thường khi ở cùng dung lượng tham số hay không.
-   - *Lưu ý trung thực về chi phí tính toán (FLOPs):* Dù được thiết kế cùng quy mô tham số (~1.92M params), kiến trúc tích chập đặc tiêu chuẩn của `Standard U-Net` tiêu tốn nhiều phép tính không gian hơn (~18.5 GFLOPs trên patch $256 \times 256$) so với thiết kế tích chập chiều sâu tách biệt (Depthwise Separable) của `DarkIR-Edge` (~4.3 GFLOPs phần không gian, chưa tính FFT). Báo cáo sẽ ghi nhận minh bạch cả hai chỉ số Params và GFLOPs/Latency khi đối sánh.
+   - *Lưu ý trung thực về chi phí tính toán (FLOPs):* Dù được thiết kế cùng quy mô tham số (~1.92M params), kiến trúc tích chập đặc tiêu chuẩn của `Standard U-Net` tiêu tốn nhiều phép tính không gian hơn (~18.5 GFLOPs trên patch $256 \times 256$) so với thiết kế tích chập chiều sâu tách biệt (Depthwise Separable) của `DarkIR-Edge` (8.75 GFLOPs ở patch $256 \times 256$ theo số đo v1, chưa tính FFT). Tuy nhiên ít FLOPs không đồng nghĩa nhanh hơn: ở v1, latency FP16 của Edge chậm hơn U-Net ≈2,6 lần trên T4. Báo cáo ghi nhận minh bạch Params, GFLOPs, Latency và GPU đo khi đối sánh (xem mục 2 Phần III).
 
 ---
 
@@ -206,7 +222,7 @@ Tập Test độc lập gồm 100 ảnh LOLv2-Real, 30 ảnh LSRW-Huawei, 20 ả
    - > [!CAUTION]
      > Phép tính này **chỉ dùng làm công cụ chẩn đoán nội bộ (Diagnostic Tool)** để bóc tách thành phần lỗi, **tuyệt đối không đưa vào bảng kết quả chính thức**.
    - *Nguyên lý chẩn đoán:*
-     - Nếu PSNR sau căn chỉnh tăng vọt ($+3 \dots 5 \text{ dB}$): Lỗi chủ yếu nằm ở việc ước lượng sai độ sáng toàn cục $\implies$ Kiểm chứng trực tiếp vai trò của nhánh tần số Fourier FFT (`FreMLP`) và hàm mất mát $\mathcal{L}_{\text{side}}$.
+     - Nếu PSNR sau căn chỉnh tăng vọt ($+3 \dots 5 \text{ dB}$): Lỗi chủ yếu nằm ở việc ước lượng sai độ sáng toàn cục $\implies$ Là *gợi ý* về vai trò của nhánh Fourier FFT (`FreMLP`) và $\mathcal{L}_{\text{side}}$ — chỉ ablation bỏ FFT (mục 3 Phần III) mới cho phép kết luận; ở v1 `gap_illumination` của Edge không thấp hơn U-Net nên giả thuyết FFT chưa được ủng hộ.
      - Nếu PSNR sau căn chỉnh hầu như không đổi: Lỗi nằm ở chi tiết bề mặt, mất biên cạnh và hạt nhiễu $\implies$ Kiểm chứng vai trò của khối tích chập đa tỷ lệ `Di-SpAM` và cổng chặn nhiễu `Residual Gated Skip`.
 2. **Cắt mảng cục bộ vùng tối phẳng (Flat Dark Patch Inspection):**
    - Cắt các vùng ảnh phẳng tối (như mặt bàn, bức tường đêm) để so sánh phương sai nhiễu cảm biến giữa ảnh đầu vào, baseline U-Net và mô hình đề xuất.
@@ -229,8 +245,8 @@ import os
 drive.mount('/content/drive')
 
 # Copy dữ liệu nén sang SSD ảo
-!cp /content/drive/MyDrive/llie_data_clean.zip /content/
-!unzip -q /content/llie_data_clean.zip -d /content/datasets/
+!cp /content/drive/MyDrive/llie_project_v2/llie_data_clean_v2.zip /content/
+!unzip -q /content/llie_data_clean_v2.zip -d /content/datasets/
 
 # Kiểm tra thư mục dữ liệu đã sẵn sàng
 print("Dữ liệu sẵn sàng tại:", os.listdir('/content/datasets'))
@@ -240,14 +256,15 @@ print("Dữ liệu sẵn sàng tại:", os.listdir('/content/datasets'))
 
 ```python
 # ==============================================================
-# BƯỚC 2: HUẤN LUYỆN MÔ HÌNH ĐỀ XUẤT DUY NHẤT DARKIR-EDGE (C=24) TRÊN D_train (2-3 SEEDS)
+# BƯỚC 2: HUẤN LUYỆN MÔ HÌNH ĐỀ XUẤT DUY NHẤT DARKIR-EDGE (C=24) TRÊN D_train (2 SEEDS)
 # ==============================================================
 for seed in [42, 123]:
     print(f"--- Bắt đầu huấn luyện Seed {seed} ---")
     !python train.py --model darkir_edge \
                      --batch_size 8 \
                      --patch_size 256 \
-                     --epochs 60 \
+                     --epochs 100 \
+                     --early_stop_min_epochs 40 --early_stop_patience 15 --early_stop_min_delta 0.05 \
                      --lr 2e-4 \
                      --lr_min 1e-6 \
                      --val_interval 5 \
@@ -257,18 +274,29 @@ for seed in [42, 123]:
                      --save_dir /content/drive/MyDrive/llie_checkpoints/darkir_edge_seed{seed}/
 
 # ==============================================================
-# BƯỚC 3: HUẤN LUYỆN BASELINE STANDARD U-NET (~1.9M) ĐỐI CHUẨN (1 SEED)
+# BƯỚC 3: HUẤN LUYỆN BASELINE STANDARD U-NET (~1.9M) ĐỐI CHUẨN (2 SEEDS, cùng quy tắc Early Stopping)
 # ==============================================================
-!python train.py --model standard_unet \
-                 --batch_size 8 \
-                 --patch_size 256 \
-                 --epochs 60 \
-                 --lr 2e-4 \
-                 --lr_min 1e-6 \
-                 --val_interval 5 \
-                 --use_amp \
-                 --seed 42 \
-                 --save_dir /content/drive/MyDrive/llie_checkpoints/standard_unet_seed42/
+for seed in [42, 123]:
+    !python train.py --model standard_unet \
+                     --batch_size 8 \
+                     --patch_size 256 \
+                     --epochs 100 \
+                     --early_stop_min_epochs 40 --early_stop_patience 15 --early_stop_min_delta 0.05 \
+                     --lr 2e-4 \
+                     --lr_min 1e-6 \
+                     --val_interval 5 \
+                     --use_amp \
+                     --seed {seed} \
+                     --save_dir /content/drive/MyDrive/llie_checkpoints/standard_unet_seed{seed}/
+
+# ==============================================================
+# BƯỚC 3b: ABLATION BỎ FFT/FreMLP (2 SEEDS) — kiểm chứng giả thuyết FFT
+# ==============================================================
+for seed in [42, 123]:
+    !python train.py --model darkir_edge_nofft --epochs 100 \
+                     --early_stop_min_epochs 40 --early_stop_patience 15 --early_stop_min_delta 0.05 \
+                     --seed {seed} \
+                     --save_dir /content/drive/MyDrive/llie_checkpoints/darkir_edge_nofft_seed{seed}/
 ```
 
 ## 3. Kịch Bản Đánh Giá Ghép Cặp (Paired Evaluation)
@@ -277,8 +305,8 @@ for seed in [42, 123]:
 # Đánh giá toàn diện trên toàn bộ 190 ảnh test (gộp và tách domain) kèm Paired T-test:
 python evaluate.py --model darkir_edge \
                    --checkpoint_dir /content/drive/MyDrive/llie_checkpoints/ \
-                   --seeds 42,123,999 \
-                   --test_datasets lolv2_real,lsrw_huawei,lsrw_nikon \
+                   --seeds 42,123 \
+                   --test_datasets lolv2_real,lsrw_huawei,lsrw_nikon,lolblur \
                    --paired_ttest \
                    --metrics psnr,ssim,lpips \
                    --save_csv /content/drive/MyDrive/llie_results/benchmark_summary.csv
@@ -297,7 +325,7 @@ Dưới đây là 5 câu hỏi trọng tâm mà Hội đồng thường chất v
 - **Trả lời chuẩn mực:**  
   *"Thưa Thầy/Cô, việc thiết lập tập dữ liệu huấn luyện đồng nhất $D_{\text{train}} = 1.350$ cặp ảnh (gồm 639 LOLv2-Real DSLR, 561 LSRW-Huawei Smartphone và 150 LOL-Blur) xuất phát từ 2 lý do khoa học và thực tiễn:  
   1. **Cân bằng phân phối đa cảm biến:** Đây là sự kết hợp chuẩn mực bao quát cả hai môi trường quang học thực tế (DSLR trong nhà và Smartphone ban đêm), giúp mô hình học được các đặc trưng vật lý bất biến và ngăn ngừa hiện tượng dịch chuyển cảm biến. Đồng thời, nhóm rút toàn bộ 20 ảnh LSRW-Nikon khỏi tập huấn luyện và validation để giữ làm bài kiểm tra tổng quát hóa zero-shot (unseen sensor) hoàn toàn khách quan.  
-  2. **Hiệu quả thực nghiệm & độ tin cậy thống kê:** Với mô hình gọn nhẹ ~1.93M tham số, quy mô 1.350 cặp ảnh cho phép huấn luyện tối đa 60 epochs (có Early Stopping theo tập Validation) qua 2-3 random seeds trong thời gian ngắn trên GPU L4 của Google Colab, vừa đủ để mô hình hội tụ ổn định vừa bảo đảm tính nghiêm cẩn về mặt phương pháp luận thống kê mà không vượt quá hạn mức tài nguyên nghiên cứu của đồ án."*
+  2. **Hiệu quả thực nghiệm & độ tin cậy thống kê:** Với mô hình gọn nhẹ ~1.93M tham số, quy mô 1.350 cặp ảnh cho phép huấn luyện tối đa 100 epochs (có Early Stopping theo tập Validation, không dừng trước epoch 40) qua 2 random seeds cho mỗi mô hình trong thời gian ngắn trên GPU L4 của Google Colab, vừa đủ để mô hình hội tụ ổn định vừa bảo đảm tính nghiêm cẩn về mặt phương pháp luận thống kê mà không vượt quá hạn mức tài nguyên nghiên cứu của đồ án."*
 
 ### Câu hỏi 2: "Tại sao nhóm loại bỏ hoàn toàn bộ dữ liệu LOLv1 kinh điển mà nhiều bài báo trước đây vẫn dùng?"
 - **Trả lời chuẩn mực:**  
@@ -307,13 +335,17 @@ Dưới đây là 5 câu hỏi trọng tâm mà Hội đồng thường chất v
 - **Trả lời chuẩn mực:**  
   *"Thưa Thầy/Cô, nhóm thiết lập hệ quy chiếu so sánh tham chiếu (Reference Comparison) hoàn toàn minh bạch:  
   1. **Khối tham chiếu trần (Reference SOTA từ Paper gốc):** Ghi nhận đầy đủ chỉ số của các mô hình lớn (DarkIR-mt 3.32M, Restormer 26.1M, LLFormer 24.5M) được huấn luyện trên 100% dữ liệu lớn làm mốc trần lý thuyết.  
-  2. **Khối thực nghiệm nội bộ có kiểm soát (Internal Controlled Experiments):** Nhóm huấn luyện các baseline trên cùng tập dữ liệu chuẩn 1.350 ảnh (CLAHE vs. Standard U-Net vs. DarkIR-Edge đề xuất) và đánh giá qua 3 random seeds với kiểm định paired t-test.  
+  2. **Khối thực nghiệm nội bộ có kiểm soát (Internal Controlled Experiments):** Nhóm huấn luyện các baseline trên cùng tập dữ liệu chuẩn 1.350 ảnh (CLAHE vs. Standard U-Net vs. DarkIR-Edge đề xuất) và đánh giá qua 2 random seeds với kiểm định paired t-test.  
   Đúng với tinh thần **không tuyên bố reproduce SOTA**, nhóm tập trung làm rõ hiệu năng của kiến trúc đề xuất duy nhất `DarkIR-Edge`, đánh giá liệu mô hình có mang lại cải thiện có ý nghĩa thống kê so với Standard U-Net cùng số lượng tham số hay không."*
 
 ### Câu hỏi 4: "Tại sao nhóm bắt buộc phải đưa ảnh chụp từ điện thoại (LSRW-Huawei) vào tập huấn luyện thay vì chỉ để ở tập kiểm thử?"
 - **Trả lời chuẩn mực:**  
   *"Thưa Thầy/Cô, cảm biến máy ảnh DSLR lớn cho ra nhiễu Gauss/Poisson tương đối đồng nhất, trong khi cảm biến smartphone siêu nhỏ phải đẩy ISO cực cao và qua bộ nén ISP của điện thoại, tạo ra nhiễu hạt bệt và loang màu cục bộ. Nếu chỉ huấn luyện trên DSLR, mô hình sẽ bị thiên vị phân phối (Domain Bias) và thất bại khi gặp ảnh chụp đêm từ điện thoại thực tế. Việc cân bằng 561 cặp ảnh smartphone trong tập Train giúp mạng học được đồng thời cả hai phân bố nhiễu vật lý, đảm bảo khả năng ứng dụng thực tế trên thiết bị di động."*
 
-### Câu hỏi 5: "Mô hình giữ lại nhánh biến đổi Fourier FFT (FreMLP) của DarkIR nhưng tuyên bố hướng tới thiết bị biên (Edge Devices). Liệu điều này có mâu thuẫn khi FFT phức hỗ trợ kém trên NPU?"
+### Câu hỏi 5: "Mô hình giữ lại nhánh biến đổi Fourier FFT (FreMLP) của DarkIR. FFT có thật sự giúp ích không, và mô hình có phù hợp thiết bị biên (Edge Devices) không?"
 - **Trả lời chuẩn mực:**  
-  *"Thưa Thầy/Cô, nhóm đã nhận diện rõ giới hạn phần cứng này: phép biến đổi Fourier phức (`rfft2`) hiện có độ hỗ trợ chưa đồng đều trên các runtime NPU di động (như SNPE, CoreML, TensorRT). Do đó, trong đồ án này, nhóm bảo toàn nhánh FFT như một thành phần kiến trúc cốt lõi của DarkIR giúp nâng sáng toàn cục mượt mà, đồng thời đo đạc thông lượng thực tế (FPS, Latency) trực tiếp trên GPU máy chủ (NVIDIA T4). Các phương án tối ưu hóa sâu hơn (như xấp xỉ FFT bằng tích chập không gian rời rạc để hỗ trợ NPU chuyên dụng 100%) được đề xuất như hướng nghiên cứu mở rộng tiếp theo."*
+  *"Thưa Thầy/Cô, nhóm không tuyên bố FFT chắc chắn có ích. Ở v1 chẩn đoán độ sáng toàn cục không ủng hộ giả thuyết này, nên ở v2 nhóm chạy ablation bỏ FFT/FreMLP (2 seed) và báo cáo đúng kết quả: nếu khoảng tin cậy ΔPSNR (Edge − noFFT) nằm hoàn toàn trên 0 thì FFT có đóng góp đo được; nếu chứa 0 thì nhóm kết luận *chưa chứng minh được* đóng góp của FFT. Về thiết bị biên: nhóm **không** tuyên bố \"edge-friendly\". Mô hình có ít FLOPs hơn U-Net cùng số tham số, nhưng đo thực tế latency FP16 trên GPU lại chậm hơn U-Net (≈2,6 lần ở v1, T4), và `rfft2` chưa được hỗ trợ đồng đều trên NPU di động (SNPE, CoreML, TensorRT). Nhóm đo FPS/Latency trên GPU máy chủ (ghi rõ T4 hay L4) và coi việc triển khai trên thiết bị biên thật là hướng mở rộng chưa kiểm chứng."*
+
+### Câu hỏi 6: "DarkIR-Edge có thật sự tốt hơn Standard U-Net cùng số tham số không?"
+- **Trả lời chuẩn mực:**  
+  *"Thưa Thầy/Cô, ở v1 câu trả lời là chưa: PSNR pooled của Edge 20.04 dB so với U-Net 20.50 dB (U-Net nhỉnh hơn, p≈0.05; U-Net khi đó chỉ chạy 1 seed). Ở v2 nhóm chạy U-Net 2 seed như Edge và kết luận theo quy tắc đã khóa trước (mục 3 Phần III): chỉ khi khoảng tin cậy ΔPSNR trên tập gộp nằm hoàn toàn trên 0 nhóm mới nói Edge tốt hơn; nếu chứa 0, nhóm nói hai mô hình không khác biệt có ý nghĩa thống kê; nếu nằm dưới 0, nhóm nói U-Net tốt hơn. Đây là đồ án môn học nên nhóm ưu tiên báo cáo trung thực hơn là chứng minh mô hình đề xuất vượt trội."*

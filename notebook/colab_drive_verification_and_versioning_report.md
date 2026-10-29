@@ -95,6 +95,15 @@ llie_project/
 
 ## 6. Nhật ký thay đổi
 
+### 29/10/2026 — Bản v2 (LLIE_DarkIR_Edge_Colab_v2.ipynb)
+- **Tạo mới notebook v2** từ bản v1 qua `docs/ai/build_notebook_v2.py` (giữ nguyên bản v1).
+- **Đường dẫn Drive tách biệt:** `/content/drive/MyDrive/llie_project_v2/`, file zip `/content/drive/MyDrive/llie_project_v2/llie_data_clean_v2.zip`, `EXP_VERSION = 'v2'`.
+- **Dữ liệu v2 (1.650 cặp):** Train `{'lolv2': 639, 'huawei': 561, 'blur': 150}` = 1.350 (337 steps/epoch), Val `{'lolv2': 50, 'huawei': 50, 'blur': 10}` = 110, Test `{'lolv2': 100, 'huawei': 30, 'nikon': 20, 'blur': 40}` = 190. CELL 5 kiểm tra khớp số lượng manifest v2.
+- **Early Stopping bật mặc định:** theo dõi `val PSNR macro` (trung bình 3 miền Val: LOLv2, Huawei, Blur) mỗi 5 epoch; `early_stop_min_epochs = 40` (không dừng trước epoch 40), `early_stop_patience = 15` (3 lần kiểm tra liên tiếp), `early_stop_min_delta = 0.05` dB; số epoch tối đa giữ nguyên `epochs = 100` (`T_max` Cosine = 100). Lưu `epochs_run` vào `final.pt`.
+- **U-Net 2 seed & Ablation bỏ FFT/FreMLP:** `unet_seeds = [42, 123]`; thêm `darkir_edge_nofft` (`use_fft=False`, 1,495,422 params, seeds `[42, 123]`) trong cell huấn luyện riêng (`RUN_NOFFT_ABLATION = True`).
+- **Đánh giá & kiểm định ghép cặp:** xuất `paired_tests.csv` (paired t-test, Wilcoxon, 95% bootstrap CI trên pooled và từng miền cho `Edge vs U-Net` và `Edge vs no-FFT`), thêm cột `GPU` vào `efficiency.csv`.
+- **Kiểm thử local:** `docs/ai/verify_notebook_v2.py`.
+
 ### 28/10/2026 (đợt 2) — Rà soát trước khi train Colab
 - Phát hiện lỗi cách ly version: `find_checkpoint` và phần vẽ đường cong từng fallback sang `llie_project/checkpoints/`, nên version mới có thể âm thầm lấy checkpoint của run cũ. **Đã bỏ fallback**; chỉ đọc trong `experiments/{version}/checkpoints/`.
 - Sửa lại báo cáo này: bản trước ghi sai số ảnh test (đúng là 100/30/20), sai thành phần loss (không có Charbonnier/Edge loss), sai cơ chế seed của DataLoader, sai tên khối kiến trúc, và có ước lượng thời gian không có cơ sở. Đã thay bằng nội dung đối chiếu trực tiếp với code.
