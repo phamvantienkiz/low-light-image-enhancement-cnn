@@ -26,6 +26,7 @@
 
   window.addEventListener('resize', resizeCanvas);
   window.addEventListener('DOMContentLoaded', resizeCanvas);
+  resizeCanvas();
 
   function showSlide(index) {
     if (index < 0) index = 0;

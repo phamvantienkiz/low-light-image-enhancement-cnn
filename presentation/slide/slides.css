@@ -77,6 +77,9 @@ html, body {
   position: relative;
   width: var(--slide-width);
   height: var(--slide-height);
+  min-width: var(--slide-width);
+  min-height: var(--slide-height);
+  flex-shrink: 0;
   background-color: var(--bg-slide);
   box-shadow: 0 25px 60px rgba(0, 0, 0, 0.45);
   transform-origin: center center;
@@ -260,8 +263,8 @@ html, body {
 }
 
 .ppt-top-title {
-  font-size: 38px;
-  font-weight: 700;
+  font-size: 40px;
+  font-weight: 800;
   color: #FFFFFF;
   letter-spacing: -0.01em;
   line-height: 1.25;
@@ -273,16 +276,16 @@ html, body {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 1380px;
+  max-width: 1420px;
 }
 
 .ppt-top-tag {
-  font-size: 20px;
-  font-weight: 600;
+  font-size: 22px;
+  font-weight: 700;
   color: #FFFFFF;
   background: rgba(255, 255, 255, 0.22);
-  border: 1px solid rgba(255, 255, 255, 0.35);
-  padding: 6px 18px;
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  padding: 8px 20px;
   border-radius: 6px;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -293,9 +296,11 @@ html, body {
 .ppt-content {
   width: 100%;
   height: 916px;
-  padding: 35px 80px 25px 80px;
+  padding: 40px 80px 36px 80px;
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
+  gap: 28px;
   position: relative;
   background-color: #FFFFFF;
   overflow: hidden;
@@ -312,7 +317,7 @@ html, body {
   background-color: #FFFFFF;
   border-top: 1px solid var(--border-footer);
   display: grid;
-  grid-template-columns: 380px 510px 1fr auto;
+  grid-template-columns: 340px 560px 1fr auto;
   align-items: center;
   padding: 0 80px;
   font-size: 21px;
@@ -360,324 +365,419 @@ html, body {
 }
 
 /* ==========================================================================
-   SECTION INTRO SLIDES (Slide 5, 21, 34)
+   PROJECTOR-READY CLEAN ACADEMIC LAYOUTS (HIGH CONTRAST, BIG FONT, LOW DENSITY)
    ========================================================================== */
-.ppt-section-content {
-  flex: 1;
+
+/* Lead sentence (optional, big & bold) */
+.ppt-lead {
+  font-size: 32px;
+  line-height: 1.4;
+  color: #0F172A;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+/* Bottom Summary / Key Takeaway Bar */
+.ppt-takeaway {
+  background: #F0F9FF;
+  border: 2.5px solid #0284C7;
+  border-left: 10px solid #0284C7;
+  border-radius: 10px;
+  padding: 20px 32px;
+  font-size: 29px;
+  font-weight: 700;
+  color: #0F172A;
+  line-height: 1.4;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-shrink: 0;
+}
+
+.ppt-takeaway strong {
+  color: #0369A1;
+  font-weight: 800;
+}
+
+.ppt-takeaway.takeaway-warn {
+  background: #FEF3C7;
+  border-color: #D97706;
+  border-left-color: #D97706;
+}
+
+.ppt-takeaway.takeaway-warn strong {
+  color: #B45309;
+}
+
+/* Academic Cards Grid (2 or 3 columns, fit content height naturally) */
+.acad-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 36px;
+  align-items: stretch;
+}
+
+.acad-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  align-items: stretch;
+}
+
+.acad-card {
+  background: #FFFFFF;
+  border: 2.5px solid #CBD5E1;
+  border-top: 8px solid #126CD5;
+  border-radius: 12px;
+  padding: 34px 34px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 60px 120px;
+  justify-content: flex-start;
+  height: auto;
+  min-height: 580px;
+}
+
+.acad-card.card-accent {
+  border-top-color: #0284C7;
   background: #F8FAFC;
-  border-radius: 12px;
-  border: 2px dashed #CBD5E1;
-  margin: 30px 0;
 }
 
-.ppt-section-tag {
-  font-size: 28px;
+.acad-card.card-highlight {
+  border-color: #059669;
+  border-top: 8px solid #059669;
+  background: #F0FDF4;
+}
+
+.acad-card.card-warn {
+  border-color: #DC2626;
+  border-top: 8px solid #DC2626;
+  background: #FFF1F2;
+}
+
+.acad-card-tag {
+  display: inline-block;
+  font-size: 21px;
   font-weight: 800;
-  color: var(--blue-cover);
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin-bottom: 24px;
+  letter-spacing: 0.04em;
+  color: #126CD5;
+  margin-bottom: 10px;
 }
 
-.ppt-section-title {
-  font-size: 56px;
+.acad-card-title {
+  font-size: 36px;
   font-weight: 800;
   color: #0F172A;
   line-height: 1.25;
-  margin-bottom: 25px;
+  margin-bottom: 20px;
 }
 
-.ppt-section-subtitle {
-  font-size: 32px;
-  color: var(--text-secondary);
-  max-width: 1250px;
-  line-height: 1.6;
-}
-
-/* ==========================================================================
-   ACADEMIC TYPOGRAPHY & LISTS
-   ========================================================================== */
-.ppt-lead-text {
-  font-size: 36px;
-  line-height: 1.55;
-  color: var(--text-primary);
-}
-
-.ppt-lead-text strong {
-  font-weight: 800;
-}
-
-.ppt-bullet-list {
+.acad-list {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 22px;
-  margin-top: 18px;
+  gap: 18px;
+  flex: 1;
 }
 
-.ppt-bullet-list li {
-  font-size: 34px;
-  line-height: 1.45;
-  color: var(--text-primary);
+.acad-list li {
+  font-size: 29px;
+  line-height: 1.42;
+  color: #1E293B;
+  font-weight: 600;
   position: relative;
-  padding-left: 45px;
+  padding-left: 34px;
 }
 
-.ppt-bullet-list li::before {
-  content: "•";
+.acad-list li::before {
+  content: "▪";
   position: absolute;
-  left: 10px;
-  color: var(--blue-cover);
-  font-size: 42px;
-  line-height: 1;
-  top: -3px;
+  left: 4px;
+  top: 0;
+  color: #126CD5;
+  font-size: 32px;
 }
 
-.ppt-numbered-list {
-  list-style: none;
+.acad-list li strong {
+  color: #0F172A;
+  font-weight: 800;
+}
+
+.acad-formula {
+  background: #F1F5F9;
+  border: 2px solid #94A3B8;
+  border-radius: 8px;
+  padding: 16px 20px;
+  font-family: var(--font-mono);
+  font-size: 26px;
+  font-weight: 700;
+  color: #0F172A;
+  text-align: center;
+  margin-top: 48px;
+  align-self: stretch;
+}
+
+/* Big Metric Callouts */
+.metric-stack {
   display: flex;
   flex-direction: column;
-  gap: 22px;
-  margin-top: 18px;
+  justify-content: flex-start;
+  gap: 20px;
 }
 
-.ppt-numbered-list li {
-  font-size: 36px;
-  line-height: 1.4;
-  color: var(--text-primary);
+.metric-box {
+  background: #F8FAFC;
+  border: 2.5px solid #CBD5E1;
+  border-left: 8px solid #126CD5;
+  border-radius: 10px;
+  padding: 20px 30px;
   display: flex;
-  align-items: baseline;
-  gap: 16px;
-}
-
-.ppt-num-badge {
-  font-weight: 800;
-  color: var(--text-primary);
-}
-
-/* Academic Lemma / Theorem Box */
-.ppt-lemma-box {
-  border: 2px solid var(--blue-cover);
-  background: #F0F7FF;
-  padding: 22px 30px;
-  margin-top: 24px;
-  border-radius: 8px;
-}
-
-.ppt-lemma-title {
-  font-size: 32px;
-  font-weight: 800;
-  color: var(--navy-author);
-  margin-bottom: 10px;
-  display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 12px;
 }
 
-.ppt-lemma-body {
+.metric-box-label {
   font-size: 28px;
-  line-height: 1.5;
+  font-weight: 700;
   color: #1E293B;
 }
 
-.ppt-lemma-meaning {
-  font-size: 25px;
-  line-height: 1.5;
-  color: #0369A1;
-  margin-top: 10px;
-  padding-top: 10px;
-  border-top: 1px dashed #7DD3FC;
+.metric-box-sub {
+  font-size: 22px;
+  font-weight: 600;
+  color: #475569;
+  margin-top: 4px;
+}
+
+.metric-box-val {
+  font-family: var(--font-mono);
+  font-size: 52px;
+  font-weight: 800;
+  color: #126CD5;
+}
+
+/* ==========================================================================
+   PROJECTOR-READY ACADEMIC TABLES (LARGE FONT, CLEAR BORDERS)
+   ========================================================================== */
+.acad-table-wrap {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.acad-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #FFFFFF;
+  border: 2.5px solid #1E293B;
+  font-size: 27px;
+}
+
+.acad-table th {
+  background: #1E293B;
+  color: #FFFFFF;
+  font-size: 27px;
+  font-weight: 800;
+  padding: 16px 22px;
+  text-align: left;
+  border: 2px solid #334155;
+}
+
+.acad-table td {
+  padding: 15px 22px;
+  border: 2px solid #CBD5E1;
+  color: #0F172A;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.acad-table tr:nth-child(even) td {
+  background: #F8FAFC;
+}
+
+.acad-table tr.row-best td {
+  background: #DCFCE7 !important;
+  color: #065F46;
+  font-weight: 800;
+  border-top: 3px solid #059669;
+  border-bottom: 3px solid #059669;
+}
+
+.acad-table tr.row-ours td {
+  background: #E0F2FE !important;
+  color: #075985;
+  font-weight: 800;
+}
+
+.acad-table tr.row-ref td {
+  background: #F1F5F9 !important;
+  color: #475569;
   font-style: italic;
 }
 
-/* Two-column layout */
-.ppt-cols-2 {
-  display: flex;
-  gap: 60px;
-  margin-top: 20px;
-  align-items: flex-start;
-}
-
-.ppt-col {
-  flex: 1;
-}
-
-/* Memory Node Layout */
-.node-memory-box {
-  border: 3px solid var(--blue-cover);
-  background: #FFFFFF;
-  width: 100%;
-}
-
-.node-memory-header {
-  background: var(--blue-cover);
-  color: #FFFFFF;
-  padding: 12px 20px;
-  font-size: 28px;
-  font-weight: 800;
-  text-align: center;
-  letter-spacing: 0.04em;
-}
-
-.node-field-row {
-  display: flex;
-  border-bottom: 2px solid #93C5FD;
-  font-size: 26px;
-}
-
-.node-field-row:last-child {
-  border-bottom: none;
-}
-
-.node-field-name {
-  width: 200px;
-  padding: 12px 18px;
-  background: #EFF6FF;
-  font-weight: 800;
-  color: #1E3A8A;
-  border-right: 2px solid #93C5FD;
+.num-col {
+  text-align: center !important;
   font-family: var(--font-mono);
 }
 
-.node-field-desc {
-  flex: 1;
-  padding: 12px 18px;
+/* Status Pill for Tables */
+.pill-status {
+  display: inline-block;
+  padding: 6px 18px;
+  border-radius: 6px;
+  font-size: 23px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.pill-green {
+  background: #DCFCE7;
+  color: #166534;
+  border: 2px solid #22C55E;
+}
+
+.pill-red {
+  background: #FEE2E2;
+  color: #991B1B;
+  border: 2px solid #EF4444;
+}
+
+.pill-gray {
+  background: #E2E8F0;
   color: #1E293B;
+  border: 2px solid #64748B;
 }
 
 /* ==========================================================================
-   TABLES & MINING LAYOUT (HUIT Style)
+   VISUAL COMPARISON GRIDS (LARGE IMAGES FOR PROJECTOR)
    ========================================================================== */
-table.ppt-table {
-  border-collapse: collapse;
+.vis-grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.vis-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  align-items: stretch;
+}
+
+.vis-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 36px;
+  align-items: stretch;
+  width: 100%;
+}
+
+/* Architecture Visualizer Card */
+.arch-visualizer-card {
   background: #FFFFFF;
-  font-size: 32px;
-  text-align: center;
-  border: 2px solid #0284C7;
-}
-
-table.ppt-table th {
-  background-color: var(--table-header-bg);
-  color: #000000;
-  font-weight: 800;
-  padding: 16px 28px;
-  border: 2px solid #0284C7;
-  font-size: 34px;
-}
-
-table.ppt-table td {
-  padding: 14px 28px;
-  border: 2px solid #0284C7;
-  color: #000000;
-  font-weight: 600;
-}
-
-table.ppt-table tr.highlight-red-row td {
-  border: 4px solid #DC2626 !important;
-  color: #DC2626;
-  font-weight: 800;
-}
-
-.table-row-highlight {
-  box-shadow: inset 0 0 0 3px #DC2626;
-  font-weight: 800;
-}
-
-/* HUIT Mining 3-Column Layout */
-.mining-layout {
-  display: flex;
-  gap: 40px;
-  height: 800px;
-  align-items: flex-start;
-}
-
-.mining-col-table {
-  width: 320px;
-  flex-shrink: 0;
-}
-
-.mining-col-tree {
-  flex: 1;
-  height: 780px;
-}
-
-.mining-col-calc {
-  width: 580px;
-  flex-shrink: 0;
-  border: 2px solid #0284C7;
-  background: #FFFFFF;
-}
-
-.calc-row {
-  padding: 16px 24px;
-  border-bottom: 2px solid #0284C7;
-  font-size: 30px;
-  font-weight: 700;
-  color: #000000;
-  line-height: 1.4;
-}
-
-.calc-row:last-child {
-  border-bottom: none;
-}
-
-.calc-title {
-  font-size: 32px;
-  font-weight: 800;
-  color: #000000;
-  margin-bottom: 8px;
-}
-
-.calc-patterns {
+  border: 2.5px solid #CBD5E1;
+  border-top: 8px solid #126CD5;
+  border-radius: 12px;
+  padding: 24px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  font-size: 32px;
-  font-weight: 800;
-  color: #111827;
+  justify-content: space-between;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
 }
 
-/* ==========================================================================
-   SVG TREE STYLING
-   ========================================================================== */
-.tree-svg-huit {
-  width: 100%;
-  height: 100%;
+.arch-vis-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #E2E8F0;
 }
 
-.tree-node-oval {
-  fill: #FFFFFF;
-  stroke: #0284C7;
-  stroke-width: 3.5;
-}
-
-.tree-node-oval.active-node {
-  stroke: #DC2626 !important;
-  stroke-width: 5 !important;
-}
-
-.tree-node-text {
-  font-family: var(--font-slide);
+.arch-vis-title {
   font-size: 26px;
   font-weight: 800;
-  text-anchor: middle;
-  dominant-baseline: central;
-  fill: #000000;
+  color: #0F172A;
 }
 
-.tree-node-text.active-text {
-  fill: #DC2626 !important;
+.arch-vis-legend {
+  display: flex;
+  gap: 16px;
+  font-size: 18px;
+  font-weight: 700;
 }
 
-.tree-edge {
-  stroke: #0284C7;
-  stroke-width: 3;
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #475569;
+}
+
+.legend-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+}
+
+.vis-card {
+  background: #F8FAFC;
+  border: 2.5px solid #CBD5E1;
+  border-radius: 12px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.vis-card.vis-highlight {
+  border-color: #059669;
+  background: #F0FDF4;
+}
+
+.vis-card.vis-edge {
+  border-color: #0284C7;
+  background: #F0F9FF;
+}
+
+.vis-header {
+  font-size: 25px;
+  font-weight: 800;
+  color: #0F172A;
+  text-align: center;
+  padding: 8px 10px;
+  background: #E2E8F0;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+
+.vis-card.vis-highlight .vis-header {
+  background: #BBF7D0;
+  color: #065F46;
+}
+
+.vis-card.vis-edge .vis-header {
+  background: #BAE6FD;
+  color: #075985;
+}
+
+.vis-img {
+  width: 100%;
+  height: 360px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 2px solid #94A3B8;
+}
+
+.vis-metric {
+  font-family: var(--font-mono);
+  font-size: 23px;
+  font-weight: 800;
+  color: #1E293B;
+  text-align: center;
+  margin-top: 10px;
 }
 
 /* ==========================================================================
@@ -792,584 +892,3 @@ table.ppt-table tr.highlight-red-row td {
     display: none !important;
   }
 }
-
-/* ==========================================================================
-   EXTENSION STYLES: LLIE-CNN ACADEMIC SLIDES ENHANCEMENTS
-   ========================================================================== */
-.mock-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: #FEF3C7;
-  color: #B45309;
-  border: 1.5px solid #F59E0B;
-  padding: 4px 14px;
-  border-radius: 999px;
-  font-size: 19px;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-}
-
-.grid-cards-3 {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 30px;
-  margin-top: 25px;
-}
-
-.grid-cards-2 {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 36px;
-  margin-top: 25px;
-}
-
-.grid-cards-4 {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 24px;
-  margin-top: 25px;
-}
-
-.feature-card {
-  background: #F8FAFC;
-  border: 2px solid #E2E8F0;
-  border-radius: 12px;
-  padding: 26px 28px;
-  display: flex;
-  flex-direction: column;
-  transition: border-color 0.2s ease;
-}
-
-.feature-card.card-primary {
-  border-color: #38BDF8;
-  background: #F0F9FF;
-}
-
-.feature-card.card-success {
-  border-color: #34D399;
-  background: #ECFDF5;
-}
-
-.feature-card.card-accent {
-  border-color: #FBBF24;
-  background: #FFFBEB;
-}
-
-.card-icon-title {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  font-size: 28px;
-  font-weight: 800;
-  color: #0F172A;
-  margin-bottom: 12px;
-}
-
-.card-icon-title .icon-badge {
-  width: 44px;
-  height: 44px;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 22px;
-  font-weight: 800;
-  color: #FFFFFF;
-  background: var(--blue-cover);
-  flex-shrink: 0;
-}
-
-.card-body-text {
-  font-size: 23px;
-  line-height: 1.5;
-  color: #334155;
-}
-
-.stat-metric-card {
-  background: #FFFFFF;
-  border: 2px solid #0284C7;
-  border-radius: 12px;
-  padding: 24px;
-  text-align: center;
-  box-shadow: 0 4px 12px rgba(2, 132, 199, 0.08);
-}
-
-.stat-number {
-  font-size: 48px;
-  font-weight: 800;
-  color: var(--blue-cover);
-  font-family: var(--font-mono);
-  line-height: 1.1;
-  margin-bottom: 8px;
-}
-
-.stat-label {
-  font-size: 22px;
-  font-weight: 700;
-  color: #1E293B;
-  margin-bottom: 4px;
-}
-
-.stat-sub {
-  font-size: 18px;
-  color: #64748B;
-  font-weight: 500;
-}
-
-.tech-pill {
-  display: inline-block;
-  background: #EFF6FF;
-  color: #1D4ED8;
-  border: 1px solid #BFDBFE;
-  padding: 4px 12px;
-  border-radius: 6px;
-  font-size: 19px;
-  font-weight: 700;
-  font-family: var(--font-mono);
-}
-
-.formula-highlight {
-  background: #F1F5F9;
-  border-left: 5px solid #0284C7;
-  padding: 14px 22px;
-  font-size: 26px;
-  font-family: var(--font-mono);
-  color: #0F172A;
-  border-radius: 0 8px 8px 0;
-  margin: 14px 0;
-}
-
-.flow-step-container {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  margin-top: 25px;
-}
-
-.flow-step {
-  flex: 1;
-  background: #FFFFFF;
-  border: 2px solid #0284C7;
-  border-radius: 10px;
-  padding: 20px 22px;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-}
-
-.flow-step-num {
-  font-size: 18px;
-  font-weight: 800;
-  color: #0284C7;
-  text-transform: uppercase;
-  margin-bottom: 6px;
-}
-
-.flow-step-title {
-  font-size: 24px;
-  font-weight: 800;
-  color: #0F172A;
-  margin-bottom: 8px;
-}
-
-.flow-step-desc {
-  font-size: 20px;
-  color: #475569;
-  line-height: 1.45;
-}
-
-.flow-arrow {
-  font-size: 36px;
-  font-weight: 800;
-  color: #0284C7;
-  user-select: none;
-}
-
-/* ==========================================================================
-   OPTIMIZED FULL-AREA LAYOUTS (SLIDE 02, 03, 04) - ENSURES >=80% UTILIZATION
-   ========================================================================== */
-
-/* Lead text standardized for high fill */
-.ppt-lead-standard {
-  font-size: 25px;
-  line-height: 1.5;
-  color: #1E293B;
-  font-weight: 500;
-  margin-bottom: 20px;
-}
-
-/* Slide 02: 3-column physical degradation layout */
-.intro-grid-3 {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 28px;
-  height: 580px;
-}
-
-.intro-card {
-  background: #FFFFFF;
-  border: 2px solid #CBD5E1;
-  border-radius: 12px;
-  padding: 28px 24px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.05);
-  transition: transform 0.15s ease, border-color 0.15s ease;
-}
-
-.intro-card.card-blue {
-  border-color: #38BDF8;
-  background: linear-gradient(180deg, #F0F9FF 0%, #FFFFFF 22%);
-}
-
-.intro-card.card-amber {
-  border-color: #FBBF24;
-  background: linear-gradient(180deg, #FFFBEB 0%, #FFFFFF 22%);
-}
-
-.intro-card.card-rose {
-  border-color: #FB7185;
-  background: linear-gradient(180deg, #FFF1F2 0%, #FFFFFF 22%);
-}
-
-.intro-card-header {
-  margin-bottom: 14px;
-}
-
-.intro-badge {
-  display: inline-block;
-  font-size: 15px;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  padding: 4px 12px;
-  border-radius: 6px;
-  margin-bottom: 10px;
-}
-
-.badge-blue {
-  background: #E0F2FE;
-  color: #0369A1;
-  border: 1px solid #BAE6FD;
-}
-
-.badge-amber {
-  background: #FEF3C7;
-  color: #B45309;
-  border: 1px solid #FDE68A;
-}
-
-.badge-rose {
-  background: #FFE4E6;
-  color: #BE123C;
-  border: 1px solid #FECDD3;
-}
-
-.badge-emerald {
-  background: #D1FAE5;
-  color: #047857;
-  border: 1px solid #A7F3D0;
-}
-
-.intro-card-title {
-  font-size: 26px;
-  font-weight: 800;
-  color: #0F172A;
-  line-height: 1.3;
-}
-
-.intro-bullets {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  flex: 1;
-  margin: 12px 0;
-}
-
-.intro-bullets li {
-  font-size: 21px;
-  line-height: 1.5;
-  color: #334155;
-  position: relative;
-  padding-left: 26px;
-}
-
-.intro-bullets li::before {
-  content: "■";
-  position: absolute;
-  left: 4px;
-  top: 1px;
-  font-size: 14px;
-  color: #0284C7;
-}
-
-.intro-card.card-amber .intro-bullets li::before {
-  color: #D97706;
-}
-
-.intro-card.card-rose .intro-bullets li::before {
-  color: #E11D48;
-}
-
-.intro-card.card-emerald .intro-bullets li::before {
-  color: #059669;
-}
-
-.intro-formula-box {
-  background: #F8FAFC;
-  border: 1.5px solid #E2E8F0;
-  border-radius: 8px;
-  padding: 10px 14px;
-  font-size: 18px;
-  font-family: var(--font-mono);
-  font-weight: 600;
-  color: #0F172A;
-  text-align: center;
-  line-height: 1.4;
-}
-
-.banner-summary-wide {
-  margin-top: 20px;
-  height: 82px;
-  background: #F8FAFC;
-  border: 2px solid #CBD5E1;
-  border-radius: 10px;
-  padding: 0 28px;
-  display: flex;
-  align-items: center;
-  gap: 18px;
-  font-size: 21px;
-  font-weight: 600;
-  color: #1E293B;
-}
-
-.banner-summary-wide strong {
-  color: #0284C7;
-  font-weight: 800;
-}
-
-.banner-summary-wide.banner-warning {
-  background: #FEF3C7;
-  border-color: #F59E0B;
-  color: #92400E;
-}
-
-.banner-summary-wide.banner-warning strong {
-  color: #B45309;
-}
-
-.banner-summary-wide.banner-primary {
-  background: #F0F9FF;
-  border-color: #38BDF8;
-  color: #0369A1;
-}
-
-.banner-summary-wide.banner-primary strong {
-  color: #0284C7;
-}
-
-/* Slide 03: Visual dataset comparison layout */
-.compare-grid-2 {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 32px;
-  height: 615px;
-}
-
-.compare-panel {
-  background: #FFFFFF;
-  border: 2px solid #CBD5E1;
-  border-radius: 12px;
-  padding: 22px 24px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.05);
-}
-
-.compare-panel-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 12px;
-}
-
-.compare-panel-title {
-  font-size: 25px;
-  font-weight: 800;
-  color: #0F172A;
-}
-
-.compare-img-pair {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  margin-bottom: 14px;
-}
-
-.compare-img-box {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.compare-img-tag {
-  font-size: 16px;
-  font-weight: 700;
-  padding: 4px 10px;
-  border-radius: 4px;
-  text-align: center;
-  letter-spacing: 0.02em;
-}
-
-.tag-input-dark {
-  background: #FEE2E2;
-  color: #991B1B;
-  border: 1px solid #FECACA;
-}
-
-.tag-gt-normal {
-  background: #DCFCE7;
-  color: #166534;
-  border: 1px solid #BBF7D0;
-}
-
-.compare-img {
-  width: 100%;
-  height: 270px;
-  object-fit: cover;
-  border-radius: 8px;
-  border: 2px solid #E2E8F0;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-}
-
-.compare-caption {
-  font-size: 16px;
-  font-weight: 600;
-  color: #64748B;
-  text-align: center;
-}
-
-.compare-note-box {
-  background: #F8FAFC;
-  border-left: 4px solid #0284C7;
-  border-radius: 4px;
-  padding: 10px 16px;
-  font-size: 19px;
-  line-height: 1.5;
-  color: #1E293B;
-}
-
-.compare-note-box strong {
-  color: #0369A1;
-}
-
-/* Slide 04: Research landscape & Project orientation */
-.triptych-grid-3 {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1.15fr;
-  gap: 26px;
-  height: 680px;
-}
-
-.triptych-col {
-  background: #FFFFFF;
-  border: 2px solid #CBD5E1;
-  border-radius: 12px;
-  padding: 26px 22px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.05);
-}
-
-.triptych-col.col-problem {
-  border-color: #F87171;
-  background: linear-gradient(180deg, #FEF2F2 0%, #FFFFFF 20%);
-}
-
-.triptych-col.col-solution {
-  border-color: #60A5FA;
-  background: linear-gradient(180deg, #EFF6FF 0%, #FFFFFF 20%);
-}
-
-.triptych-col.col-proposal {
-  border-color: #34D399;
-  background: linear-gradient(180deg, #ECFDF5 0%, #FFFFFF 20%);
-}
-
-.triptych-title {
-  font-size: 25px;
-  font-weight: 800;
-  color: #0F172A;
-  margin-top: 4px;
-  line-height: 1.3;
-}
-
-.triptych-bullets {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 13px;
-  flex: 1;
-  margin: 16px 0;
-}
-
-.triptych-bullets li {
-  font-size: 20px;
-  line-height: 1.5;
-  color: #334155;
-  position: relative;
-  padding-left: 24px;
-}
-
-.triptych-bullets li::before {
-  content: "•";
-  position: absolute;
-  left: 2px;
-  top: -2px;
-  font-size: 24px;
-  font-weight: bold;
-}
-
-.col-problem .triptych-bullets li::before {
-  color: #DC2626;
-}
-
-.col-solution .triptych-bullets li::before {
-  color: #2563EB;
-}
-
-.col-proposal .triptych-bullets li::before {
-  color: #059669;
-}
-
-.triptych-box-bottom {
-  border-radius: 8px;
-  padding: 12px 14px;
-  font-size: 18px;
-  line-height: 1.45;
-  font-weight: 600;
-}
-
-.col-problem .triptych-box-bottom {
-  background: #FEE2E2;
-  border: 1px solid #FECACA;
-  color: #991B1B;
-}
-
-.col-solution .triptych-box-bottom {
-  background: #DBEAFE;
-  border: 1px solid #BFDBFE;
-  color: #1E40AF;
-}
-
-.col-proposal .triptych-box-bottom {
-  background: #D1FAE5;
-  border: 1px solid #A7F3D0;
-  color: #065F46;
-}
-
