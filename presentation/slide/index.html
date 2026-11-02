@@ -68,8 +68,7 @@
         <div class="ppt-content" style="justify-content: center;">
           <div class="acad-grid-2">
             <div class="acad-card">
-              <span class="acad-card-tag">Phần I — Đặt vấn đề &amp; Phương pháp</span>
-              <h3 class="acad-card-title">1. Tổng quan &amp; Mô hình đề xuất</h3>
+              <h3 class="acad-card-tag acad-card-tag-lg">Phần I — Đặt vấn đề &amp; Phương pháp</h3>
               <ul class="acad-list">
                 <li><strong>Thông tin thành viên</strong> &amp; Đánh giá hoàn thành.</li>
                 <li><strong>Lý do &amp; Tầm quan trọng</strong> của bài toán LLIE.</li>
@@ -79,8 +78,7 @@
             </div>
 
             <div class="acad-card card-accent">
-              <span class="acad-card-tag">Phần II — Thực nghiệm &amp; Tổng kết</span>
-              <h3 class="acad-card-title">2. Kết quả &amp; Đánh giá phản biện</h3>
+              <h3 class="acad-card-tag acad-card-tag-lg">Phần II — Thực nghiệm &amp; Tổng kết</h3>
               <ul class="acad-list">
                 <li><strong>Thiết lập:</strong> Tập dữ liệu (4 miền), Độ đo, Môi trường.</li>
                 <li><strong>Kết quả định lượng:</strong> PSNR, SSIM, LPIPS, Kiểm định 95% CI, Chi phí FLOPs vs. Latency.</li>
@@ -222,35 +220,25 @@
           <div class="ppt-top-tag">Phát biểu bài toán</div>
         </div>
         <div class="ppt-content" style="justify-content: center;">
-          <div class="acad-grid-3">
-            <div class="acad-card">
-              <span class="acad-card-tag">Đầu vào (Input)</span>
-              <h3 class="acad-card-title">Ảnh Thiếu Sáng $I_{\text{low}}$</h3>
-              <ul class="acad-list">
+          <div class="acad-grid-2 slide05-grid">
+            <div class="acad-card slide05-card">
+              <span class="acad-card-tag slide05-card-tag">Đầu vào (Input)</span>
+              <h3 class="acad-card-title slide05-card-title">Ảnh Thiếu Sáng $I_{\text{low}}$</h3>
+              <ul class="acad-list slide05-card-list">
                 <li>Ảnh RGB thiếu sáng thực tế.</li>
                 <li>Có thể kèm <strong>nhiễu hạt cảm biến</strong> và <strong>nhòe chuyển động</strong> (blur).</li>
               </ul>
-              <div class="acad-formula">$I_{\text{low}} \in \mathbb{R}^{H \times W \times 3}$</div>
+              <div class="acad-formula slide05-card-formula">$I_{\text{low}} \in \mathbb{R}^{H \times W \times 3}$</div>
             </div>
 
-            <div class="acad-card card-accent">
-              <span class="acad-card-tag">Ánh xạ cần học</span>
-              <h3 class="acad-card-title">Mô Hình CNN Nhẹ $f_\theta$</h3>
-              <ul class="acad-list">
-                <li>Cực đại hóa <strong>PSNR, SSIM</strong>; cực tiểu hóa <strong>LPIPS</strong> so với $I_{\text{gt}}$.</li>
-                <li>Ràng buộc: Số lượng tham số <strong>$|\theta| \approx 1.9\text{M}$</strong>.</li>
-              </ul>
-              <div class="acad-formula">$\hat{I} = f_\theta(I_{\text{low}}) \approx I_{\text{gt}}$</div>
-            </div>
-
-            <div class="acad-card card-highlight">
-              <span class="acad-card-tag">Đầu ra (Output)</span>
-              <h3 class="acad-card-title">Ảnh Phục Hồi $\hat{I}$</h3>
-              <ul class="acad-list">
+            <div class="acad-card card-highlight slide05-card">
+              <span class="acad-card-tag slide05-card-tag">Đầu ra (Output)</span>
+              <h3 class="acad-card-title slide05-card-title">Ảnh Phục Hồi $\hat{I}$</h3>
+              <ul class="acad-list slide05-card-list">
                 <li>Ảnh RGB cùng kích thước chuẩn sáng bình thường.</li>
                 <li>Độ sáng cân bằng, giảm nhiễu, màu sắc và chi tiết gần $I_{\text{gt}}$.</li>
               </ul>
-              <div class="acad-formula">$\hat{I} \in \mathbb{R}^{H \times W \times 3}$</div>
+              <div class="acad-formula slide05-card-formula">$\hat{I} \in \mathbb{R}^{H \times W \times 3}$</div>
             </div>
           </div>
         </div>
@@ -355,7 +343,7 @@
               <div class="acad-formula">1.93M Params &bull; 18.45 GFLOPs</div>
             </div>
 
-            <div class="acad-card card-accent">
+            <div class="acad-card card-accent" style="background-color: #e3fdff;">
               <span class="acad-card-tag">Nhóm 3 — Cảm hứng CVPR'25</span>
               <h3 class="acad-card-title">Họ Mô Hình DarkIR-Edge</h3>
               <ul class="acad-list">
@@ -753,14 +741,14 @@
           <h2 class="ppt-top-title">Phương Pháp Giải Quyết: Biến Thể no-FFT &amp; Quy Trình Huấn Luyện</h2>
           <div class="ppt-top-tag">Phương pháp giải quyết</div>
         </div>
-        <div class="ppt-content">
+        <div class="ppt-content" style="justify-content: center;">
           <div class="acad-grid-2">
             <div class="acad-card">
               <span class="acad-card-tag">Mô hình 3 — Ablation Study</span>
               <h3 class="acad-card-title">DarkIR-Edge (no-FFT) &amp; Loss</h3>
               <ul class="acad-list">
                 <li><strong>Biến thể no-FFT:</strong> Tắt hoàn toàn nhánh FFT/FreMLP, giữ nguyên phần còn lại.</li>
-                <li><strong>Tiết kiệm tài nguyên:</strong> Còn <strong>1.495M tham số (&minus;22.3%)</strong>, 7.50 GFLOPs, latency 27.14 ms.</li>
+                <li><strong>Tiết kiệm tài nguyên:</strong> Còn <strong>1.495M tham số (&minus;22.3%)</strong>.</li>
                 <li><strong>Hàm mất mát tổng hợp:</strong> Kết hợp sai số điểm ảnh, cấu trúc SSIM và góc màu RGB.</li>
               </ul>
               <div class="acad-formula">$\mathcal{L} = \mathcal{L}_1 + 0.2\mathcal{L}_{\text{SSIM}} + 0.1\mathcal{L}_{\text{Color}} (+ 0.5\mathcal{L}_{\text{Side}})$</div>
@@ -795,16 +783,16 @@
           <h2 class="ppt-top-title">Kết Quả Thực Nghiệm: Tập Dữ Liệu Đa Miền (Dataset)</h2>
           <div class="ppt-top-tag">Kết quả thực nghiệm</div>
         </div>
-        <div class="ppt-content">
+        <div class="ppt-content" style="justify-content: center;">
           <div class="acad-table-wrap">
-            <table class="acad-table">
+            <table class="acad-table slide12-table">
               <thead>
                 <tr>
-                  <th style="width: 18%;">Miền (Domain)</th>
-                  <th style="width: 14%;" class="num-col">Train</th>
-                  <th style="width: 14%;" class="num-col">Val</th>
-                  <th style="width: 14%;" class="num-col">Test</th>
-                  <th style="width: 40%;">Nguồn dữ liệu &amp; Đặc điểm</th>
+                  <th style="width: 15%;">Miền (Domain)</th>
+                  <th style="width: 10%;" class="num-col">Train</th>
+                  <th style="width: 10%;" class="num-col">Val</th>
+                  <th style="width: 10%;" class="num-col">Test</th>
+                  <th style="width: 55%;">Nguồn dữ liệu &amp; Đặc điểm</th>
                 </tr>
               </thead>
               <tbody>
@@ -864,7 +852,7 @@
           <h2 class="ppt-top-title">Kết Quả Thực Nghiệm: Độ Đo Đánh Giá &amp; Môi Trường</h2>
           <div class="ppt-top-tag">Kết quả thực nghiệm</div>
         </div>
-        <div class="ppt-content">
+        <div class="ppt-content" style="justify-content: center;">
           <div class="acad-grid-2">
             <div class="acad-card">
               <span class="acad-card-tag">Hệ thống chỉ số định lượng</span>
@@ -883,7 +871,7 @@
               <ul class="acad-list">
                 <li><strong>Phần cứng huấn luyện &amp; đo:</strong> Google Colab, GPU <strong>NVIDIA L4</strong>.</li>
                 <li><strong>Đo độ trễ (Latency):</strong> Độ phân giải chuẩn <strong>600&times;400</strong> ở chế độ FP32 và FP16, kèm Peak VRAM.</li>
-                <li><strong>Quản lý môi trường:</strong> Cô lập hoàn toàn bằng <code>uv</code> / <code>.venv</code> cục bộ, cố định hạt giống ngẫu nhiên (seed 42, 123).</li>
+                <li><strong>Quản lý môi trường:</strong> Cố định giá trị khởi tạo ngẫu nhiên (random seed 42, 123) đảm bảo tính tái lập (reproducibility).</li>
               </ul>
             </div>
           </div>
@@ -905,12 +893,12 @@
           <h2 class="ppt-top-title">Kết Quả Thực Nghiệm: Bảng Kết Quả PSNR (dB &uarr;)</h2>
           <div class="ppt-top-tag">Bảng kết quả</div>
         </div>
-        <div class="ppt-content">
+        <div class="ppt-content" style="justify-content: center;">
           <div class="acad-table-wrap">
-            <table class="acad-table" style="font-size: 25px;">
+            <table class="acad-table slide14-table">
               <thead>
                 <tr>
-                  <th style="width: 26%;">Phương pháp</th>
+                  <th>Phương pháp</th>
                   <th class="num-col">blur (40)</th>
                   <th class="num-col">huawei (30)</th>
                   <th class="num-col">lolv2 (100)</th>
@@ -971,7 +959,7 @@
                   <td class="num-col">20.65 &plusmn; 0.01</td>
                   <td class="num-col"><strong>21.60 &plusmn; 0.43</strong></td>
                   <td class="num-col">17.17 &plusmn; 0.10</td>
-                  <td class="num-col" style="font-size: 29px;"><strong>21.36 &plusmn; 0.22</strong></td>
+                  <td class="num-col"><strong>21.36 &plusmn; 0.22</strong></td>
                   <td class="num-col"><strong>20.70 &plusmn; 0.09</strong></td>
                 </tr>
                 <tr class="row-ref">
@@ -1004,16 +992,16 @@
           <h2 class="ppt-top-title">Kết Quả Thực Nghiệm: Bảng Kết Quả SSIM (&uarr;) &amp; LPIPS (&darr;)</h2>
           <div class="ppt-top-tag">Bảng kết quả</div>
         </div>
-        <div class="ppt-content">
-          <div class="acad-table-wrap">
-            <table class="acad-table">
+        <div class="ppt-content" style="justify-content: center; align-items: center;">
+          <div class="acad-table-wrap" style="width: auto; max-width: 1400px;">
+            <table class="acad-table slide15-table">
               <thead>
                 <tr>
-                  <th style="width: 30%;">Phương pháp</th>
-                  <th class="num-col">SSIM Pooled (&uarr;)</th>
-                  <th class="num-col">SSIM Macro (&uarr;)</th>
-                  <th class="num-col">LPIPS Pooled (&darr;)</th>
-                  <th class="num-col">LPIPS Macro (&darr;)</th>
+                  <th style="width: 22%;">Phương pháp</th>
+                  <th class="num-col" style="width: 19.5%;">SSIM Pooled (&uarr;)</th>
+                  <th class="num-col" style="width: 19.5%;">SSIM Macro (&uarr;)</th>
+                  <th class="num-col" style="width: 19.5%;">LPIPS Pooled (&darr;)</th>
+                  <th class="num-col" style="width: 19.5%;">LPIPS Macro (&darr;)</th>
                 </tr>
               </thead>
               <tbody>
@@ -1368,7 +1356,7 @@
           <h2 class="ppt-top-title">Đánh Giá &amp; Nhận Xét: Những Ưu Điểm Đạt Được</h2>
           <div class="ppt-top-tag">Đánh giá &amp; Nhận xét</div>
         </div>
-        <div class="ppt-content">
+        <div class="ppt-content" style="justify-content: center;">
           <div class="acad-grid-2">
             <div class="acad-card card-highlight">
               <span class="acad-card-tag">Đóng góp thực tiễn</span>
