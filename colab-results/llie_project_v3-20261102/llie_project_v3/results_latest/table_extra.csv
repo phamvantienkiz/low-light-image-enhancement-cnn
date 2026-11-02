@@ -1,0 +1,13 @@
+method,domain,lum_bias,lum_abs_err,lum_emd,ciede2000,sharp_ratio,dark10_mae,bright10_mae
+DarkIR-Edge (no FFT),blur,1.266,9.92,10.413,6.36,0.177,12.15,12.94
+DarkIR-Edge (no FFT),huawei,-8.832,14.01,14.587,8.385,0.066,10.48,24.827
+DarkIR-Edge (no FFT),lolv2,13.29,20.113,21.049,10.35,0.176,13.675,28.186
+DarkIR-Edge (no FFT),nikon,0.071,19.467,20.241,10.397,0.113,22.936,23.477
+DarkIR-Edge (ours),blur,-0.352,9.952,10.287,6.351,0.181,11.506,13.117
+DarkIR-Edge (ours),huawei,-11.6,15.673,16.159,8.675,0.067,10.551,25.699
+DarkIR-Edge (ours),lolv2,12.853,19.151,20.176,10.098,0.204,13.299,27.13
+DarkIR-Edge (ours),nikon,-4.757,20.584,21.37,10.69,0.129,21.376,25.196
+Standard U-Net,blur,1.488,8.745,9.119,6.288,0.232,11.769,11.332
+Standard U-Net,huawei,-6.473,14.154,14.832,8.552,0.121,11.439,24.628
+Standard U-Net,lolv2,12.242,18.797,19.589,9.697,0.365,12.144,26.261
+Standard U-Net,nikon,-4.978,19.652,20.456,10.754,0.24,19.867,26.014
