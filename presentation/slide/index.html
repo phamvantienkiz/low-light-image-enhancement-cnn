@@ -54,7 +54,7 @@
             </div>
             <div class="ppt-footer-course">Image Processing &amp; Computer Vision</div>
             <div class="ppt-footer-topic">Low-Light Image Enhancement with Lightweight CNNs</div>
-            <div class="ppt-slide-counter">01/23</div>
+            <div class="ppt-slide-counter">01/25</div>
           </div>
         </div>
       </section>
@@ -78,11 +78,11 @@
             </div>
 
             <div class="acad-card card-accent">
-              <h3 class="acad-card-tag acad-card-tag-lg">Phần II — Thực nghiệm &amp; Tổng kết</h3>
+              <h3 class="acad-card-tag acad-card-tag-lg">Phần II — Thực nghiệm (v3 &amp; v4) &amp; Tổng kết</h3>
               <ul class="acad-list">
-                <li><strong>Thiết lập:</strong> Tập dữ liệu (4 miền), Độ đo, Môi trường.</li>
-                <li><strong>Kết quả định lượng:</strong> PSNR, SSIM, LPIPS, Kiểm định 95% CI, Chi phí FLOPs vs. Latency.</li>
-                <li><strong>Minh họa định tính:</strong> Tăng sáng &amp; Khử mờ.</li>
+                <li><strong>Thiết lập:</strong> Tập dữ liệu đa miền (v3: 1,940 cặp &rarr; v4: 7,117 cặp), Độ đo, Môi trường.</li>
+                <li><strong>Kết quả định lượng:</strong> PSNR, SSIM, LPIPS, Kiểm định 95% CI nội bộ &amp; xuyên phiên bản <code>v4 &minus; v3</code>, Chi phí FLOPs vs. Latency.</li>
+                <li><strong>Minh họa định tính:</strong> Tăng sáng (LOLv2) &amp; Khử mờ (LOL-Blur).</li>
                 <li><strong>Đánh giá ưu điểm, hạn chế</strong> &amp; Tài liệu tham khảo.</li>
               </ul>
             </div>
@@ -95,7 +95,7 @@
           </div>
           <div class="ppt-footer-course">Image Processing &amp; Computer Vision</div>
           <div class="ppt-footer-topic">Low-Light Image Enhancement with Lightweight CNNs</div>
-          <div class="ppt-slide-counter">02/23</div>
+          <div class="ppt-slide-counter">02/25</div>
         </div>
       </section>
 
@@ -128,23 +128,23 @@
               </thead>
               <tbody>
                 <tr>
-                  <td><strong>1. Chuẩn bị dữ liệu đa miền</strong></td>
-                  <td>1,650 cặp ảnh (4 domains: lolv2, huawei, nikon, blur; sequence-isolated split)</td>
+                  <td><strong>1. Chuẩn bị dữ liệu đa miền (v3 &rarr; v4)</strong></td>
+                  <td>v3: 1,940 cặp (4 domains) &rarr; v4 mở rộng 7,117 cặp (5 domains, QuotaSampler 4,800/epoch)</td>
                   <td class="num-col"><span class="pill-status pill-green">Hoàn thành</span></td>
                 </tr>
                 <tr>
                   <td><strong>2. Cài đặt mô hình &amp; Baselines</strong></td>
-                  <td>Standard U-Net, DarkIR-Edge, ablation no-FFT &amp; baselines truyền thống</td>
+                  <td>Standard U-Net, DarkIR-Edge, ablation no-FFT, DarkIR-m (ref) &amp; baselines truyền thống</td>
                   <td class="num-col"><span class="pill-status pill-green">Hoàn thành</span></td>
                 </tr>
                 <tr>
                   <td><strong>3. Huấn luyện &amp; Kiểm định thống kê</strong></td>
-                  <td>6 lần huấn luyện (3 models &times; 2 seeds) + Bootstrap 95% CI &amp; paired tests</td>
+                  <td>12 lần huấn luyện (3 models &times; 2 seeds &times; 2 stages v3/v4) + Bootstrap 95% CI &amp; paired tests</td>
                   <td class="num-col"><span class="pill-status pill-green">Hoàn thành</span></td>
                 </tr>
                 <tr>
                   <td><strong>4. Báo cáo khoa học &amp; Slide</strong></td>
-                  <td>Báo cáo thực nghiệm, slide thuyết trình &amp; mã nguồn tái lập (reproducible code)</td>
+                  <td>Báo cáo thực nghiệm v3/v4, slide thuyết trình, ứng dụng Demo &amp; mã nguồn tái lập</td>
                   <td class="num-col"><span class="pill-status pill-green">Hoàn thành</span></td>
                 </tr>
               </tbody>
@@ -158,7 +158,7 @@
           </div>
           <div class="ppt-footer-course">Image Processing &amp; Computer Vision</div>
           <div class="ppt-footer-topic">Low-Light Image Enhancement with Lightweight CNNs</div>
-          <div class="ppt-slide-counter">03/23</div>
+          <div class="ppt-slide-counter">03/25</div>
         </div>
       </section>
 
@@ -209,7 +209,7 @@
           </div>
           <div class="ppt-footer-course">Image Processing &amp; Computer Vision</div>
           <div class="ppt-footer-topic">Low-Light Image Enhancement with Lightweight CNNs</div>
-          <div class="ppt-slide-counter">04/23</div>
+          <div class="ppt-slide-counter">04/25</div>
         </div>
       </section>
 
@@ -249,7 +249,7 @@
           </div>
           <div class="ppt-footer-course">Image Processing &amp; Computer Vision</div>
           <div class="ppt-footer-topic">Low-Light Image Enhancement with Lightweight CNNs</div>
-          <div class="ppt-slide-counter">05/23</div>
+          <div class="ppt-slide-counter">05/25</div>
         </div>
       </section>
 
@@ -279,7 +279,7 @@
           </div>
           <div class="ppt-footer-course">Image Processing &amp; Computer Vision</div>
           <div class="ppt-footer-topic">Low-Light Image Enhancement with Lightweight CNNs</div>
-          <div class="ppt-slide-counter">06/23</div>
+          <div class="ppt-slide-counter">06/25</div>
         </div>
       </section>
 
@@ -309,7 +309,7 @@
           </div>
           <div class="ppt-footer-course">Image Processing &amp; Computer Vision</div>
           <div class="ppt-footer-topic">Low-Light Image Enhancement with Lightweight CNNs</div>
-          <div class="ppt-slide-counter">07/23</div>
+          <div class="ppt-slide-counter">07/25</div>
         </div>
       </section>
 
@@ -325,9 +325,9 @@
               <span class="acad-card-tag">Nhóm 1 — Không học sâu</span>
               <h3 class="acad-card-title">Xử Lý Ảnh Truyền Thống</h3>
               <ul class="acad-list">
-                <li><strong>Gamma 2.2:</strong> Biến đổi phi tuyến độ chói.</li>
+                <li><strong>Gamma 2.2:</strong> Biến đổi phi tuyến độ sáng.</li>
                 <li><strong>CLAHE:</strong> Cân bằng biểu đồ cục bộ.</li>
-                <li><strong>MSRCR (Retinex):</strong> Tách độ rọi &amp; phản xạ.</li>
+                <li><strong>MSRCR (Retinex):</strong> Tách độ sáng &amp; phản xạ.</li>
               </ul>
               <div class="acad-formula">Khuếch đại nhiễu &bull; Lệch màu</div>
             </div>
@@ -340,7 +340,7 @@
                 <li>Tích chập 3&times;3 chuẩn, bảo toàn chi tiết không gian.</li>
                 <li>Tối ưu hóa rất cao trên GPU (cuDNN).</li>
               </ul>
-              <div class="acad-formula">1.93M Params &bull; 18.45 GFLOPs</div>
+              <div class="acad-formula">1.93M Params</div>
             </div>
 
             <div class="acad-card card-accent" style="background-color: #e3fdff;">
@@ -362,7 +362,7 @@
           </div>
           <div class="ppt-footer-course">Image Processing &amp; Computer Vision</div>
           <div class="ppt-footer-topic">Low-Light Image Enhancement with Lightweight CNNs</div>
-          <div class="ppt-slide-counter">08/23</div>
+          <div class="ppt-slide-counter">08/25</div>
         </div>
       </section>
 
@@ -544,7 +544,7 @@
           </div>
           <div class="ppt-footer-course">Image Processing &amp; Computer Vision</div>
           <div class="ppt-footer-topic">Low-Light Image Enhancement with Lightweight CNNs</div>
-          <div class="ppt-slide-counter">09/23</div>
+          <div class="ppt-slide-counter">09/25</div>
         </div>
       </section>
 
@@ -731,7 +731,7 @@
           </div>
           <div class="ppt-footer-course">Image Processing &amp; Computer Vision</div>
           <div class="ppt-footer-topic">Low-Light Image Enhancement with Lightweight CNNs</div>
-          <div class="ppt-slide-counter">10/23</div>
+          <div class="ppt-slide-counter">10/25</div>
         </div>
       </section>
 
@@ -747,22 +747,22 @@
               <span class="acad-card-tag">Mô hình 3 — Ablation Study</span>
               <h3 class="acad-card-title">DarkIR-Edge (no-FFT) &amp; Loss</h3>
               <ul class="acad-list">
-                <li><strong>Biến thể no-FFT:</strong> Tắt hoàn toàn nhánh FFT/FreMLP, giữ nguyên phần còn lại.</li>
-                <li><strong>Tiết kiệm tài nguyên:</strong> Còn <strong>1.495M tham số (&minus;22.3%)</strong>.</li>
-                <li><strong>Hàm mất mát tổng hợp:</strong> Kết hợp sai số điểm ảnh, cấu trúc SSIM và góc màu RGB.</li>
+                <li><strong>Biến thể no-FFT:</strong> Tắt hoàn toàn nhánh FFT/FreMLP, cô lập đóng góp miền tần số.</li>
+                <li><strong>Tiết kiệm tài nguyên:</strong> Còn <strong>1.495M tham số (&minus;22.3%)</strong>, giảm 14% độ trễ suy luận.</li>
+                <li><strong>Hàm mất mát tổng hợp:</strong> Kết hợp sai số điểm ảnh ($\mathcal{L}_1$/Charb), SSIM, góc màu, biên cạnh &amp; giám sát phụ <code>side_out</code>.</li>
               </ul>
-              <div class="acad-formula">$\mathcal{L} = \mathcal{L}_1 + 0.2\mathcal{L}_{\text{SSIM}} + 0.1\mathcal{L}_{\text{Color}} (+ 0.5\mathcal{L}_{\text{Side}})$</div>
+              <div class="acad-formula">v3: $\mathcal{L}_1 + 0.2\mathcal{L}_{\text{SSIM}} + 0.1\mathcal{L}_{\text{Col}} + 0.5\mathcal{L}_{\text{Side}}$ &bull; v4: $+\mathcal{L}_{\text{Edge}}, \mathcal{L}_{\text{FFT}}$</div>
             </div>
 
             <div class="acad-card card-accent">
-              <span class="acad-card-tag">Quy trình thực nghiệm có kiểm soát</span>
-              <h3 class="acad-card-title">Huấn Luyện &amp; Quy Tắc Kết Luận</h3>
+              <span class="acad-card-tag">Quy trình thực nghiệm có kiểm soát (v3 &amp; v4)</span>
+              <h3 class="acad-card-title">Huấn Luyện Cố Định 70 Epochs</h3>
               <ul class="acad-list">
-                <li><strong>Tối ưu hóa:</strong> AdamW (lr $2\times 10^{-4} \to 10^{-6}$, Cosine $T_{\max}=100$), patch 256, batch 8, EMA 0.999.</li>
-                <li><strong>Early Stopping:</strong> Theo val-PSNR macro (patience 15, sau epoch 40); đánh giá bằng <code>best.pt</code> EMA.</li>
-                <li><strong>Độ tin cậy:</strong> Chạy <strong>2 seed (42, 123)</strong>; kết luận theo <strong>95% CI bootstrap</strong> của $\Delta\text{PSNR}$ ghép cặp.</li>
+                <li><strong>Tối ưu hóa:</strong> AdamW (lr $2\times 10^{-4} \to 10^{-6}$, Cosine 70 epochs: <code>28k</code> steps ở v3 &rarr; <code>42k</code> steps ở v4), patch 256, batch 8, EMA 0.999.</li>
+                <li><strong>Loại bỏ Confound:</strong> <strong>Tắt Early Stopping</strong>; đánh giá chính thức trên <code>final.pt</code> EMA (ep 70), đối chứng phụ bằng <code>best.pt</code> EMA.</li>
+                <li><strong>Độ tin cậy:</strong> Chạy <strong>2 seed (42, 123)</strong> mỗi giai đoạn (12 runs); kết luận theo <strong>95% CI bootstrap</strong> đăng ký trước.</li>
               </ul>
-              <div class="acad-formula">Pre-registered: 95% Bootstrap CI</div>
+              <div class="acad-formula">Fixed 70 Epochs (`final.pt` EMA) &bull; 95% Bootstrap CI</div>
             </div>
           </div>
         </div>
@@ -773,14 +773,14 @@
           </div>
           <div class="ppt-footer-course">Image Processing &amp; Computer Vision</div>
           <div class="ppt-footer-topic">Low-Light Image Enhancement with Lightweight CNNs</div>
-          <div class="ppt-slide-counter">11/23</div>
+          <div class="ppt-slide-counter">11/25</div>
         </div>
       </section>
 
       <!-- SLIDE 12: KẾT QUẢ THỰC NGHIỆM — DATASET -->
       <section class="slide">
         <div class="ppt-top-bar">
-          <h2 class="ppt-top-title">Kết Quả Thực Nghiệm: Tập Dữ Liệu Đa Miền (Dataset)</h2>
+          <h2 class="ppt-top-title">Kết Quả Thực Nghiệm: Tập Dữ Liệu Đa Miền (Giai Đoạn v3 &amp; Mở Rộng v4)</h2>
           <div class="ppt-top-tag">Kết quả thực nghiệm</div>
         </div>
         <div class="ppt-content" style="justify-content: center;">
@@ -788,48 +788,62 @@
             <table class="acad-table slide12-table">
               <thead>
                 <tr>
-                  <th style="width: 15%;">Miền (Domain)</th>
-                  <th style="width: 10%;" class="num-col">Train</th>
-                  <th style="width: 10%;" class="num-col">Val</th>
-                  <th style="width: 10%;" class="num-col">Test</th>
-                  <th style="width: 55%;">Nguồn dữ liệu &amp; Đặc điểm</th>
+                  <th style="width: 13%;">Miền (Domain)</th>
+                  <th style="width: 11%;" class="num-col">Train v3</th>
+                  <th style="width: 16%;" class="num-col">Train v4 (Quota/ep)</th>
+                  <th style="width: 8%;" class="num-col">Val</th>
+                  <th style="width: 8%;" class="num-col">Test</th>
+                  <th style="width: 44%;">Nguồn dữ liệu &amp; Thiết kế chống rò rỉ (Leakage-Free)</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <td><strong>lolv2</strong></td>
                   <td class="num-col">639</td>
+                  <td class="num-col">639 (1,278)</td>
                   <td class="num-col">50</td>
                   <td class="num-col">100</td>
-                  <td>LOLv2-Real: Thiếu sáng và nhiễu hạt trong nhà.</td>
+                  <td>LOLv2-Real: Thiếu sáng sâu &amp; nhiễu hạt cảm biến trong nhà.</td>
                 </tr>
                 <tr>
                   <td><strong>huawei</strong></td>
                   <td class="num-col">561</td>
+                  <td class="num-col"><strong>2,380</strong> (1,122)</td>
                   <td class="num-col">50</td>
                   <td class="num-col">30</td>
-                  <td>LSRW-Huawei: Cảm biến smartphone (gap = 10).</td>
-                </tr>
-                <tr style="background: #FEF3C7;">
-                  <td><strong>nikon</strong></td>
-                  <td class="num-col">&mdash;</td>
-                  <td class="num-col">&mdash;</td>
-                  <td class="num-col"><strong>20</strong></td>
-                  <td>LSRW-Nikon: <strong>Chỉ dùng để test</strong> (miền chưa thấy khi train).</td>
+                  <td>LSRW-Huawei: Smartphone thực tế (loại vùng đệm <code>gap = 10</code> quanh Val).</td>
                 </tr>
                 <tr>
                   <td><strong>blur</strong></td>
-                  <td class="num-col">150</td>
-                  <td class="num-col">10</td>
+                  <td class="num-col"><strong>400</strong></td>
+                  <td class="num-col"><strong>1,858</strong> (1,600)</td>
+                  <td class="num-col"><strong>50</strong></td>
                   <td class="num-col">40</td>
-                  <td>LOL-Blur: Tối + nhòe chuyển động (cách ly theo chuỗi video).</td>
+                  <td>LOL-Blur: Tối + nhòe chuyển động (cách ly tuyệt đối 150/20/20 video).</td>
+                </tr>
+                <tr style="background: #FEF3C7;">
+                  <td><strong>nikon</strong></td>
+                  <td class="num-col">0 <em>(Zero-shot)</em></td>
+                  <td class="num-col"><strong>1,000</strong> (400)</td>
+                  <td class="num-col">0</td>
+                  <td class="num-col"><strong>20</strong></td>
+                  <td>LSRW-Nikon DSLR: <strong>Zero-shot</strong> ở v3 &rarr; <strong>In-domain</strong> ở v4 (kiểm tra lệch miền).</td>
+                </tr>
+                <tr>
+                  <td><strong>lolv2syn</strong></td>
+                  <td class="num-col">0</td>
+                  <td class="num-col"><strong>900</strong> (400)</td>
+                  <td class="num-col">0</td>
+                  <td class="num-col">0</td>
+                  <td>LOLv2-Synthetic: Bổ sung ở v4 nhằm tăng đa dạng cấu trúc cảnh chụp.</td>
                 </tr>
                 <tr class="row-best">
                   <td><strong>Tổng cộng</strong></td>
-                  <td class="num-col">1,350</td>
-                  <td class="num-col">110</td>
-                  <td class="num-col">190</td>
-                  <td><strong>1,650 cặp ảnh</strong> (kiểm soát SHA-256 <code>split_manifest.json</code>).</td>
+                  <td class="num-col"><strong>1,600</strong></td>
+                  <td class="num-col"><strong>6,777 (4,800)</strong></td>
+                  <td class="num-col"><strong>150</strong></td>
+                  <td class="num-col"><strong>190</strong></td>
+                  <td>Cố định 100% Val (150) &amp; Test (190) qua v3/v4 để đối chứng ghép cặp trực tiếp.</td>
                 </tr>
               </tbody>
             </table>
@@ -842,7 +856,7 @@
           </div>
           <div class="ppt-footer-course">Image Processing &amp; Computer Vision</div>
           <div class="ppt-footer-topic">Low-Light Image Enhancement with Lightweight CNNs</div>
-          <div class="ppt-slide-counter">12/23</div>
+          <div class="ppt-slide-counter">12/25</div>
         </div>
       </section>
 
@@ -858,9 +872,9 @@
               <span class="acad-card-tag">Hệ thống chỉ số định lượng</span>
               <h3 class="acad-card-title">1. Độ Đo &amp; Thống Kê</h3>
               <ul class="acad-list">
-                <li><strong>PSNR (dB &uarr;):</strong> Độ chính xác điểm ảnh &amp; độ sáng toàn cục.</li>
-                <li><strong>SSIM (&uarr;):</strong> Độ tương đồng cấu trúc không gian.</li>
-                <li><strong>LPIPS (&darr;):</strong> Khoảng cách đặc trưng cảm quan thị giác.</li>
+                <li><strong>PSNR / $\text{PSNR}_{\text{gt-mean}}$ (dB &uarr;):</strong> Độ chính xác điểm ảnh &amp; chẩn đoán lệch độ sáng nền.</li>
+                <li><strong>SSIM (&uarr;) &amp; LPIPS (&darr;):</strong> Độ tương đồng cấu trúc &amp; khoảng cách cảm quan thị giác.</li>
+                <li><strong>Độ đo chẩn đoán mở rộng:</strong> <code>lum_bias</code>, <code>sharp_ratio</code> (Laplacian), $\Delta E_{00}$ &amp; <code>dark10_mae</code>.</li>
                 <li><strong>Tổng hợp:</strong> <em>Pooled</em> (190 ảnh) &amp; <em>Macro</em> (4 miền); kiểm định ghép cặp Bootstrap 95% CI + t-test/Wilcoxon.</li>
               </ul>
             </div>
@@ -869,9 +883,10 @@
               <span class="acad-card-tag">Hạ tầng phần cứng &amp; phần mềm</span>
               <h3 class="acad-card-title">2. Môi Trường Thực Nghiệm</h3>
               <ul class="acad-list">
-                <li><strong>Phần cứng huấn luyện &amp; đo:</strong> Google Colab, GPU <strong>NVIDIA L4</strong>.</li>
+                <li><strong>Phần cứng huấn luyện &amp; đo:</strong> Google Colab High-RAM (53 GB), GPU <strong>NVIDIA L4 (24 GB VRAM)</strong>.</li>
+                <li><strong>Nạp dữ liệu lai (v4):</strong> Hybrid RAM Cache (5.4 GB) + Lazy SSD Disk I/O cho 6,777 cặp ảnh.</li>
                 <li><strong>Đo độ trễ (Latency):</strong> Độ phân giải chuẩn <strong>600&times;400</strong> ở chế độ FP32 và FP16, kèm Peak VRAM.</li>
-                <li><strong>Quản lý môi trường:</strong> Cố định giá trị khởi tạo ngẫu nhiên (random seed 42, 123) đảm bảo tính tái lập (reproducibility).</li>
+                <li><strong>Quản lý thực nghiệm:</strong> Cố định random seed (<code>42, 123</code>), chấm điểm chính thức trên <code>final.pt</code> EMA (ep 70).</li>
               </ul>
             </div>
           </div>
@@ -883,14 +898,14 @@
           </div>
           <div class="ppt-footer-course">Image Processing &amp; Computer Vision</div>
           <div class="ppt-footer-topic">Low-Light Image Enhancement with Lightweight CNNs</div>
-          <div class="ppt-slide-counter">13/23</div>
+          <div class="ppt-slide-counter">13/25</div>
         </div>
       </section>
 
       <!-- SLIDE 14: BẢNG KẾT QUẢ — PSNR (table_main.csv) -->
       <section class="slide">
         <div class="ppt-top-bar">
-          <h2 class="ppt-top-title">Kết Quả Thực Nghiệm: Bảng Kết Quả PSNR (dB &uarr;)</h2>
+          <h2 class="ppt-top-title">Kết Quả Thực Nghiệm: Bảng Kết Quả PSNR (dB &uarr; &mdash; final.pt EMA)</h2>
           <div class="ppt-top-tag">Bảng kết quả</div>
         </div>
         <div class="ppt-content" style="justify-content: center;">
@@ -898,7 +913,7 @@
             <table class="acad-table slide14-table">
               <thead>
                 <tr>
-                  <th>Phương pháp</th>
+                  <th>Phương pháp (Giai đoạn)</th>
                   <th class="num-col">blur (40)</th>
                   <th class="num-col">huawei (30)</th>
                   <th class="num-col">lolv2 (100)</th>
@@ -909,22 +924,13 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>Input (Low-Light)</td>
-                  <td class="num-col">10.55</td>
-                  <td class="num-col">9.06</td>
-                  <td class="num-col">9.72</td>
-                  <td class="num-col">9.30</td>
-                  <td class="num-col">9.75</td>
-                  <td class="num-col">9.66</td>
-                </tr>
-                <tr>
-                  <td>Gamma 2.2</td>
-                  <td class="num-col">18.09</td>
-                  <td class="num-col">15.08</td>
-                  <td class="num-col">17.27</td>
-                  <td class="num-col">15.42</td>
-                  <td class="num-col">16.90</td>
-                  <td class="num-col">16.46</td>
+                  <td>Input / Gamma 2.2</td>
+                  <td class="num-col">10.55 / 18.09</td>
+                  <td class="num-col">9.06 / 15.08</td>
+                  <td class="num-col">9.72 / 17.27</td>
+                  <td class="num-col">9.30 / 15.42</td>
+                  <td class="num-col">9.75 / 16.90</td>
+                  <td class="num-col">9.66 / 16.46</td>
                 </tr>
                 <tr>
                   <td>CLAHE / MSRCR</td>
@@ -936,40 +942,67 @@
                   <td class="num-col">11.47 / 12.28</td>
                 </tr>
                 <tr>
-                  <td>DarkIR-Edge (no FFT)</td>
-                  <td class="num-col">22.73 &plusmn; 0.27</td>
-                  <td class="num-col"><strong>20.87 &plusmn; 0.09</strong></td>
-                  <td class="num-col">20.64 &plusmn; 0.29</td>
-                  <td class="num-col">17.21 &plusmn; 0.07</td>
-                  <td class="num-col">20.76 &plusmn; 0.23</td>
-                  <td class="num-col">20.36 &plusmn; 0.18</td>
+                  <td>DarkIR-Edge (no FFT) &mdash; <strong>v3</strong></td>
+                  <td class="num-col">23.47 &plusmn; 0.13</td>
+                  <td class="num-col"><strong>20.85 &plusmn; 0.23</strong></td>
+                  <td class="num-col">20.84 &plusmn; 0.00</td>
+                  <td class="num-col">17.12 &plusmn; 0.29</td>
+                  <td class="num-col">21.00 &plusmn; 0.02</td>
+                  <td class="num-col">20.57 &plusmn; 0.05</td>
                 </tr>
                 <tr class="row-ours">
-                  <td><strong>DarkIR-Edge (ours)</strong></td>
-                  <td class="num-col">22.93 &plusmn; 0.21</td>
-                  <td class="num-col">20.80 &plusmn; 0.03</td>
-                  <td class="num-col">20.55 &plusmn; 0.01</td>
-                  <td class="num-col"><strong>17.24 &plusmn; 0.10</strong></td>
-                  <td class="num-col">20.74 &plusmn; 0.06</td>
-                  <td class="num-col">20.38 &plusmn; 0.08</td>
+                  <td><strong>DarkIR-Edge (ours) &mdash; v3</strong></td>
+                  <td class="num-col">23.57 &plusmn; 0.17</td>
+                  <td class="num-col">20.66 &plusmn; 0.05</td>
+                  <td class="num-col">21.07 &plusmn; 0.08</td>
+                  <td class="num-col">16.96 &plusmn; 0.04</td>
+                  <td class="num-col">21.10 &plusmn; 0.07</td>
+                  <td class="num-col">20.57 &plusmn; 0.04</td>
                 </tr>
                 <tr class="row-best">
-                  <td><strong>Standard U-Net</strong></td>
-                  <td class="num-col"><strong>23.37 &plusmn; 0.00</strong></td>
-                  <td class="num-col">20.65 &plusmn; 0.01</td>
-                  <td class="num-col"><strong>21.60 &plusmn; 0.43</strong></td>
-                  <td class="num-col">17.17 &plusmn; 0.10</td>
-                  <td class="num-col"><strong>21.36 &plusmn; 0.22</strong></td>
-                  <td class="num-col"><strong>20.70 &plusmn; 0.09</strong></td>
+                  <td><strong>Standard U-Net &mdash; v3</strong></td>
+                  <td class="num-col">23.80 &plusmn; 0.12</td>
+                  <td class="num-col">20.51 &plusmn; 0.18</td>
+                  <td class="num-col"><strong>21.39 &plusmn; 0.64</strong></td>
+                  <td class="num-col"><strong>17.15 &plusmn; 0.02</strong></td>
+                  <td class="num-col"><strong>21.31 &plusmn; 0.34</strong></td>
+                  <td class="num-col"><strong>20.71 &plusmn; 0.17</strong></td>
+                </tr>
+                <tr>
+                  <td>DarkIR-Edge (no FFT) &mdash; <strong>v4</strong></td>
+                  <td class="num-col">23.72 &plusmn; 0.26</td>
+                  <td class="num-col">20.66 &plusmn; 0.03</td>
+                  <td class="num-col">20.98 &plusmn; 0.49</td>
+                  <td class="num-col">17.13 &plusmn; 0.01</td>
+                  <td class="num-col">21.10 &plusmn; 0.32</td>
+                  <td class="num-col">20.62 &plusmn; 0.20</td>
+                </tr>
+                <tr class="row-ours">
+                  <td><strong>DarkIR-Edge (ours) &mdash; v4</strong></td>
+                  <td class="num-col">23.54 &plusmn; 0.01</td>
+                  <td class="num-col"><strong>20.97 &plusmn; 0.20</strong></td>
+                  <td class="num-col">20.74 &plusmn; 0.02</td>
+                  <td class="num-col">16.96 &plusmn; 0.17</td>
+                  <td class="num-col">20.97 &plusmn; 0.06</td>
+                  <td class="num-col">20.55 &plusmn; 0.10</td>
+                </tr>
+                <tr>
+                  <td><strong>Standard U-Net &mdash; v4</strong></td>
+                  <td class="num-col"><strong>24.01 &plusmn; 0.09</strong></td>
+                  <td class="num-col">20.52 &plusmn; 0.28</td>
+                  <td class="num-col">20.86 &plusmn; 0.25</td>
+                  <td class="num-col">16.69 &plusmn; 0.02</td>
+                  <td class="num-col">21.03 &plusmn; 0.15</td>
+                  <td class="num-col">20.52 &plusmn; 0.10</td>
                 </tr>
                 <tr class="row-ref">
-                  <td>DarkIR-m (CVPR'25, ref)</td>
-                  <td class="num-col">27.37</td>
-                  <td class="num-col">18.63</td>
-                  <td class="num-col">20.01</td>
-                  <td class="num-col">16.43</td>
-                  <td class="num-col">20.96</td>
-                  <td class="num-col">20.61</td>
+                  <td>DarkIR-m (CVPR'25, ref v3 / v4)</td>
+                  <td class="num-col">27.37 / 27.72</td>
+                  <td class="num-col">18.63 / 18.51</td>
+                  <td class="num-col">20.01 / 20.04</td>
+                  <td class="num-col">16.42 / 16.43</td>
+                  <td class="num-col">20.96 / 20.96</td>
+                  <td class="num-col">20.61 / 20.68</td>
                 </tr>
               </tbody>
             </table>
@@ -982,7 +1015,7 @@
           </div>
           <div class="ppt-footer-course">Image Processing &amp; Computer Vision</div>
           <div class="ppt-footer-topic">Low-Light Image Enhancement with Lightweight CNNs</div>
-          <div class="ppt-slide-counter">14/23</div>
+          <div class="ppt-slide-counter">14/25</div>
         </div>
       </section>
 
@@ -993,31 +1026,24 @@
           <div class="ppt-top-tag">Bảng kết quả</div>
         </div>
         <div class="ppt-content" style="justify-content: center; align-items: center;">
-          <div class="acad-table-wrap" style="width: auto; max-width: 1400px;">
+          <div class="acad-table-wrap" style="width: auto; max-width: 1560px;">
             <table class="acad-table slide15-table">
               <thead>
                 <tr>
-                  <th style="width: 22%;">Phương pháp</th>
-                  <th class="num-col" style="width: 19.5%;">SSIM Pooled (&uarr;)</th>
-                  <th class="num-col" style="width: 19.5%;">SSIM Macro (&uarr;)</th>
-                  <th class="num-col" style="width: 19.5%;">LPIPS Pooled (&darr;)</th>
-                  <th class="num-col" style="width: 19.5%;">LPIPS Macro (&darr;)</th>
+                  <th style="width: 28%;">Phương pháp (Giai đoạn)</th>
+                  <th class="num-col" style="width: 18%;">SSIM Pooled (&uarr;)</th>
+                  <th class="num-col" style="width: 18%;">SSIM Macro (&uarr;)</th>
+                  <th class="num-col" style="width: 18%;">LPIPS Pooled (&darr;)</th>
+                  <th class="num-col" style="width: 18%;">LPIPS Macro (&darr;)</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td>Input (Low-Light)</td>
-                  <td class="num-col">0.217</td>
-                  <td class="num-col">0.225</td>
-                  <td class="num-col">0.554</td>
-                  <td class="num-col">0.557</td>
-                </tr>
-                <tr>
-                  <td>Gamma 2.2</td>
-                  <td class="num-col">0.595</td>
-                  <td class="num-col">0.555</td>
-                  <td class="num-col">0.356</td>
-                  <td class="num-col">0.363</td>
+                  <td>Input / Gamma 2.2</td>
+                  <td class="num-col">0.217 / 0.595</td>
+                  <td class="num-col">0.225 / 0.555</td>
+                  <td class="num-col">0.554 / 0.356</td>
+                  <td class="num-col">0.557 / 0.363</td>
                 </tr>
                 <tr>
                   <td>CLAHE / MSRCR</td>
@@ -1027,32 +1053,53 @@
                   <td class="num-col">0.472 / 0.450</td>
                 </tr>
                 <tr>
-                  <td>DarkIR-Edge (no FFT)</td>
-                  <td class="num-col">0.730 &plusmn; 0.009</td>
-                  <td class="num-col">0.670 &plusmn; 0.004</td>
-                  <td class="num-col">0.353 &plusmn; 0.060</td>
-                  <td class="num-col">0.367 &plusmn; 0.048</td>
+                  <td>DarkIR-Edge (no FFT) &mdash; <strong>v3</strong></td>
+                  <td class="num-col">0.732 &plusmn; 0.001</td>
+                  <td class="num-col">0.672 &plusmn; 0.001</td>
+                  <td class="num-col">0.350 &plusmn; 0.019</td>
+                  <td class="num-col">0.361 &plusmn; 0.016</td>
                 </tr>
                 <tr class="row-ours">
-                  <td><strong>DarkIR-Edge (ours)</strong></td>
-                  <td class="num-col">0.728 &plusmn; 0.005</td>
-                  <td class="num-col">0.668 &plusmn; 0.003</td>
-                  <td class="num-col">0.368 &plusmn; 0.009</td>
-                  <td class="num-col">0.378 &plusmn; 0.006</td>
+                  <td><strong>DarkIR-Edge (ours) &mdash; v3</strong></td>
+                  <td class="num-col">0.733 &plusmn; 0.003</td>
+                  <td class="num-col">0.672 &plusmn; 0.002</td>
+                  <td class="num-col">0.341 &plusmn; 0.022</td>
+                  <td class="num-col">0.357 &plusmn; 0.015</td>
                 </tr>
                 <tr class="row-best">
-                  <td><strong>Standard U-Net</strong></td>
-                  <td class="num-col"><strong>0.749 &plusmn; 0.000</strong></td>
-                  <td class="num-col"><strong>0.680 &plusmn; 0.000</strong></td>
-                  <td class="num-col"><strong>0.277 &plusmn; 0.002</strong></td>
-                  <td class="num-col"><strong>0.305 &plusmn; 0.002</strong></td>
+                  <td><strong>Standard U-Net &mdash; v3</strong></td>
+                  <td class="num-col"><strong>0.747 &plusmn; 0.004</strong></td>
+                  <td class="num-col"><strong>0.678 &plusmn; 0.002</strong></td>
+                  <td class="num-col"><strong>0.279 &plusmn; 0.002</strong></td>
+                  <td class="num-col"><strong>0.307 &plusmn; 0.003</strong></td>
+                </tr>
+                <tr>
+                  <td>DarkIR-Edge (no FFT) &mdash; <strong>v4</strong></td>
+                  <td class="num-col">0.743 &plusmn; 0.005</td>
+                  <td class="num-col"><strong>0.678 &plusmn; 0.002</strong></td>
+                  <td class="num-col">0.303 &plusmn; 0.010</td>
+                  <td class="num-col">0.324 &plusmn; 0.007</td>
+                </tr>
+                <tr class="row-ours">
+                  <td><strong>DarkIR-Edge (ours) &mdash; v4</strong></td>
+                  <td class="num-col">0.743 &plusmn; 0.001</td>
+                  <td class="num-col"><strong>0.678 &plusmn; 0.000</strong></td>
+                  <td class="num-col">0.307 &plusmn; 0.008</td>
+                  <td class="num-col">0.331 &plusmn; 0.005</td>
+                </tr>
+                <tr class="row-best">
+                  <td><strong>Standard U-Net &mdash; v4</strong></td>
+                  <td class="num-col"><strong>0.745 &plusmn; 0.002</strong></td>
+                  <td class="num-col">0.674 &plusmn; 0.004</td>
+                  <td class="num-col"><strong>0.277 &plusmn; 0.000</strong></td>
+                  <td class="num-col"><strong>0.305 &plusmn; 0.004</strong></td>
                 </tr>
                 <tr class="row-ref">
-                  <td>DarkIR-m (CVPR'25, ref)</td>
-                  <td class="num-col">0.728</td>
-                  <td class="num-col">&mdash;</td>
-                  <td class="num-col"><strong>0.233</strong></td>
-                  <td class="num-col">&mdash;</td>
+                  <td>DarkIR-m (CVPR'25, ref v3 / v4)</td>
+                  <td class="num-col">0.728 / 0.729</td>
+                  <td class="num-col">0.678 / 0.678</td>
+                  <td class="num-col"><strong>0.233 / 0.233</strong></td>
+                  <td class="num-col"><strong>0.256 / 0.256</strong></td>
                 </tr>
               </tbody>
             </table>
@@ -1065,87 +1112,99 @@
           </div>
           <div class="ppt-footer-course">Image Processing &amp; Computer Vision</div>
           <div class="ppt-footer-topic">Low-Light Image Enhancement with Lightweight CNNs</div>
-          <div class="ppt-slide-counter">15/23</div>
+          <div class="ppt-slide-counter">15/25</div>
         </div>
       </section>
 
       <!-- SLIDE 16: BẢNG KẾT QUẢ — KIỂM ĐỊNH THỐNG KÊ GHÉP CẶP -->
       <section class="slide">
         <div class="ppt-top-bar">
-          <h2 class="ppt-top-title">Kết Quả Thực Nghiệm: Kiểm Định Thống Kê Ghép Cặp (95% CI)</h2>
+          <h2 class="ppt-top-title">Kết Quả Thực Nghiệm: Kiểm Định Ghép Cặp 95% CI (v3, v4 &amp; v4 &minus; v3)</h2>
           <div class="ppt-top-tag">Bảng kết quả</div>
         </div>
-        <div class="ppt-content">
+        <div class="ppt-content" style="justify-content: center;">
           <div class="acad-table-wrap">
-            <table class="acad-table" style="font-size: 26px;">
+            <table class="acad-table slide16-table">
               <thead>
                 <tr>
-                  <th style="width: 28%;">Cặp so sánh (A &minus; B)</th>
+                  <th style="width: 23%;">Cặp so sánh (A &minus; B)</th>
                   <th class="num-col">Miền (n)</th>
                   <th class="num-col">$\Delta\text{PSNR}$ (dB)</th>
                   <th class="num-col">95% Bootstrap CI</th>
-                  <th class="num-col">p (Wilcoxon)</th>
+                  <th class="num-col">$p_t$ / $p_W$</th>
                   <th class="num-col">% A thắng</th>
-                  <th class="num-col">Kết luận</th>
+                  <th class="num-col">Kết luận đăng ký trước</th>
                 </tr>
               </thead>
               <tbody>
-                <tr style="background: #FEE2E2;">
-                  <td><strong>Edge &minus; U-Net</strong></td>
+                <tr class="row-ours">
+                  <td><strong>[v3] Edge &minus; U-Net</strong></td>
                   <td class="num-col"><strong>pooled (190)</strong></td>
-                  <td class="num-col" style="color: #991B1B; font-weight: 800;">&minus;0.615</td>
-                  <td class="num-col"><strong>[&minus;0.891, &minus;0.335]</strong></td>
-                  <td class="num-col">4.4e-5</td>
-                  <td class="num-col">38.4%</td>
-                  <td class="num-col"><span class="pill-status pill-red">U-Net thắng</span></td>
+                  <td class="num-col"><strong>&minus;0.214</strong></td>
+                  <td class="num-col"><strong>[&minus;0.530, +0.132]</strong></td>
+                  <td class="num-col">0.222 / 0.028*</td>
+                  <td class="num-col">41.6%</td>
+                  <td class="num-col"><span class="pill-status pill-gray">Ngang nhau<br><small style="font-size: 0.82em; font-weight: normal;">(CI chứa 0; $p_W=0.028$*)</small></span></td>
                 </tr>
                 <tr>
-                  <td>Edge &minus; U-Net</td>
-                  <td class="num-col">lolv2 (100)</td>
-                  <td class="num-col" style="color: #991B1B; font-weight: 800;">&minus;1.050</td>
-                  <td class="num-col">[&minus;1.516, &minus;0.558]</td>
-                  <td class="num-col">1.2e-5</td>
-                  <td class="num-col">30.0%</td>
-                  <td class="num-col"><span class="pill-status pill-red">U-Net thắng</span></td>
-                </tr>
-                <tr>
-                  <td>Edge &minus; U-Net</td>
-                  <td class="num-col">blur (40)</td>
-                  <td class="num-col">&minus;0.442</td>
-                  <td class="num-col">[&minus;0.832, &minus;0.075]</td>
-                  <td class="num-col">0.042</td>
-                  <td class="num-col">35.0%</td>
-                  <td class="num-col"><span class="pill-status pill-red">U-Net nhỉnh hơn</span></td>
-                </tr>
-                <tr>
-                  <td>Edge &minus; U-Net</td>
-                  <td class="num-col">huawei / nikon</td>
-                  <td class="num-col">+0.148 / +0.065</td>
-                  <td class="num-col">CI chứa 0</td>
-                  <td class="num-col">&ge; 0.205</td>
-                  <td class="num-col">56.7% / 60%</td>
-                  <td class="num-col"><span class="pill-status pill-gray">Không khác biệt</span></td>
+                  <td><strong>[v3] Edge &minus; no-FFT</strong></td>
+                  <td class="num-col">pooled (190)</td>
+                  <td class="num-col">+0.096</td>
+                  <td class="num-col">[&minus;0.122, +0.310]</td>
+                  <td class="num-col">0.386 / 0.613</td>
+                  <td class="num-col">51.1%</td>
+                  <td class="num-col"><span class="pill-status pill-gray">Không khác biệt<br><small style="font-size: 0.85em; font-weight: normal;">(CI chứa 0)</small></span></td>
                 </tr>
                 <tr class="row-ours">
-                  <td><strong>Edge &minus; no-FFT</strong></td>
+                  <td><strong>[v4] Edge &minus; U-Net</strong></td>
                   <td class="num-col"><strong>pooled (190)</strong></td>
-                  <td class="num-col">&minus;0.014</td>
-                  <td class="num-col"><strong>[&minus;0.231, +0.199]</strong></td>
-                  <td class="num-col">0.431</td>
-                  <td class="num-col">52.6%</td>
-                  <td class="num-col"><span class="pill-status pill-gray">Chưa có bằng chứng</span></td>
+                  <td class="num-col"><strong>&minus;0.063</strong></td>
+                  <td class="num-col"><strong>[&minus;0.360, +0.229]</strong></td>
+                  <td class="num-col">0.680 / 0.725</td>
+                  <td class="num-col">50.5%</td>
+                  <td class="num-col"><span class="pill-status pill-gray">Hòa thống kê<br><small style="font-size: 0.85em; font-weight: normal;">(CI chứa 0)</small></span></td>
                 </tr>
                 <tr>
-                  <td>Edge &minus; no-FFT</td>
+                  <td><strong>[v4] Edge &minus; no-FFT</strong></td>
+                  <td class="num-col">pooled (190)</td>
+                  <td class="num-col">&minus;0.131</td>
+                  <td class="num-col">[&minus;0.371, +0.105]</td>
+                  <td class="num-col">0.290 / 0.340</td>
+                  <td class="num-col">47.4%</td>
+                  <td class="num-col"><span class="pill-status pill-gray">Không khác biệt<br><small style="font-size: 0.85em; font-weight: normal;">(CI chứa 0)</small></span></td>
+                </tr>
+                <tr style="background: #FEE2E2;">
+                  <td><strong>[v4 &minus; v3] Edge / U-Net (QT1)</strong></td>
+                  <td class="num-col">lolv2+huawei<br>(130)</td>
+                  <td class="num-col" style="color: #991B1B; font-weight: 800;">&minus;0.185 /<br>&minus;0.407</td>
+                  <td class="num-col">[&minus;0.519, +0.101]<br>[&minus;0.765, &minus;0.067]</td>
+                  <td class="num-col">0.236 /<br>0.023</td>
+                  <td class="num-col">53.1% /<br>44.6%</td>
+                  <td class="num-col"><span class="pill-status pill-red">Vi phạm QT1<br><small style="font-size: 0.85em; font-weight: normal;">(CI_lo &lt; &minus;0.3)</small></span></td>
+                </tr>
+                <tr>
+                  <td><strong>[v4 &minus; v3] Edge (QT2 Nikon)</strong></td>
+                  <td class="num-col">nikon (20)</td>
+                  <td class="num-col">+0.006</td>
+                  <td class="num-col">[&minus;0.625, +0.657]</td>
+                  <td class="num-col">0.987 / 1.000</td>
+                  <td class="num-col">45.0%</td>
+                  <td class="num-col"><span class="pill-status pill-gray">Không đổi<br><small style="font-size: 0.85em; font-weight: normal;">(Bất định phơi sáng)</small></span></td>
+                </tr>
+                <tr>
+                  <td><strong>[v4 &minus; v3] Edge / U-Net (QT3 Blur)</strong></td>
                   <td class="num-col">blur (40)</td>
-                  <td class="num-col">+0.194</td>
-                  <td class="num-col">[&minus;0.088, +0.472]</td>
-                  <td class="num-col">0.089</td>
-                  <td class="num-col">62.5%</td>
-                  <td class="num-col"><span class="pill-status pill-gray">CI chứa 0 (Nhiễu)</span></td>
+                  <td class="num-col">&minus;0.032 /<br>+0.207</td>
+                  <td class="num-col">[&minus;0.534, +0.433]<br>[&minus;0.237, +0.665]</td>
+                  <td class="num-col">0.896 /<br>0.369</td>
+                  <td class="num-col">55.0% /<br>57.5%</td>
+                  <td class="num-col"><span class="pill-status pill-gray">Bão hòa dung lượng<br><small style="font-size: 0.85em; font-weight: normal;">(~1.9M params)</small></span></td>
                 </tr>
               </tbody>
             </table>
+            <div style="font-size: 19px; font-weight: 600; color: #475569; margin-top: 10px; line-height: 1.35;">
+              <strong>*Ghi chú dòng [v3] Edge &minus; U-Net:</strong> Theo tiêu chí chính 95% Bootstrap CI đăng ký trước ($[-0.530, +0.132]$ chứa $0$) và paired t-test ($p_t = 0.222$), hai mô hình <strong>ngang nhau về trung bình</strong>; tuy nhiên kiểm định phi tham số Wilcoxon ghi nhận $p_W = 0.028 &lt; 0.05$ (Edge thắng 41.6% mẫu) do phân phối hiệu số lệch về phía U-Net trên một số mẫu.
+            </div>
           </div>
         </div>
         <div class="ppt-footer">
@@ -1155,7 +1214,7 @@
           </div>
           <div class="ppt-footer-course">Image Processing &amp; Computer Vision</div>
           <div class="ppt-footer-topic">Low-Light Image Enhancement with Lightweight CNNs</div>
-          <div class="ppt-slide-counter">16/23</div>
+          <div class="ppt-slide-counter">16/25</div>
         </div>
       </section>
 
@@ -1165,59 +1224,59 @@
           <h2 class="ppt-top-title">Kết Quả Thực Nghiệm: Chi Phí Tính Toán &amp; Độ Trễ (NVIDIA L4)</h2>
           <div class="ppt-top-tag">Bảng kết quả</div>
         </div>
-        <div class="ppt-content">
+        <div class="ppt-content slide17-content">
           <div class="acad-table-wrap">
-            <table class="acad-table">
+            <table class="acad-table slide17-table">
               <thead>
                 <tr>
-                  <th style="width: 28%;">Mô hình</th>
+                  <th>Mô hình</th>
                   <th class="num-col">Params</th>
                   <th class="num-col">GFLOPs @256&sup2;</th>
-                  <th class="num-col">Latency FP32 (FPS)</th>
-                  <th class="num-col">Latency FP16 (FPS)</th>
-                  <th class="num-col">Peak VRAM</th>
+                  <th class="num-col">Latency FP32<br>(v3 / v4)</th>
+                  <th class="num-col">Latency FP16<br>(v3 / v4)</th>
+                  <th class="num-col">Infer / Train VRAM</th>
                 </tr>
               </thead>
               <tbody>
                 <tr class="row-ours">
                   <td><strong>DarkIR-Edge (C=24)</strong></td>
                   <td class="num-col">1.924 M</td>
-                  <td class="num-col">8.75 G (&minus;53%)</td>
-                  <td class="num-col" style="color: #DC2626;">31.52 ms (31.7)</td>
-                  <td class="num-col">26.61 ms (37.6)</td>
-                  <td class="num-col">308 MB</td>
+                  <td class="num-col">8.75 G<br>(&minus;53%)</td>
+                  <td class="num-col" style="color: #DC2626;">31.71 / 32.29 ms<br>(~31 FPS)</td>
+                  <td class="num-col">26.23 / 26.63 ms<br>(~38 FPS)</td>
+                  <td class="num-col">236.7 MB / 4,816 MB</td>
                 </tr>
                 <tr>
                   <td><strong>DarkIR-Edge (no-FFT)</strong></td>
-                  <td class="num-col"><strong>1.495 M (&minus;22%)</strong></td>
+                  <td class="num-col"><strong>1.495 M<br>(&minus;22%)</strong></td>
                   <td class="num-col"><strong>7.50 G</strong></td>
-                  <td class="num-col">27.14 ms (36.8)</td>
-                  <td class="num-col">21.41 ms (46.7)</td>
-                  <td class="num-col"><strong>293 MB</strong></td>
+                  <td class="num-col">27.31 / 27.79 ms<br>(~36 FPS)</td>
+                  <td class="num-col">21.57 / 21.98 ms<br>(~46 FPS)</td>
+                  <td class="num-col"><strong>220.6 MB</strong> / 3,264 MB</td>
                 </tr>
                 <tr class="row-best">
-                  <td><strong>Standard U-Net (base=32)</strong></td>
+                  <td><strong>Standard U-Net (b=32)</strong></td>
                   <td class="num-col">1.928 M</td>
                   <td class="num-col">18.45 G</td>
-                  <td class="num-col"><strong>12.98 ms (77.1)</strong></td>
-                  <td class="num-col"><strong>11.38 ms (87.9)</strong></td>
-                  <td class="num-col">342 MB</td>
+                  <td class="num-col"><strong>13.23 / 13.37 ms<br>(~75 FPS)</strong></td>
+                  <td class="num-col"><strong>11.55 / 11.81 ms<br>(~86 FPS)</strong></td>
+                  <td class="num-col">269.7 MB / <strong>1,471 MB</strong></td>
                 </tr>
               </tbody>
             </table>
           </div>
 
-          <div class="acad-grid-2">
-            <div class="acad-card" style="padding: 22px 28px;">
-              <h3 class="acad-card-title" style="font-size: 30px; margin-bottom: 10px;">1. Nghịch lý FLOPs vs. Latency</h3>
+          <div class="acad-grid-2 slide17-grid">
+            <div class="acad-card slide17-card" style="padding: 22px 28px;">
+              <h3 class="acad-card-title" style="font-size: 30px; margin-bottom: 10px;">1. Nghịch lý FLOPs vs. Latency &amp; Train Time</h3>
               <ul class="acad-list">
-                <li style="font-size: 26px;">Edge ít hơn <strong>53% FLOPs</strong> nhưng <strong>chậm hơn &times;2.43 lần</strong> trên L4 do nghẽn băng thông bộ nhớ ở DW-Conv/FFT/Gating.</li>
+                <li style="font-size: 26px;">Edge ít hơn <strong>53% FLOPs</strong> nhưng <strong>chậm hơn &times;2.40–2.42 lần</strong> khi suy luận và tốn <strong>207.9 phút/run</strong> (so với 55.4 phút của U-Net ở v4) do nghẽn băng thông bộ nhớ ở DW-Conv/rFFT/Gating.</li>
               </ul>
             </div>
-            <div class="acad-card card-highlight" style="padding: 22px 28px;">
-              <h3 class="acad-card-title" style="font-size: 30px; margin-bottom: 10px;">2. Giá trị thực tiễn của no-FFT</h3>
+            <div class="acad-card card-highlight slide17-card" style="padding: 22px 28px;">
+              <h3 class="acad-card-title" style="font-size: 30px; margin-bottom: 10px;">2. Giá trị thực tiễn của biến thể no-FFT</h3>
               <ul class="acad-list">
-                <li style="font-size: 26px;">Bỏ nhánh FFT giúp giảm <strong>22% tham số</strong> và <strong>~14% latency FP32</strong> mà không giảm chất lượng đo được.</li>
+                <li style="font-size: 26px;">Bỏ nhánh FFT giúp giảm <strong>22.3% tham số</strong>, giảm <strong>~14% latency FP32</strong> và tiết kiệm <strong>32% VRAM huấn luyện</strong> mà không làm giảm PSNR ở cả v3 và v4.</li>
               </ul>
             </div>
           </div>
@@ -1229,37 +1288,74 @@
           </div>
           <div class="ppt-footer-course">Image Processing &amp; Computer Vision</div>
           <div class="ppt-footer-topic">Low-Light Image Enhancement with Lightweight CNNs</div>
-          <div class="ppt-slide-counter">17/23</div>
+          <div class="ppt-slide-counter">17/25</div>
         </div>
       </section>
 
       <!-- SLIDE 18: MINH HỌA KẾT QUẢ — CHỈ TĂNG SÁNG (LOLv2) -->
       <section class="slide">
         <div class="ppt-top-bar">
-          <h2 class="ppt-top-title">Minh Họa Kết Quả: Phục Hồi Ảnh Thiếu Sáng (Miền LOLv2)</h2>
+          <h2 class="ppt-top-title">Minh Họa Kết Quả: Phục Hồi Ảnh Thiếu Sáng (Miền LOLv2 &mdash; low00690)</h2>
           <div class="ppt-top-tag">Minh họa kết quả</div>
         </div>
-        <div class="ppt-content">
-          <div class="vis-grid-4">
-            <div class="vis-card">
-              <div class="vis-header">1. Input Low-Light</div>
-              <img src="assets/01_lolv2_low00690_input.png" alt="Input" class="vis-img">
-              <div class="vis-metric">PSNR: 8.09 dB</div>
+        <div class="ppt-content" style="padding: 12px 80px 30px 80px; gap: 14px;">
+          <div class="vis-rows-wrap">
+            <!-- HÀNG 1: GIAI ĐOẠN I (v3) -->
+            <div class="vis-stage-section">
+              <div class="vis-stage-title-text">
+                <strong>Giai đoạn I (v3):</strong> Huấn luyện 3 miền (1,600 pairs, 28k steps) &mdash; Phục hồi sắc nét &amp; độ tương phản
+              </div>
+              <div class="vis-grid-4">
+                <div class="vis-card">
+                  <div class="vis-header">1. Input Low-Light</div>
+                  <img src="assets/01_lolv2_low00690_input.png" alt="Input" class="vis-img">
+                  <div class="vis-metric">PSNR: 8.09 dB | SSIM: 0.163</div>
+                </div>
+                <div class="vis-card vis-highlight">
+                  <div class="vis-header">2. Standard U-Net [v3]</div>
+                  <img src="assets/01_lolv2_low00690_standard_u_net.png" alt="U-Net" class="vis-img">
+                  <div class="vis-metric" style="color: #065F46;">PSNR: 26.31 dB (s42) | SSIM: 0.873</div>
+                </div>
+                <div class="vis-card vis-edge">
+                  <div class="vis-header">3. DarkIR-Edge [v3, ours]</div>
+                  <img src="assets/01_lolv2_low00690_darkir_edge.png" alt="DarkIR-Edge" class="vis-img">
+                  <div class="vis-metric" style="color: #075985;">PSNR: 27.88 dB (s42) | SSIM: 0.848</div>
+                </div>
+                <div class="vis-card">
+                  <div class="vis-header">4. Ground Truth (GT)</div>
+                  <img src="assets/01_lolv2_low00690_gt.png" alt="Ground Truth" class="vis-img">
+                  <div class="vis-metric">LOLv2 Mean (v3): U-Net 21.39 / Edge 21.07 dB</div>
+                </div>
+              </div>
             </div>
-            <div class="vis-card vis-highlight">
-              <div class="vis-header">2. Standard U-Net</div>
-              <img src="assets/01_lolv2_low00690_standard_u_net.png" alt="U-Net" class="vis-img">
-              <div class="vis-metric" style="color: #065F46;">PSNR: 25.31 dB | SSIM: 0.865</div>
-            </div>
-            <div class="vis-card vis-edge">
-              <div class="vis-header">3. DarkIR-Edge (ours)</div>
-              <img src="assets/01_lolv2_low00690_darkir_edge.png" alt="DarkIR-Edge" class="vis-img">
-              <div class="vis-metric" style="color: #075985;">PSNR: 28.49 dB | SSIM: 0.854</div>
-            </div>
-            <div class="vis-card">
-              <div class="vis-header">4. Ground Truth (GT)</div>
-              <img src="assets/01_lolv2_low00690_gt.png" alt="Ground Truth" class="vis-img">
-              <div class="vis-metric">Ảnh chuẩn tham chiếu</div>
+
+            <!-- HÀNG 2: GIAI ĐOẠN II (v4) -->
+            <div class="vis-stage-section">
+              <div class="vis-stage-title-text">
+                <strong>Giai đoạn II (v4):</strong> Mở rộng 5 miền (6,777 pairs, QuotaSampler) &mdash; Hiện tượng kéo co độ sáng đa miền
+              </div>
+              <div class="vis-grid-4">
+                <div class="vis-card">
+                  <div class="vis-header">1. Input Low-Light</div>
+                  <img src="assets/01_lolv2_low00690_input.png" alt="Input" class="vis-img">
+                  <div class="vis-metric">PSNR: 8.09 dB | SSIM: 0.163</div>
+                </div>
+                <div class="vis-card vis-highlight">
+                  <div class="vis-header">2. Standard U-Net [v4]</div>
+                  <img src="assets/01_lolv2_low00690_standard_u_net.png" alt="U-Net" class="vis-img">
+                  <div class="vis-metric" style="color: #065F46;">PSNR: 27.15 dB (s42) | SSIM: 0.870</div>
+                </div>
+                <div class="vis-card vis-edge">
+                  <div class="vis-header">3. DarkIR-Edge [v4, ours]</div>
+                  <img src="assets/01_lolv2_low00690_darkir_edge.png" alt="DarkIR-Edge" class="vis-img">
+                  <div class="vis-metric" style="color: #075985;">PSNR: 24.92 dB (s42) | SSIM: 0.853</div>
+                </div>
+                <div class="vis-card">
+                  <div class="vis-header">4. Ground Truth (GT)</div>
+                  <img src="assets/01_lolv2_low00690_gt.png" alt="Ground Truth" class="vis-img">
+                  <div class="vis-metric">LOLv2 Mean (v4): U-Net 20.86 / Edge 20.74 dB</div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -1270,37 +1366,74 @@
           </div>
           <div class="ppt-footer-course">Image Processing &amp; Computer Vision</div>
           <div class="ppt-footer-topic">Low-Light Image Enhancement with Lightweight CNNs</div>
-          <div class="ppt-slide-counter">18/23</div>
+          <div class="ppt-slide-counter">18/25</div>
         </div>
       </section>
 
       <!-- SLIDE 19: MINH HỌA KẾT QUẢ — CÓ BLUR (LOL-BLUR) -->
       <section class="slide">
         <div class="ppt-top-bar">
-          <h2 class="ppt-top-title">Minh Họa Kết Quả: Thiếu Sáng Kèm Nhòe Chuyển Động (LOL-Blur)</h2>
+          <h2 class="ppt-top-title">Minh Họa Kết Quả: Thiếu Sáng Kèm Nhòe Chuyển Động (LOL-Blur #0010)</h2>
           <div class="ppt-top-tag">Minh họa kết quả</div>
         </div>
-        <div class="ppt-content">
-          <div class="vis-grid-4">
-            <div class="vis-card">
-              <div class="vis-header">1. Input (Low + Blur)</div>
-              <img src="assets/0010_input.png" alt="Input Blur" class="vis-img">
-              <div class="vis-metric">Mẫu LOL-Blur #0010</div>
+        <div class="ppt-content" style="padding: 12px 80px 30px 80px; gap: 14px;">
+          <div class="vis-rows-wrap">
+            <!-- HÀNG 1: GIAI ĐOẠN I (v3) -->
+            <div class="vis-stage-section">
+              <div class="vis-stage-title-text">
+                <strong>Giai đoạn I (v3):</strong> Huấn luyện với 400 cặp ảnh Blur &mdash; Biên cạnh và chi tiết còn nhòe
+              </div>
+              <div class="vis-grid-4">
+                <div class="vis-card">
+                  <div class="vis-header">1. Input (Low + Blur)</div>
+                  <img src="assets/0010_input.png" alt="Input Blur" class="vis-img">
+                  <div class="vis-metric">Mẫu 0082_0010 (PSNR: 10.16 dB)</div>
+                </div>
+                <div class="vis-card">
+                  <div class="vis-header">2. Standard U-Net [v3]</div>
+                  <img src="assets/0010_standard_u_net.png" alt="U-Net Blur" class="vis-img">
+                  <div class="vis-metric">Mẫu: 27.63 dB | Mean: 23.80 dB</div>
+                </div>
+                <div class="vis-card vis-edge">
+                  <div class="vis-header">3. DarkIR-Edge [v3, ours]</div>
+                  <img src="assets/0010_darkir_edge_ours.png" alt="Edge Blur" class="vis-img">
+                  <div class="vis-metric" style="color: #075985;">Mẫu: 27.47 dB | Mean: 23.57 dB</div>
+                </div>
+                <div class="vis-card vis-highlight">
+                  <div class="vis-header">4. DarkIR-m [CVPR25 Ref]</div>
+                  <img src="assets/0010_darkir_m_cvpr25.png" alt="DarkIR-m Blur" class="vis-img">
+                  <div class="vis-metric" style="color: #065F46;">Mẫu: 25.55 dB | Mean: 27.37 dB</div>
+                </div>
+              </div>
             </div>
-            <div class="vis-card">
-              <div class="vis-header">2. Standard U-Net</div>
-              <img src="assets/0010_standard_u_net.png" alt="U-Net Blur" class="vis-img">
-              <div class="vis-metric">Pooled Blur: 23.37 dB</div>
-            </div>
-            <div class="vis-card vis-edge">
-              <div class="vis-header">3. DarkIR-Edge (ours)</div>
-              <img src="assets/0010_darkir_edge_ours.png" alt="Edge Blur" class="vis-img">
-              <div class="vis-metric" style="color: #075985;">Pooled Blur: 22.93 dB</div>
-            </div>
-            <div class="vis-card vis-highlight">
-              <div class="vis-header">4. DarkIR-m (Ref Ceiling)</div>
-              <img src="assets/0010_darkir_m_cvpr25.png" alt="DarkIR-m Blur" class="vis-img">
-              <div class="vis-metric" style="color: #065F46;">Pooled Blur: 27.37 dB (+4 dB)</div>
+
+            <!-- HÀNG 2: GIAI ĐOẠN II (v4) -->
+            <div class="vis-stage-section">
+              <div class="vis-stage-title-text">
+                <strong>Giai đoạn II (v4):</strong> Mở rộng lên 1,858 cặp ảnh Blur (quota 1,600/ep) &mdash; Cải thiện PSNR mẫu (+0.9 dB ở Edge) nhưng bão hòa khử mờ
+              </div>
+              <div class="vis-grid-4">
+                <div class="vis-card">
+                  <div class="vis-header">1. Input (Low + Blur)</div>
+                  <img src="assets/0010_input.png" alt="Input Blur" class="vis-img">
+                  <div class="vis-metric">Mẫu 0082_0010 (PSNR: 10.16 dB)</div>
+                </div>
+                <div class="vis-card">
+                  <div class="vis-header">2. Standard U-Net [v4]</div>
+                  <img src="assets/0010_standard_u_net.png" alt="U-Net Blur" class="vis-img">
+                  <div class="vis-metric">Mẫu: 25.01 dB | Mean: 24.01 dB</div>
+                </div>
+                <div class="vis-card vis-edge">
+                  <div class="vis-header">3. DarkIR-Edge [v4, ours]</div>
+                  <img src="assets/0010_darkir_edge_ours.png" alt="Edge Blur" class="vis-img">
+                  <div class="vis-metric" style="color: #075985;">Mẫu: 28.36 dB | Mean: 23.54 dB</div>
+                </div>
+                <div class="vis-card vis-highlight">
+                  <div class="vis-header">4. DarkIR-m [CVPR25 Ref]</div>
+                  <img src="assets/0010_darkir_m_cvpr25.png" alt="DarkIR-m Blur" class="vis-img">
+                  <div class="vis-metric" style="color: #065F46;">Trần tham chiếu (Mean: 27.72 dB)</div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -1311,30 +1444,46 @@
           </div>
           <div class="ppt-footer-course">Image Processing &amp; Computer Vision</div>
           <div class="ppt-footer-topic">Low-Light Image Enhancement with Lightweight CNNs</div>
-          <div class="ppt-slide-counter">19/23</div>
+          <div class="ppt-slide-counter">19/25</div>
         </div>
       </section>
 
       <!-- SLIDE 20: ĐƯỜNG CONG HUẤN LUYỆN & CHẨN ĐOÁN ĐỘ SÁNG -->
       <section class="slide">
         <div class="ppt-top-bar">
-          <h2 class="ppt-top-title">Minh Họa Kết Quả: Đường Cong Huấn Luyện &amp; Chẩn Đoán Độ Sáng</h2>
+          <h2 class="ppt-top-title">Minh Họa Kết Quả: Đường Cong Huấn Luyện (v3 &amp; v4) &amp; Chẩn Đoán Độ Sáng</h2>
           <div class="ppt-top-tag">Minh họa kết quả</div>
         </div>
-        <div class="ppt-content">
-          <div style="display: grid; grid-template-columns: 1.25fr 0.75fr; gap: 32px; align-items: start;">
-            <div style="background: #FFFFFF; border: 2.5px solid #CBD5E1; border-radius: 12px; padding: 18px; display: flex; flex-direction: column; justify-content: flex-start; align-items: center;">
-              <img src="assets/curves.png" alt="Training Curves" style="width: 100%; max-height: 480px; object-fit: contain;">
-              <div style="font-size: 23px; font-weight: 800; color: #334155; margin-top: 12px;">Lịch sử Loss &amp; Val-PSNR Macro (EMA) của 6 runs</div>
+        <div class="ppt-content" style="padding: 16px 80px 18px 80px;">
+          <div style="display: grid; grid-template-columns: 1.34fr 0.66fr; gap: 24px; align-items: start; height: 100%;">
+            <div style="display: flex; flex-direction: column; gap: 12px; height: 100%; justify-content: space-between;">
+              <!-- v3 Curve Box -->
+              <div style="background: #FFFFFF; border: 2.5px solid #CBD5E1; border-radius: 10px; padding: 8px 12px 10px 12px; display: flex; flex-direction: column; align-items: center; flex: 1;">
+                <div style="font-size: 20px; font-weight: 800; color: #1E293B; margin-bottom: 4px; align-self: flex-start; display: flex; align-items: center; gap: 8px;">
+                  <span style="background: #1E293B; color: #FFFFFF; padding: 2px 8px; border-radius: 4px; font-size: 15px;">v3</span>
+                  <span>Đường cong học tập Giai đoạn I (1,600 pairs, 28,000 steps)</span>
+                </div>
+                <img src="assets/curves_v3.png" alt="Training Curves v3" style="width: 100%; flex: 1; max-height: 385px; object-fit: contain;">
+              </div>
+
+              <!-- v4 Curve Box -->
+              <div style="background: #FFFFFF; border: 2.5px solid #CBD5E1; border-radius: 10px; padding: 8px 12px 10px 12px; display: flex; flex-direction: column; align-items: center; flex: 1;">
+                <div style="font-size: 20px; font-weight: 800; color: #1E293B; margin-bottom: 4px; align-self: flex-start; display: flex; align-items: center; gap: 8px;">
+                  <span style="background: #0284C7; color: #FFFFFF; padding: 2px 8px; border-radius: 4px; font-size: 15px;">v4</span>
+                  <span>Đường cong học tập Giai đoạn II (6,777 pairs, 42,000 steps)</span>
+                </div>
+                <img src="assets/curves_v4.png" alt="Training Curves v4" style="width: 100%; flex: 1; max-height: 385px; object-fit: contain;">
+              </div>
             </div>
 
-            <div class="acad-card card-accent">
-              <span class="acad-card-tag">Chẩn đoán thực nghiệm</span>
-              <h3 class="acad-card-title">Bản Chất Sai Số &amp; Hội Tụ</h3>
-              <ul class="acad-list">
-                <li><strong>Lệch sáng toàn cục (LOLv2):</strong> Chuẩn hóa độ sáng theo GT giúp PSNR tăng vọt <strong>+5.65 &rarr; +5.97 dB</strong> &rarr; lỗi chính là lệch sáng nền, không phải mất chi tiết.</li>
-                <li><strong>FFT không sửa sáng:</strong> Gap độ sáng của Edge (5.97 dB) và no-FFT (5.71 dB) xấp xỉ nhau.</li>
-                <li><strong>Hội tụ:</strong> Edge bão hòa sớm (~ep 30–55); U-Net s123 tiếp tục tăng tới ep 90 (22.03 dB val).</li>
+            <div class="acad-card card-accent" style="height: auto; min-height: unset; padding: 24px 26px;">
+              <span class="acad-card-tag" style="margin-bottom: 10px;">Chẩn đoán thực nghiệm (v3 &amp; v4)</span>
+              <h3 class="acad-card-title" style="font-size: 27px; margin-bottom: 14px;">Bản Chất Sai Số &amp; Hội Tụ</h3>
+              <ul class="acad-list" style="gap: 16px;">
+                <li style="font-size: 22px; line-height: 1.4;"><strong>Hội tụ ổn định qua cả v3 &amp; v4:</strong> Lịch trình Cosine 70 epochs cố định giúp cả 3 mô hình hội tụ mượt mà, sai lệch giữa <code>final.pt</code> và <code>best.pt</code> chỉ $\le 0.07\text{ dB}$.</li>
+                <li style="font-size: 22px; line-height: 1.4;"><strong>Lệch sáng toàn cục (LOLv2):</strong> Chuẩn hóa theo độ sáng GT giúp PSNR tăng vọt <strong>+5.30 &rarr; +6.15 dB</strong> ($\text{PSNR}_{\text{gt-mean}} \approx 26.5\text{–}27.1\text{ dB}$).</li>
+                <li style="font-size: 22px; line-height: 1.4;"><strong>Bất định phơi sáng (Nikon):</strong> Đưa 1,000 ảnh Nikon vào train ở v4 vẫn duy trì khoảng cách $\text{PSNR}_{\text{gt-mean}} - \text{PSNR}$ ở mức <strong>+6.41 dB</strong>.</li>
+                <li style="font-size: 22px; line-height: 1.4;"><strong>Độ nét chi tiết:</strong> <code>sharp_ratio</code> của U-Net (0.285–0.304) cao hơn Edge (0.170–0.221), khôi phục biên cạnh rõ nét hơn.</li>
               </ul>
             </div>
           </div>
@@ -1346,37 +1495,26 @@
           </div>
           <div class="ppt-footer-course">Image Processing &amp; Computer Vision</div>
           <div class="ppt-footer-topic">Low-Light Image Enhancement with Lightweight CNNs</div>
-          <div class="ppt-slide-counter">20/23</div>
+          <div class="ppt-slide-counter">20/25</div>
         </div>
       </section>
 
       <!-- SLIDE 21: ĐÁNH GIÁ & NHẬN XÉT — ƯU ĐIỂM -->
       <section class="slide">
         <div class="ppt-top-bar">
-          <h2 class="ppt-top-title">Đánh Giá &amp; Nhận Xét: Những Ưu Điểm Đạt Được</h2>
+          <h2 class="ppt-top-title">Đánh Giá &amp; Nhận Xét: Những Kết Quả &amp; Ưu Điểm Đạt Được</h2>
           <div class="ppt-top-tag">Đánh giá &amp; Nhận xét</div>
         </div>
-        <div class="ppt-content" style="justify-content: center;">
-          <div class="acad-grid-2">
-            <div class="acad-card card-highlight">
-              <span class="acad-card-tag">Đóng góp thực tiễn</span>
-              <h3 class="acad-card-title">1. Về Mô Hình &amp; Hiệu Năng</h3>
-              <ul class="acad-list">
-                <li><strong>Học sâu vượt xa truyền thống:</strong> Cả 3 mô hình CNN nhẹ (~1.9M) đều vượt Gamma 2.2 từ <strong>+3.8 dB trở lên</strong> (+9 dB so với CLAHE/MSRCR).</li>
-                <li><strong>Baseline U-Net gọn rất mạnh:</strong> Đạt chất lượng cao nhất (21.36 dB) và tốc độ nhanh nhất (<strong>12.98 ms / 77 FPS</strong> trên L4).</li>
-                <li><strong>Phát hiện tối ưu từ no-FFT:</strong> Loại bỏ FFT giảm <strong>22% tham số</strong> và <strong>~14% độ trễ</strong> mà không giảm chất lượng đo được.</li>
-              </ul>
-            </div>
-
-            <div class="acad-card">
-              <span class="acad-card-tag">Đóng góp phương pháp luận</span>
-              <h3 class="acad-card-title">2. Về Quy Trình Khoa Học</h3>
-              <ul class="acad-list">
-                <li><strong>Kiểm soát dữ liệu chặt chẽ:</strong> Hợp nhất 4 miền (1,650 cặp), cách ly chuỗi video chống rò rỉ dữ liệu.</li>
-                <li><strong>Đánh giá thống kê nghiêm ngặt:</strong> Huấn luyện 2 seed độc lập, kiểm định ghép cặp Bootstrap 95% CI đăng ký trước.</li>
-                <li><strong>Trung thực học thuật:</strong> Báo cáo khách quan cả <strong>kết quả âm (negative results)</strong> khi biến thể đề xuất không vượt baseline.</li>
-              </ul>
-            </div>
+        <div class="ppt-content" style="justify-content: center; align-items: center;">
+          <div class="acad-card card-highlight" style="width: 100%; max-width: 1400px;">
+            <span class="acad-card-tag">Kết quả thực nghiệm cốt lõi</span>
+            <h3 class="acad-card-title">Về Mô Hình &amp; Hiệu Năng</h3>
+            <ul class="acad-list">
+              <li><strong>Mạng nhỏ học sâu thắng hẳn phương pháp truyền thống.</strong> Ảnh sáng hơn, ít nhiễu và đúng màu hơn.</li>
+              <li><strong>Thiết kế phức tạp hơn không thắng thiết kế đơn giản.</strong> DarkIR-Edge chỉ ngang U-Net.</li>
+              <li><strong>U-Net gọn là lựa chọn thực tế nhất.</strong> Nó chạy nhanh nhất và cho ảnh gần với ảnh thật nhất.</li>
+              <li><strong>Nhánh tần số (FFT) không mang lại lợi ích rõ rệt.</strong> Bỏ đi thì mô hình nhẹ hơn mà chất lượng gần như giữ nguyên.</li>
+            </ul>
           </div>
         </div>
         <div class="ppt-footer">
@@ -1386,39 +1524,35 @@
           </div>
           <div class="ppt-footer-course">Image Processing &amp; Computer Vision</div>
           <div class="ppt-footer-topic">Low-Light Image Enhancement with Lightweight CNNs</div>
-          <div class="ppt-slide-counter">21/23</div>
+          <div class="ppt-slide-counter">21/25</div>
         </div>
       </section>
 
       <!-- SLIDE 22: ĐÁNH GIÁ & NHẬN XÉT — HẠN CHẾ & HƯỚNG PHÁT TRIỂN -->
       <section class="slide">
         <div class="ppt-top-bar">
-          <h2 class="ppt-top-title">Đánh Giá &amp; Nhận Xét: Hạn Chế &amp; Hướng Phát Triển</h2>
+          <h2 class="ppt-top-title">Đánh Giá &amp; Nhận Xét: Bão Hòa Dung Lượng (v4) &amp; Hướng Phát Triển</h2>
           <div class="ppt-top-tag">Đánh giá &amp; Nhận xét</div>
         </div>
         <div class="ppt-content">
           <div class="acad-grid-2">
             <div class="acad-card card-warn">
-              <span class="acad-card-tag">Giới hạn thực nghiệm (Threats to Validity)</span>
-              <h3 class="acad-card-title">1. Những Hạn Chế Tồn Tại</h3>
+              <span class="acad-card-tag">Khi thêm nhiều dữ liệu hơn, điều gì xảy ra?</span>
+              <h3 class="acad-card-title">1. Những Giới Hạn Thực Nghiệm</h3>
               <ul class="acad-list">
-                <li><strong>DarkIR-Edge thua U-Net:</strong> Kém hơn 0.62 dB PSNR, LPIPS cao hơn và chậm hơn &times;2.4 lần; nhánh FFT chưa chứng minh được lợi ích.</li>
-                <li><strong>Khử mờ chưa đạt:</strong> Dữ liệu blur quá ít (150 train / 10 val), thua xa trần DarkIR-m (~4 dB).</li>
-                <li><strong>Confound độ dài huấn luyện:</strong> Early stopping làm số epoch không đều (55 vs. 90 epoch; <code>best.pt</code> ở ep 25–90), có thể thiên về U-Net.</li>
-                <li><strong>Quy mô đánh giá:</strong> Chỉ 2 seed; nikon 20 ảnh; chỉ đo trên L4; nhận xét định tính chủ quan.</li>
+                <li><strong>Khử mờ gần như không cải thiện.</strong> Thêm nhiều ảnh nhòe nhưng kết quả vẫn kém mô hình lớn DarkIR-m.</li>
+                <li><strong>Các miền ảnh "giành nhau" độ sáng.</strong> Thêm ảnh từ nhiều nguồn làm một số miền tốt lên, một số kém đi.</li>
+                <li><strong>Nhánh FFT vẫn không chứng minh được giá trị</strong> và còn làm mô hình chạy chậm hơn.</li>
               </ul>
             </div>
 
             <div class="acad-card card-accent">
-              <span class="acad-card-tag">Giải thích &amp; Kế hoạch v3</span>
-              <h3 class="acad-card-title">2. Giả Thuyết &amp; Hướng Mở Rộng</h3>
+              <span class="acad-card-tag">Bài học rút ra &amp; Hướng nghiên cứu tiếp theo</span>
+              <h3 class="acad-card-title">2. Hướng Phát Triển</h3>
               <ul class="acad-list">
-                <li><strong>Giả thuyết vì sao U-Net mạnh:</strong> Tính toán cục bộ dày đặc gấp 2.1&times; FLOPs ở cùng số tham số; các khối tần số/gating cần tập dữ liệu lớn hơn nhiều.</li>
-                <li><strong>Hướng phát triển thực nghiệm v3:</strong>
-                  <br>&bull; Tăng dữ liệu <code>blur</code> lên <strong>400 train / 50 val</strong>.
-                  <br>&bull; Huấn luyện cố định <strong>70 epochs</strong> (bỏ early stopping, chấm <code>final.pt</code>) để loại bỏ confound.
-                  <br>&bull; Bổ sung độ đo lệch sáng có dấu, $\Delta E$, độ nét Laplacian &amp; khảo sát mù.
-                </li>
+                <li><strong>Điều kiện hóa theo miền / độ phơi sáng (Exposure Conditioning):</strong> Tích hợp đầu vào điều khiển tỷ lệ sáng hoặc chuẩn hóa thích ứng để giải quyết xung đột độ sáng đa miền (LOLv2 vs. Huawei/Nikon).</li>
+                <li><strong>Phân bổ dung lượng cho Deblurring:</strong> Mở rộng bề rộng kênh ($C \ge 32$) hoặc dùng nhân tích chập tách chiều lớn để thu hẹp khoảng cách độ nét với DarkIR-m.</li>
+                <li><strong>Đánh giá phần cứng biên thực tế:</strong> Đo đạc trực tiếp trên ARM NPU / Jetson / ONNX-TensorRT và mở rộng số lượng hạt giống ($\ge 5$ seeds).</li>
               </ul>
             </div>
           </div>
@@ -1430,7 +1564,7 @@
           </div>
           <div class="ppt-footer-course">Image Processing &amp; Computer Vision</div>
           <div class="ppt-footer-topic">Low-Light Image Enhancement with Lightweight CNNs</div>
-          <div class="ppt-slide-counter">22/23</div>
+          <div class="ppt-slide-counter">22/25</div>
         </div>
       </section>
 
@@ -1472,7 +1606,78 @@
           </div>
           <div class="ppt-footer-course">Image Processing &amp; Computer Vision</div>
           <div class="ppt-footer-topic">Low-Light Image Enhancement with Lightweight CNNs</div>
-          <div class="ppt-slide-counter">23/23</div>
+          <div class="ppt-slide-counter">23/25</div>
+        </div>
+      </section>
+
+      <!-- SLIDE 24: HỎI ĐÁP & THẢO LUẬN (Q&A) -->
+      <section class="slide">
+        <div class="ppt-top-bar">
+          <h2 class="ppt-top-title">Hỏi &amp; Đáp</h2>
+          <div class="ppt-top-tag">Thảo luận</div>
+        </div>
+        <div class="ppt-content" style="justify-content: center; align-items: center;">
+          <div class="acad-card card-accent" style="width: 100%; max-width: 1200px; min-height: 460px; justify-content: center; align-items: center; text-align: center; padding: 60px 80px; gap: 24px;">
+            <h3 style="font-size: 84px; font-weight: 800; color: #126CD5; line-height: 1.2;">
+              HỎI &amp; ĐÁP
+            </h3>
+            <p style="font-size: 34px; font-weight: 600; color: #334155; max-width: 960px; line-height: 1.5;">
+              Kính mời Quý Thầy Cô và các anh chị học viên đặt câu hỏi và góp ý cho đề tài.
+            </p>
+          </div>
+        </div>
+        <div class="ppt-footer">
+          <div class="ppt-footer-left">
+            <img src="assets/uit-logo.png" alt="UIT" class="ppt-footer-logo">
+            <span class="ppt-footer-brand">UIT - VNUHCM</span>
+          </div>
+          <div class="ppt-footer-course">Image Processing &amp; Computer Vision</div>
+          <div class="ppt-footer-topic">Low-Light Image Enhancement with Lightweight CNNs</div>
+          <div class="ppt-slide-counter">24/25</div>
+        </div>
+      </section>
+
+      <!-- SLIDE 25: LỜI CẢM ƠN -->
+      <section class="slide">
+        <div class="slide-cover">
+          <div class="cover-top-section" style="justify-content: center; padding-top: 0;">
+            <div class="cover-institution" style="margin-bottom: 36px;">
+              <div class="cover-institution-line1">
+                ĐẠI HỌC QUỐC GIA THÀNH PHỐ HỒ CHÍ MINH
+              </div>
+              <div class="cover-institution-line2">
+                TRƯỜNG ĐẠI HỌC CÔNG NGHỆ THÔNG TIN
+              </div>
+            </div>
+            <div class="cover-topic-label">Tổng kết báo cáo</div>
+            <h1 class="cover-main-title" style="font-size: 64px; margin-bottom: 20px;">
+              TRÂN TRỌNG CẢM ƠN!
+            </h1>
+            <p class="cover-subtitle" style="font-size: 34px; color: #E0F2FE;">
+              Cảm ơn Quý Thầy Cô và các anh chị học viên đã chú ý lắng nghe
+            </p>
+          </div>
+          <div class="cover-bottom-section">
+            <div class="cover-course-title">Đề tài: Tăng cường chất lượng ảnh trong điều kiện thiếu sáng bằng mạng nơ-ron tích chập</div>
+            <div class="cover-authors-list">
+              <div class="cover-author-row">
+                <span class="cover-author-name">Học viên thực hiện: Phạm Văn Tiến</span>
+                <span class="cover-author-id">MSHV: 26848223</span>
+              </div>
+              <div class="cover-author-row" style="font-size: 24px; color: #475569; font-weight: 600; margin-top: 4px;">
+                <span>Môn học: Xử lý ảnh và Thị giác máy tính (CS2203) — Khóa 2026</span>
+              </div>
+            </div>
+          </div>
+          <div class="ppt-footer">
+            <div class="ppt-footer-left">
+              <img src="assets/uit-logo.png" alt="UIT" class="ppt-footer-logo">
+              <span class="ppt-footer-brand">UIT - VNUHCM</span>
+            </div>
+            <div class="ppt-footer-course">Image Processing &amp; Computer Vision</div>
+            <div class="ppt-footer-topic">Low-Light Image Enhancement with Lightweight CNNs</div>
+            <div class="ppt-slide-counter">25/25</div>
+          </div>
         </div>
       </section>
 
@@ -1483,7 +1688,7 @@
   <div id="nav-bar">
     <button class="nav-btn" id="btn-prev" title="Previous Slide (Left Arrow / PageUp)">◀</button>
     <div class="nav-counter">
-      <span id="current-slide-num">01</span> / <span id="total-slide-num">23</span>
+      <span id="current-slide-num">01</span> / <span id="total-slide-num">25</span>
     </div>
     <button class="nav-btn" id="btn-next" title="Next Slide (Right Arrow / Space / PageDown)">▶</button>
     <button class="nav-btn" id="btn-fullscreen" title="Fullscreen (F)">⛶</button>
