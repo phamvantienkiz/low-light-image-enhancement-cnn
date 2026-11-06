@@ -1,0 +1,72 @@
+{
+  "title": "LLIE Demo Presets Manifest (100% Out-Of-Split Verified)",
+  "verification_rule": "Strict SHA-256 intersection with Train(6777), Val(150), Test(190) == EMPTY",
+  "presets": [
+    {
+      "id": "01_huawei_gap_00945",
+      "name": "LSRW Huawei (Buffer Gap #00945)",
+      "domain": "LSRW-Huawei",
+      "type": "Paired",
+      "desc": "Cặp ảnh ngoại cảnh đêm đô thị từ vùng đệm bảo vệ (Buffer Gap #00945). Hoàn toàn ngoài Train/Val/Test.",
+      "input_file": "01_huawei_gap_00945_input.jpg",
+      "gt_file": "01_huawei_gap_00945_gt.jpg",
+      "input_sha256": "61d324abf41bd1f59b828ff0a198e447ee49592e6c587d0a19bf5529e9c47410",
+      "gt_sha256": "0d7550dc4182ea7602ad78b9b7338e839d73594e2d9182ddfee529feb406e544"
+    },
+    {
+      "id": "02_huawei_gap_01005",
+      "name": "LSRW Huawei (Buffer Gap #01005)",
+      "domain": "LSRW-Huawei",
+      "type": "Paired",
+      "desc": "Cặp ảnh đường phố ánh đèn vàng thiếu sáng sâu từ vùng đệm bảo vệ sau Val (#01005). Hoàn toàn ngoài Train/Val/Test.",
+      "input_file": "02_huawei_gap_01005_input.jpg",
+      "gt_file": "02_huawei_gap_01005_gt.jpg",
+      "input_sha256": "86f8ef43527986f55995ba96ca7c20ec141890faf29928adf083eb51246e15b1",
+      "gt_sha256": "d3edae12e5a51d4e03cf0dc62d005de922ae0cb1ddee8bf5f19004bb9f880ef4"
+    },
+    {
+      "id": "03_lolv2_syn_test_sample",
+      "name": "LOL-v2 Synthetic Test (r00816405t)",
+      "domain": "LOL-v2-Synthetic",
+      "type": "Paired",
+      "desc": "Cặp ảnh kiểm thử thuộc tập Synthetic Test gốc (chưa từng dùng trong Train/Val/Test của bất kỳ version nào).",
+      "input_file": "03_lolv2_syn_test_r00816405t_input.png",
+      "gt_file": "03_lolv2_syn_test_r00816405t_gt.png",
+      "input_sha256": "d5731b4b4e4866ae1dd2d8c052d1d4b56597b41355c3c96f837e60f1e13e8b22",
+      "gt_sha256": "6dfdc1aa128ae5398c3147b8929ea7a705bf4ac814fa13a059ecd32e6bd5d0d4"
+    },
+    {
+      "id": "04_nikon_holdout",
+      "name": "LSRW Nikon DSLR (1.jpg)",
+      "domain": "LSRW-Nikon",
+      "type": "Paired",
+      "desc": "Cặp ảnh máy ảnh cơ chuyên nghiệp Nikon (1.jpg) nằm ngoài tập Test 20 ảnh và không nằm trong tập Train chọn lọc.",
+      "input_file": "04_nikon_holdout_1_input.jpg",
+      "gt_file": "04_nikon_holdout_1_gt.jpg",
+      "input_sha256": "91a0b3d399a1879d57f53ee38a1cf68039cb4aee8d2d9cd065b606b5d9d9f98e",
+      "gt_sha256": "f838a7963342bec036c01b4da222084d5748d73a3031dfba7bd18da6e38c56b0"
+    },
+    {
+      "id": "05_lime_benchmark_01",
+      "name": "LIME Benchmark (#1)",
+      "domain": "LIME (Unpaired)",
+      "type": "Unpaired",
+      "desc": "Ảnh chuẩn quốc tế LIME kinh điển, cảnh bóng đêm nội thất không tham chiếu Ground-Truth.",
+      "input_file": "05_lime_benchmark_01_input.bmp",
+      "gt_file": null,
+      "input_sha256": "4f78ab13cc1f4905ab4d9d63997b7a6856e3dab40ec3b3fb49dd03bbc937f295",
+      "gt_sha256": null
+    },
+    {
+      "id": "06_dicm_benchmark_01",
+      "name": "DICM Benchmark (#01)",
+      "domain": "DICM (Unpaired)",
+      "type": "Unpaired",
+      "desc": "Ảnh chuẩn quốc tế DICM thương mại, thử thách tăng cường tương phản thực tế không có Ground-Truth.",
+      "input_file": "06_dicm_benchmark_01_input.jpg",
+      "gt_file": null,
+      "input_sha256": "7423c3aa679add5a7021e47acf106d3c1f2b5ac5ea4548088b0e2eac894415fa",
+      "gt_sha256": null
+    }
+  ]
+}

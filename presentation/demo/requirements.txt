@@ -1,0 +1,8 @@
+# Phụ thuộc cho ứng dụng Demo cục bộ LLIE DarkIR-Edge
+torch>=2.0.0
+torchvision>=0.15.0
+gradio>=4.20.0
+numpy>=1.22.0
+opencv-python-headless>=4.7.0
+scikit-image>=0.20.0
+Pillow>=9.5.0
